@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comunidades Japonesas no Brasil 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Shippori+Mincho:wght@400;600;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c0392b;
+    --ink: #1a1a2e;
+    --paper: #faf7f2;
+    --cream: #f0ebe1;
+    --gold: #c9a84c;
+    --muted: #7a7068;
+    --border: #ddd5c8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .hero::before {
+    content: '桜';
+    font-family: 'Noto Serif JP', serif;
+    font-size: 260px;
+    position: absolute;
+    right: -30px;
+    top: -60px;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .hero-flag {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(26px, 5vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--red); }
+  .hero p {
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    max-width: 560px;
+    margin: 0 auto 20px;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    display: block;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--gold);
+  }
+  .hero-stat .lbl {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* TOOLBAR */
+  .toolbar {
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .toolbar-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+  .filter-btn {
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .search-box {
+    margin-left: auto;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    width: 220px;
+  }
+  .search-box:focus { border-color: var(--red); }
+
+  /* MAIN */
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px 60px; }
+
+  /* SECTION */
+  .section { margin-bottom: 40px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-flag { font-size: 28px; }
+  .section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .section-count {
+    font-size: 11px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 20px;
+    padding: 2px 10px;
+    margin-left: auto;
+  }
+
+  /* SUBSECTION */
+  .subsection { margin-bottom: 18px; }
+  .subsection-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+  }
+
+  /* CARD */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: box-shadow 0.15s, border-color 0.15s;
+  }
+  .card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border-color: var(--gold);
+  }
+  .card-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .card-city {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .card-links {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover { opacity: 0.8; }
+  .btn-google { background: #4285F4; color: #fff; }
+  .btn-video  { background: #FF0000; color: #fff; }
+  .btn-site   { background: var(--ink); color: #fff; }
+  .btn-nippo  { background: var(--red); color: #fff; }
+
+  /* PORTAIS */
+  .portais-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .portal-card {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .portal-card .card-name { color: #fff; font-size: 14px; }
+  .portal-card .card-city { color: rgba(255,255,255,0.5); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+  }
+  footer a { color: var(--gold); }
+
+  /* HIDDEN */
+  .card.hidden, .subsection.empty, .section.empty { display: none; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px 32px; }
+    .toolbar { padding: 10px 16px; }
+    .search-box { width: 100%; margin-left: 0; }
+    .container { padding: 20px 16px 40px; }
+  }
+
+  @media print {
+    .toolbar, .hero-flag { display: none; }
+    .card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-flag">🇧🇷🇯🇵</div>
+  <h1>Comunidades <span>Japonesas</span><br>no Brasil</h1>
+  <p>Diretório de entidades, associações, clubes e organizações nipo-brasileiras em todo o território nacional.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">437+</span><span class="lbl">Entidades no Brasil</span></div>
+    <div class="hero-stat"><span class="num">1,5M</span><span class="lbl">Nikkeis no Brasil</span></div>
+    <div class="hero-stat"><span class="num">118</span><span class="lbl">Anos de Imigração</span></div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <span class="toolbar-label">Filtrar:</span>
+  <button class="filter-btn active" data-region="all">Todos</button>
+  <button class="filter-btn" data-region="SP">São Paulo</button>
+  <button class="filter-btn" data-region="SUL">Sul</button>
+  <button class="filter-btn" data-region="MG-RJ">MG / RJ</button>
+  <button class="filter-btn" data-region="CO">Centro-Oeste</button>
+  <button class="filter-btn" data-region="NORTE">Norte</button>
+  <button class="filter-btn" data-region="NE">Nordeste</button>
+  <button class="filter-btn" data-region="NACIONAIS">Nacionais</button>
+  <input class="search-box" type="text" id="searchInput" placeholder="🔍 Buscar entidade ou cidade...">
+</div>
+
+<div class="container">
+
+  <!-- PORTAIS NACIONAIS -->
+  <div class="section" data-region="NACIONAIS">
+    <div class="section-header">
+      <span class="section-flag">🌐</span>
+      <span class="section-title">Portais & Redes Nacionais</span>
+      <span class="section-count">6 entidades</span>
+    </div>
+    <div class="portais-grid">
+
+      <div class="card" data-name="NIPPO Brasília – Diretório de Entidades">
+        <div class="card-name">NIPPO Brasília – Diretório Completo de Entidades</div>
+        <div class="card-city">Nacional · 437+ entidades cadastradas</div>
+        <div class="card-links">
+          <a class="btn btn-site" href="https://nippobrasilia.com.br/entidades/entidades-br/" target="_blank">🌐 Site</a>
+          <a class="btn btn-google" href="https://www.google.com/search?q=NIPPO+Brasilia+entidades+nipo-brasileiras" target="_blank">🔍 Google</a>
+        </div>
+      </div>
+
+      <div class="card" data-name="Nikkeyweb">
+        <div class="card-name">Nikkeyweb – Rede Nikkei Brasil</div>
+        <div class="card-city">Nacional · rede colaborativa</div>
+        <div class="card-links">
+          <a class="btn btn-site" href="https://nikkeyweb.org.br" target="_blank">🌐 Site</a>
+          <a class="btn btn-google" href="https://www.google.com/search?q=Nikkeyweb+comunidade+japonesa+Brasil" target="_blank">🔍 Google</a>
+          <a class="btn btn-video" href="https://www.google.com/search?q=Nikkeyweb&tbm=vid" target="_blank">▶ Vídeos</a>
+        </div>
+      </div>
+
+      <div class="card" data-name="Bunkyo São Paulo">
+        <div class="card-name">Bunkyo – Soc. Bras. de Cultura Japonesa</div>
+        <div class="card-city">São Paulo-SP · principal entidade nacional</div>
+        <div class="card-links">
+          <a class="btn btn-site" href="http://www.bunkyo.org.br" target="_blank">🌐 Site</a>
+          <a class="btn btn-google" href="https://www.google.com/search?q=Bunkyo+Sao+Paulo+sociedade+brasileira+cultura+japonesa" target="_blank">🔍 Google</a>
+          <a class="btn btn-video" href="https://www.google.com/search?q=Bunkyo+Sao+Paulo&tbm=vid" target="_blank">▶ Vídeos</a>
+        </div>
+      </div>
+
+      <div class="card" data-name="Jornal Nippak">
+        <div class="card-name">Jornal Nippak</div>
+        <div class="card-city">São Paulo-SP · imprensa nikkei</div>
+        <div class="card-links">
+          <a class="btn btn-site" href="https://www.jnippak.com.br" target="_blank">🌐 Site</a>
+          <a class="btn btn-google" href="https://www.google.com/search?q=Jornal+Nippak+comunidade+japonesa" target="_blank">🔍 Google</a>
+        </div>
+      </div>
+
+      <div class="card" data-name="CIATE">
+        <div class="card-name">CIATE – Centro de Inf. e Apoio ao Trabalhador no Exterior</div>
+        <div class="card-city">São Paulo-SP</div>
+        <div class="card-links">
+          <a class="btn btn-site" href="http://www.ciate.org.br" target="_blank">🌐 Site</a>
+          <a class="btn btn-google" href="https://www.google.com/search?q=CIATE+trabalhador+exterior+japao+SP" target="_blank">🔍 Google</a>
+        </div>
+      </div>
+
+      <div class="card" data-name="Enkyo">
+        <div class="card-name">Enkyo – Beneficência Nipo-Brasileira de São Paulo</div>
+        <div class="card-city">São Paulo-SP</div>
+        <div class="card-links">
+          <a class="btn btn-site" href="http://www.enkyo.org.br" target="_blank">🌐 Site</a>
+          <a class="btn btn-google" href="https://www.google.com/search?q=Enkyo+Beneficencia+Nipo-Brasileira+SP" target="_blank">🔍 Google</a>
+          <a class="btn btn-video" href="https://www.google.com/search?q=Enkyo+nipo+brasileira&tbm=vid" target="_blank">▶ Vídeos</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SÃO PAULO -->
+  <div class="section" data-region="SP">
+    <div class="section-header">
+      <span class="section-flag">🏙️</span>
+      <span class="section-title">São Paulo</span>
+      <span class="section-count">maior concentração nikkei do mundo</span>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Capital – São Paulo (SP)</div>
+      <div class="grid">
+
+        <div class="card" data-name="Japan House São Paulo">
+          <div class="card-name">Japan House São Paulo</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-site" href="https://www.japanhouse.jp/saopaulo/" target="_blank">🌐 Site</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Japan+House+Sao+Paulo" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Japan+House+Sao+Paulo&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="AJAB Jabaquara">
+          <div class="card-name">AJAB – Assoc. Nipo-Brasileira do Jabaquara</div>
+          <div class="card-city">São Paulo-SP · Zona Sul</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/ajab-associacao-cultural-e-assistencial-nipo-brasileira-do-jabaquara-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=AJAB+Associacao+Nipo-Brasileira+Jabaquara+Sao+Paulo" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=AJAB+Jabaquara+japonesa&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACNBVNC Vila Nova Cachoeirinha">
+          <div class="card-name">ACNBVNC – Kaikan de Vila Nova Cachoeirinha</div>
+          <div class="card-city">São Paulo-SP · fundada em 1933</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-nipo-brasileira-de-vila-nova-cachoeirinha-acnbvnc-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACNBVNC+Vila+Nova+Cachoeirinha+nipo+brasileira" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="CENB Centro de Estudos Nipo-Brasileiros">
+          <div class="card-name">CENB – Centro de Estudos Nipo-Brasileiros</div>
+          <div class="card-city">São Paulo-SP · fundado em 1965</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/centro-de-estudos-nipo-brasileiros-cenb-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=CENB+Centro+Estudos+Nipo-Brasileiros+Sao+Paulo" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Centro+Estudos+Nipo-Brasileiros&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ABEUNI Aliança Beneficente Universitária">
+          <div class="card-name">ABEUNI – Aliança Beneficente Universitária de SP</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/abeuni-alianca-beneficente-universitaria-de-sao-paulo-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ABEUNI+Alianca+Beneficente+Universitaria+Sao+Paulo" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ABJICA Bolsistas JICA São Paulo">
+          <div class="card-name">ABJICA – Associação dos Bolsistas JICA</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/entidades/entidades-br/abjica-associacao-dos-bolsistas-jica-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ABJICA+Associacao+Bolsistas+JICA+Sao+Paulo" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ABMON Bolsistas Governo Japonês">
+          <div class="card-name">ABMON – Assoc. dos Bolsistas do Governo Japonês</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/abmon-associacao-dos-bolsistas-do-governo-japones-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ABMON+Bolsistas+Governo+Japones+Sao+Paulo" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ABRADEMI Mangá Ilustrações">
+          <div class="card-name">ABRADEMI – Assoc. Bras. de Desenhistas de Mangá</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/abrademi-associacao-brasileira-de-desenhistas-de-manga-e-ilustracoes-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ABRADEMI+desenhistas+manga+Brasil" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=ABRADEMI+manga&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ABAO Arte Oshibana">
+          <div class="card-name">ABAO – Assoc. Brasileira de Arte Oshibana</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/abao-associacao-brasileira-de-arte-oshibana-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ABAO+Arte+Oshibana+Brasil" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Kenjinkai – Associações por Províncias Japonesas (SP)</div>
+      <div class="grid">
+
+        <div class="card" data-name="Wakayama Kenjinkai">
+          <div class="card-name">Associação Wakayama Kenjinkai do Brasil</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-wakayama-kenjinkai-do-brasil-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Wakayama+Kenjinkai+Brasil+Sao+Paulo" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Wakayama+Kenjinkai+Brasil&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Niigata Kenjinkai">
+          <div class="card-name">Assoc. Cultural Niigata do Brasil (Kenjinkai)</div>
+          <div class="card-city">São Paulo-SP · Bairro Liberdade</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-niigata-do-brasil-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Niigata+Kenjinkai+Brasil+Sao+Paulo" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Shizuoka Kenjin">
+          <div class="card-name">Assoc. Shizuoka Kenjin do Brasil</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-dos-shizuoka-kenjin-do-brasil-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Shizuoka+Kenjin+Brasil+Sao+Paulo" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Tochigi Kenjinkai">
+          <div class="card-name">Tochigi Gakuryo – Assoc. Estudantes Tochigi Kenjinkai</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/tochigi-gakuryo-associacao-de-estudantes-do-tochigi-kenjinkai-sao-paulo-sp-sao-paulo-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Tochigi+Kenjinkai+Brasil" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Kenren Federação Províncias">
+          <div class="card-name">Kenren – Fed. das Assoc. das Províncias do Japão no Brasil</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Kenren+Federacao+Associacoes+Provincias+Japao+Brasil" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Kenren+nikkei+Brasil&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Interior de São Paulo</div>
+      <div class="grid">
+
+        <div class="card" data-name="ACNBA Araraquara">
+          <div class="card-name">ACNBA – Assoc. Cultural Nipo-Brasileira de Araraquara</div>
+          <div class="card-city">Araraquara-SP · Festival Tanabata</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/nipoararaquara/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACNBA+Nipo+Araraquara+SP" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Tanabata+Araraquara&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Araçatuba">
+          <div class="card-name">Assoc. Cultural Nipo-Brasileira de Araçatuba</div>
+          <div class="card-city">Araçatuba-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-nipo-brasileira-de-aracatuba-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nipo+Aracatuba+SP+japonesa" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ANBRP Ribeirão Preto">
+          <div class="card-name">ANBRP – Assoc. Nipo-Brasileira de Ribeirão Preto</div>
+          <div class="card-city">Ribeirão Preto-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-nipo-brasileira-de-ribeirao-preto-anbrp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ANBRP+Nipo-Brasileira+Ribeirao+Preto+SP" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACJRP Ribeirão Preto">
+          <div class="card-name">ACJRP – Assoc. Cultural Japonesa de Ribeirão Preto</div>
+          <div class="card-city">Ribeirão Preto-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-japonesa-de-ribeirao-preto-acjrcp-ribeirao-preto-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACJRP+Associacao+Cultural+Japonesa+Ribeirao+Preto" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="BBC São José dos Campos">
+          <div class="card-name">Assoc. Cultural Nipo-Brasileira BBC – SJC</div>
+          <div class="card-city">São José dos Campos-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-nipo-brasileira-bbc-sao-jose-dos-campos-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nipo-Brasileira+BBC+Sao+Jose+dos+Campos" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACNBR Registro">
+          <div class="card-name">ACNBR – Assoc. Cultural Nipo-Brasileira de Registro</div>
+          <div class="card-city">Registro-SP · fundada em 1922</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-nipo-brasileira-de-registro-acnbr/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACNBR+Bunkyo+Registro+SP" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=colonia+japonesa+Registro+SP&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Americana">
+          <div class="card-name">Assoc. Nipo-Brasileira de Americana</div>
+          <div class="card-city">Americana-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-nipo-brasileira-de-americana-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nipo-Brasileira+Americana+SP" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo São Vicente">
+          <div class="card-name">Assoc. Nipo-Brasileira de São Vicente</div>
+          <div class="card-city">São Vicente-SP · fundada em 2000</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-nipo-brasileira-de-sao-vicente-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nipo-Brasileira+Sao+Vicente+SP" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACAE Presidente Prudente">
+          <div class="card-name">ACAE – Assoc. Cultural, Agrícola e Esportiva</div>
+          <div class="card-city">Presidente Prudente-SP</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/acae-associacao-cultural-agricola-e-esportiva-de-presidente-prudente-sp/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACAE+Nipo+Presidente+Prudente+SP" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACEAS Suzano">
+          <div class="card-name">ACEAS Nikkey – Suzano</div>
+          <div class="card-city">Suzano-SP</div>
+          <div class="card-links">
+            <a class="btn btn-site" href="http://www.aceas.com.br" target="_blank">🌐 Site</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACEAS+Nikkey+Suzano+SP" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=ACEAS+Nikkey+Suzano&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nikkey Marília">
+          <div class="card-name">Nikkey Clube de Marília</div>
+          <div class="card-city">Marília-SP</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nikkey+Clube+Marilia+SP+japonesa" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Nikkey+Clube+Marilia+SP&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Tupã nipo">
+          <div class="card-name">Assoc. Nipo-Brasileira de Tupã</div>
+          <div class="card-city">Tupã-SP</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Tupa+SP" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Aliança Cultural Brasil Japão ACBJ">
+          <div class="card-name">Aliança Cultural Brasil-Japão (ACBJ)</div>
+          <div class="card-city">São Paulo-SP</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Alianca+Cultural+Brasil+Japao+ACBJ+Sao+Paulo" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Alianca+Cultural+Brasil+Japao&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PARANÁ -->
+  <div class="section" data-region="SUL">
+    <div class="section-header">
+      <span class="section-flag">🌲</span>
+      <span class="section-title">Sul do Brasil</span>
+      <span class="section-count">PR · SC · RS</span>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Paraná (PR)</div>
+      <div class="grid">
+
+        <div class="card" data-name="Nikkei Curitiba">
+          <div class="card-name">Nikkei Curitiba – Soc. Cultural e Beneficente</div>
+          <div class="card-city">Curitiba-PR · fundado em 1946</div>
+          <div class="card-links">
+            <a class="btn btn-site" href="https://www.nikkeicuritiba.com.br" target="_blank">🌐 Site</a>
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/sociedade-cultural-e-beneficente-nipo-brasileira-de-curitiba/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nikkei+Curitiba+sociedade+beneficente+japonesa" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Nikkei+Curitiba&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="CENIBRAC Casa do Estudante Curitiba">
+          <div class="card-name">CENIBRAC – Casa do Estudante Nipo-Brasileira de Curitiba</div>
+          <div class="card-city">Curitiba-PR · fundada em 1979</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/casa-do-estudante-nipo-brasileira-de-curitiba-cenibrac/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=CENIBRAC+Casa+Estudante+Nipo-Brasileira+Curitiba" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Casa+Estudante+nipo+Curitiba&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACEA Apucarana">
+          <div class="card-name">ACEA – Assoc. Cultural Esportiva de Apucarana</div>
+          <div class="card-city">Apucarana-PR</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/acea-associacao-cultural-esportiva-apucarana-apucarana-pr/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACEA+Nipo+Apucarana+PR" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Londrina">
+          <div class="card-name">Assoc. Cultural Nipo-Brasileira de Londrina (ACEL)</div>
+          <div class="card-city">Londrina-PR · Expo Japão anual</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACEL+Associacao+Cultural+Nipo-Brasileira+Londrina+PR" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Expo+Japao+Londrina+PR&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Maringá">
+          <div class="card-name">Assoc. Nipo-Brasileira de Maringá</div>
+          <div class="card-city">Maringá-PR</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Maringa+PR" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=comunidade+japonesa+Maringa+PR&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Cascavel">
+          <div class="card-name">Assoc. Nipo-Brasileira de Cascavel</div>
+          <div class="card-city">Cascavel-PR</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Cascavel+PR" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Assaí Colônia">
+          <div class="card-name">Assoc. Nipo-Brasileira de Assaí</div>
+          <div class="card-city">Assaí-PR · colônia histórica</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=colonia+japonesa+Assai+Parana" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=colonia+japonesa+Assai+PR&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Foz do Iguaçu">
+          <div class="card-name">Assoc. Nipo-Brasileira de Foz do Iguaçu</div>
+          <div class="card-city">Foz do Iguaçu-PR</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Foz+do+Iguacu+PR" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Santa Catarina (SC)</div>
+      <div class="grid">
+
+        <div class="card" data-name="ACBJJ Joinville">
+          <div class="card-name">ACBJJ – Aliança Cultural Brasil Japão de Joinville</div>
+          <div class="card-city">Joinville-SC</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/acbjj-alianca-cultural-brasil-japao-de-joinville/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACBJJ+Alianca+Cultural+Brasil+Japao+Joinville+SC" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Florianópolis">
+          <div class="card-name">Assoc. Nipo-Brasileira de Florianópolis</div>
+          <div class="card-city">Florianópolis-SC</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Florianopolis+SC" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=comunidade+japonesa+Florianopolis&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Blumenau">
+          <div class="card-name">Assoc. Nipo-Brasileira de Blumenau</div>
+          <div class="card-city">Blumenau-SC</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Blumenau+SC" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Rio Grande do Sul (RS)</div>
+      <div class="grid">
+
+        <div class="card" data-name="Enkyosul Porto Alegre">
+          <div class="card-name">Enkyosul – Assoc. de Assistência Nipo-Brasileira do Sul</div>
+          <div class="card-city">Porto Alegre-RS · fundada em 1971</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/enkyosul-associacao-de-assistencia-nipo-brasileira-sul-porto-alegre-rs/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Enkyosul+Nipo-Brasileira+Sul+Porto+Alegre+RS" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Enkyosul+comunidade+japonesa+RS&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACNBPel Pelotas">
+          <div class="card-name">ACNBPel – Assoc. de Cultura Nipo-Brasileira de Pelotas</div>
+          <div class="card-city">Pelotas-RS</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-de-cultura-nipo-brasileira-de-pelotas-acnbpel-pelotas-rs/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Pelotas+RS" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Porto Alegre">
+          <div class="card-name">Assoc. Nipo-Brasileira do RS</div>
+          <div class="card-city">Porto Alegre-RS</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Rio+Grande+do+Sul+Porto+Alegre" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Festival+Japao+Rio+Grande+do+Sul&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Santa Maria RS">
+          <div class="card-name">Assoc. Nipo-Brasileira de Santa Maria</div>
+          <div class="card-city">Santa Maria-RS</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Santa+Maria+RS" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MINAS GERAIS E RIO DE JANEIRO -->
+  <div class="section" data-region="MG-RJ">
+    <div class="section-header">
+      <span class="section-flag">⛰️</span>
+      <span class="section-title">Minas Gerais & Rio de Janeiro</span>
+      <span class="section-count">MG · RJ · ES</span>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Minas Gerais (MG)</div>
+      <div class="grid">
+
+        <div class="card" data-name="AMCNB Belo Horizonte">
+          <div class="card-name">AMCNB – Assoc. Mineira de Cultura Nipo-Brasileira</div>
+          <div class="card-city">Belo Horizonte-MG · fundada em 1958</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-mineira-de-cultura-nipo-brasileira-belo-horizonte-mg-amcnb/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=AMCNB+Associacao+Mineira+Cultura+Nipo-Brasileira+BH" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Festival+Japao+Belo+Horizonte&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACCTBJ Belo Horizonte">
+          <div class="card-name">ACCTBJ – Assoc. Coop. em Cultura e Tecnologia Brasil-Japão</div>
+          <div class="card-city">Belo Horizonte-MG</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/acctbj-associacao-de-cooperacao-em-cultura-e-tecnologia-brasil-japao-belo-horizonte-mg/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACCTBJ+cultura+tecnologia+Brasil+Japao+BH" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ANBI Ipatinga">
+          <div class="card-name">ANBI – Assoc. Nipo-Brasileira de Ipatinga</div>
+          <div class="card-city">Ipatinga-MG</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-nipo-brasileira-de-ipatinga-anbi-ipatinga-mg/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ANBI+Nipo-Brasileira+Ipatinga+MG" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACENP Paracatu">
+          <div class="card-name">ACENP – Assoc. Cultural Nipo-Brasileira de Paracatu</div>
+          <div class="card-city">Paracatu-MG</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACENP+Nipo-Brasileira+Paracatu+MG" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Beneficente São Gotardo">
+          <div class="card-name">Assoc. Beneficente São Gotardo</div>
+          <div class="card-city">São Gotardo-MG</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Beneficente+Sao+Gotardo+MG+japonesa" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Uberaba">
+          <div class="card-name">Assoc. Nipo-Brasileira de Uberaba</div>
+          <div class="card-city">Uberaba-MG</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Uberaba+MG" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Esportiva Nipo-Carmense">
+          <div class="card-name">Assoc. Esportiva Nipo-Carmense</div>
+          <div class="card-city">Carmo do Paranaíba-MG</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Esportiva+Nipo-Carmense+MG" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Rio de Janeiro (RJ)</div>
+      <div class="grid">
+
+        <div class="card" data-name="Bunkyo RJ">
+          <div class="card-name">Bunkyo RJ – Assoc. Cultural Nipo-Brasileira do RJ</div>
+          <div class="card-city">Rio de Janeiro-RJ</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Bunkyo+Rio+de+Janeiro+Associacao+Cultural+Nipo-Brasileira" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Bunkyo+Rio+de+Janeiro+japonesa&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="NikkeiRJ">
+          <div class="card-name">NikkeiRJ – Soc. Nipo-Brasileira do Estado do RJ</div>
+          <div class="card-city">Rio de Janeiro-RJ · Sabores do Japão</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=NikkeiRJ+Nipo-Brasileira+Rio+de+Janeiro" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=NikkeiRJ+Sabores+Japao+Rio&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTRO-OESTE -->
+  <div class="section" data-region="CO">
+    <div class="section-header">
+      <span class="section-flag">🌾</span>
+      <span class="section-title">Centro-Oeste</span>
+      <span class="section-count">DF · GO · MT · MS</span>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Distrito Federal (DF) e Entorno</div>
+      <div class="grid">
+
+        <div class="card" data-name="Bunkyo Brasília">
+          <div class="card-name">Soc. Cultural Nipo-Brasileira de Brasília (Bunkyo DF)</div>
+          <div class="card-city">Brasília-DF</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/bunkyo/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Bunkyo+Brasilia+DF+sociedade+cultural+japonesa" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Bunkyo+Brasilia+japonesa&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="NIPPO Brasília FEANBRA">
+          <div class="card-name">NIPPO Brasília / FEANBRA</div>
+          <div class="card-city">Brasília-DF · Fed. Assoc. Nipo-Bras. Centro-Oeste</div>
+          <div class="card-links">
+            <a class="btn btn-site" href="https://nippobrasilia.com.br" target="_blank">🌐 Site</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=FEANBRA+Federacao+Associacoes+Nipo-Brasileiras+Centro-Oeste" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACENBB Casa Estudante Brasília">
+          <div class="card-name">ACENBB – Casa do Estudante Nipo-Brasileiro de Brasília</div>
+          <div class="card-city">Brasília-DF · próximo à UnB</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/acenbb/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACENBB+Casa+Estudante+Nipo-Brasileiro+Brasilia" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nikkey-DF">
+          <div class="card-name">Nikkey-DF – Assoc. Cultural Esportiva Nipo-Brasileira DF</div>
+          <div class="card-city">Brasília-DF</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nikkey-DF+Associacao+Cultural+Nipo-Brasileira+Brasilia" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ARCAG Brazlândia">
+          <div class="card-name">ARCAG – Assoc. Rural Cultural Alexandre de Gusmão</div>
+          <div class="card-city">Brazlândia-DF · Festa do Morango</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/arcag/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ARCAG+Brazlandia+DF+comunidade+japonesa" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Festa+Morango+Brazlandia+ARCAG&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Vargem Bonita DF">
+          <div class="card-name">Assoc. Cultural e Esportiva Nipo-Brasileira de Vargem Bonita</div>
+          <div class="card-city">Vargem Bonita/Brasília-DF</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nipo-Brasileira+Vargem+Bonita+Brasilia+DF" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Goiás (GO)</div>
+      <div class="grid">
+
+        <div class="card" data-name="ANBG Goiânia">
+          <div class="card-name">ANBG – Assoc. Nipo-Brasileira de Goiás (Clube Kaikan)</div>
+          <div class="card-city">Goiânia-GO · ~500 famílias</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/anbg/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ANBG+Nipo-Brasileira+Goias+Goiania" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=ANBG+Clube+Kaikan+Goiania&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACNBA Anápolis">
+          <div class="card-name">ACNBA – Assoc. Cultural Nipo-Brasileira de Anápolis</div>
+          <div class="card-city">Anápolis-GO</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACNBA+Nipo-Brasileira+Anapolis+GO" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Mato Grosso (MT) e Mato Grosso do Sul (MS)</div>
+      <div class="grid">
+
+        <div class="card" data-name="Nipo Cuiabá MT">
+          <div class="card-name">Assoc. Cultural Nipo-Brasileira de Cuiabá e Várzea Grande</div>
+          <div class="card-city">Cuiabá-MT · fundada em 1956</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-nipo-brasileira-de-cuiaba-e-varzea-grande-varzea-grande-mt/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nipo-Brasileira+Cuiaba+MT+japonesa" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=Festival+Japao+Cuiaba+MT&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Sul Matogrossense Dourados">
+          <div class="card-name">Assoc. Cultural Nipo-Brasileira Sul Matogrossense</div>
+          <div class="card-city">Dourados-MS · fundada em 1964</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-nipo-brasileira-sul-matogrossense-centro-de-cultura-japonesa-dourados-ms/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nipo-Brasileira+Sul+Matogrossense+Dourados+MS" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Clube Nipônico Dourados">
+          <div class="card-name">Assoc. Cultural e Esportiva Nipo-Brasileira de Dourados</div>
+          <div class="card-city">Dourados-MS · Clube Nipônico</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-e-esportiva-nipo-brasileira-de-dourados-ms/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Clube+Niponico+Dourados+MS" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Glória de Dourados">
+          <div class="card-name">Assoc. Nipo-Brasileira de Glória de Dourados</div>
+          <div class="card-city">Glória de Dourados-MS · fundada em 1962</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-nipo-brasileira-de-gloria-de-dourados-ms/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nipo-Brasileira+Gloria+de+Dourados+MS" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Campo Grande MS">
+          <div class="card-name">Assoc. Nipo-Brasileira de Campo Grande</div>
+          <div class="card-city">Campo Grande-MS</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Campo+Grande+MS" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=comunidade+japonesa+Campo+Grande+MS&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- NORTE -->
+  <div class="section" data-region="NORTE">
+    <div class="section-header">
+      <span class="section-flag">🌿</span>
+      <span class="section-title">Norte do Brasil</span>
+      <span class="section-count">PA · AM · AP · RO</span>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Pará (PA)</div>
+      <div class="grid">
+
+        <div class="card" data-name="APANB Pan-Amazônia Nipo-Brasileira">
+          <div class="card-name">APANB – Assoc. Pan-Amazônia Nipo-Brasileira</div>
+          <div class="card-city">Belém-PA · 18 assoc. nos estados do Norte</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-pan-amazonia-nipo-brasileira/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=APANB+Pan-Amazonia+Nipo-Brasileira+Belem+PA" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=APANB+comunidade+japonesa+Amazonia&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ANB Belém">
+          <div class="card-name">ANB – Assoc. Nikkei de Belém</div>
+          <div class="card-city">Belém-PA</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-nikkei-de-belem-belem-pa/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ANB+Associacao+Nikkei+Belem+PA" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Koutakukai Pará">
+          <div class="card-name">Assoc. Koutaku do Pará – Pará Koutakukai</div>
+          <div class="card-city">Belém-PA</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-koutaku-do-para-para-koutakukai-belem-pa/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Koutakukai+Para+Belem+japonesa" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACNBC Castanhal">
+          <div class="card-name">ACNBC – Assoc. Cultural Nipo-Brasileira de Castanhal</div>
+          <div class="card-city">Castanhal-PA</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-nipo-brasileira-de-castanhal-acnbc-castanhal-pa/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACNBC+Nipo-Brasileira+Castanhal+PA" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Tomé-Açu">
+          <div class="card-name">Assoc. Nipo-Brasileira de Tomé-Açu</div>
+          <div class="card-city">Tomé-Açu-PA · colônia pioneira</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Tome-Acu+PA+colonia" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=colonia+japonesa+Tome+Acu+Para&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Santarém">
+          <div class="card-name">Assoc. Nipo-Brasileira de Santarém</div>
+          <div class="card-city">Santarém-PA</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Santarem+PA" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Amazonas (AM)</div>
+      <div class="grid">
+
+        <div class="card" data-name="NIPPAKU Manaus">
+          <div class="card-name">NIPPAKU – Assoc. Nipo-Brasileira da Amazônia Ocidental</div>
+          <div class="card-city">Manaus-AM</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-nipo-brasileira-da-amazonia-ocidental-nippaku/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=NIPPAKU+Nipo-Brasileira+Amazonia+Ocidental+Manaus" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=comunidade+japonesa+Manaus+AM&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ABAJICA Manaus">
+          <div class="card-name">ABAJICA – Assoc. de Bolsistas da Amazônia JICA</div>
+          <div class="card-city">Manaus-AM</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/abajica-associacao-de-bolsistas-da-amazonia-jica-manaus-am/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ABAJICA+Bolsistas+JICA+Amazonia+Manaus" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ACBJAO Manaus">
+          <div class="card-name">ACBJAO – Assoc. Intercâmbio Científico Brasil-Japão Amazônia</div>
+          <div class="card-city">Manaus-AM</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/acbjao-associacao-de-intercambio-cientifico-e-cultural-brasil-japao-da-amazonia-ocidental-manaus-am/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ACBJAO+intercambio+Brasil+Japao+Amazonia+Manaus" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Koutakukai Amazonas">
+          <div class="card-name">Assoc. Koutaku do Amazonas – Amazon Koutakukai</div>
+          <div class="card-city">Manaus-AM · fundada em 2001</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-koutaku-do-amazonas-amazon-koutakukai-manaus-am/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Koutakukai+Amazonas+Manaus+japonesa" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="AmeoJapão Manaus">
+          <div class="card-name">AmeoJapão – Assoc. Ex-bolsistas do Japão na Amazônia Ocidental</div>
+          <div class="card-city">Manaus-AM · fundada em 2008</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/ameojapao-associacao-dos-ex-bolsistas-do-japao-na-amazonia-ocidental-manaus-am/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=AmeoJapao+ex-bolsistas+Amazonia+Ocidental+Manaus" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- NORDESTE -->
+  <div class="section" data-region="NE">
+    <div class="section-header">
+      <span class="section-flag">🌞</span>
+      <span class="section-title">Nordeste</span>
+      <span class="section-count">BA · PE · CE · MA e outros</span>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Bahia (BA)</div>
+      <div class="grid">
+
+        <div class="card" data-name="ANISA Salvador">
+          <div class="card-name">ANISA – Assoc. Cultural Nipo-Brasileira de Salvador</div>
+          <div class="card-city">Salvador-BA · fundada em 1975 · Bon Odori anual</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-nipo-brasileira-de-salvador-anisa/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=ANISA+Nipo-Brasileira+Salvador+Bahia" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=ANISA+Bon+Odori+Salvador+BA&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Colônia JK Mata de São João">
+          <div class="card-name">Assoc. Cultural Nipo Brasileira da Colônia do JK</div>
+          <div class="card-city">Mata de São João-BA</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-nipo-brasileira-da-colonia-do-j-k-mata-de-sao-joao-ba/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nipo-Brasileira+Colonia+JK+Mata+Sao+Joao+BA" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Seicho-no-Iê BA">
+          <div class="card-name">Academia de Treinamento Espiritual Seicho-no-Iê Santa Fé</div>
+          <div class="card-city">Mata de São João-BA</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/religiosa/academia-de-treinamento-espiritual-seicho-no-ie-santa-fe-bahia-mata-de-sao-joao-ba/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Seicho-no-Ie+Santa+Fe+Bahia" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Taperoá BA">
+          <div class="card-name">Assoc. Cultural Nipo-Brasileira de Taperoá</div>
+          <div class="card-city">Taperoá-BA · Baixo Sul da Bahia</div>
+          <div class="card-links">
+            <a class="btn btn-nippo" href="https://nippobrasilia.com.br/associacao/associacao-cultural-nipo-brasileira-de-taperoa-ba/" target="_blank">📋 NIPPO</a>
+            <a class="btn btn-google" href="https://www.google.com/search?q=Nipo-Brasileira+Taperoa+BA" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Ituberá BA">
+          <div class="card-name">Assoc. Nipo-Brasileira de Ituberá</div>
+          <div class="card-city">Ituberá-BA</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Iubera+BA" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Outros estados do Nordeste</div>
+      <div class="grid">
+
+        <div class="card" data-name="Nipo Recife PE">
+          <div class="card-name">Assoc. Nipo-Brasileira de Recife / Pernambuco</div>
+          <div class="card-city">Recife-PE</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Recife+Pernambuco" target="_blank">🔍 Google</a>
+            <a class="btn btn-video" href="https://www.google.com/search?q=comunidade+japonesa+Recife+PE&tbm=vid" target="_blank">▶ Vídeos</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Fortaleza CE">
+          <div class="card-name">Assoc. Nipo-Brasileira do Ceará</div>
+          <div class="card-city">Fortaleza-CE</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Ceara+Fortaleza" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Maranhão MA">
+          <div class="card-name">Assoc. Nipo-Brasileira do Maranhão</div>
+          <div class="card-city">São Luís-MA</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Maranhao+Sao+Luis" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Nipo Natal RN">
+          <div class="card-name">Assoc. Nipo-Brasileira do Rio Grande do Norte</div>
+          <div class="card-city">Natal-RN</div>
+          <div class="card-links">
+            <a class="btn btn-google" href="https://www.google.com/search?q=Associacao+Nipo-Brasileira+Rio+Grande+Norte+Natal" target="_blank">🔍 Google</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTA FINAL -->
+  <div style="background:#fff; border:1.5px dashed var(--border); border-radius:10px; padding:20px 24px; margin-top:20px; font-size:13px; color:var(--muted);">
+    <strong style="color:var(--ink);">📌 Nota:</strong> O diretório completo com 437+ entidades está disponível em
+    <a href="https://nippobrasilia.com.br/entidades/entidades-br/" target="_blank" style="color:var(--red);">nippobrasilia.com.br/entidades/entidades-br</a>.
+    Este arquivo cobre as principais entidades identificadas por estado. Novos registros são adicionados continuamente pelo portal NIPPO Brasília.
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  Compilado a partir do portal <a href="https://nippobrasilia.com.br" target="_blank">NIPPO Brasília</a> e pesquisas abertas · Gerado em fevereiro de 2026 · Dados sujeitos a atualização
+</footer>
+
+<script>
+  // FILTER BY REGION
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const region = btn.dataset.region;
+      document.querySelectorAll('.section').forEach(sec => {
+        if (region === 'all' || sec.dataset.region === region) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+      // reset search
+      document.getElementById('searchInput').value = '';
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('hidden'));
+    });
+  });
+
+  // LIVE SEARCH
+  document.getElementById('searchInput').addEventListener('input', function() {
+    const q = this.value.toLowerCase().trim();
+    // reset region filter
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-region="all"]').classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.style.display = '');
+
+    document.querySelectorAll('.card').forEach(card => {
+      const text = card.dataset.name.toLowerCase() + ' ' + card.textContent.toLowerCase();
+      card.classList.toggle('hidden', q.length > 0 && !text.includes(q));
+    });
+  });
+</script>
+</body>
+</html>

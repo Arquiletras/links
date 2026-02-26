@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia dos Jardins — São Paulo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── Variables ── */
+  :root {
+    --verde-escuro:  #1B4332;
+    --verde-medio:   #2D6A4F;
+    --verde-claro:   #52B788;
+    --dourado:       #B5935A;
+    --dourado-claro: #D4AF72;
+    --bege:          #F8F4E3;
+    --bege-escuro:   #EDE9D4;
+    --branco:        #FFFFFF;
+    --cinza-texto:   #2C2C2C;
+    --cinza-medio:   #5A5A5A;
+    --cinza-claro:   #9A9A9A;
+    --sombra: 0 4px 24px rgba(27,67,50,0.10);
+    --sombra-card: 0 2px 14px rgba(27,67,50,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bege);
+    color: var(--cinza-texto);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--verde-escuro);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 340px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 30%, rgba(181,147,90,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(82,183,136,0.12) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(212,175,114,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,175,114,0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 72px 40px 52px;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--dourado-claro);
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 7vw, 72px);
+    font-weight: 700;
+    color: var(--branco);
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--dourado-claro);
+  }
+  .hero-sub {
+    font-family: 'EB Garamond', serif;
+    font-size: 19px;
+    font-style: italic;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 32px;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .hero-tag {
+    display: inline-block;
+    padding: 5px 14px;
+    border: 1px solid rgba(212,175,114,0.4);
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--dourado-claro);
+    letter-spacing: 0.5px;
+  }
+  .gold-bar {
+    height: 4px;
+    background: linear-gradient(90deg, var(--dourado), var(--dourado-claro), var(--dourado));
+  }
+
+  /* ── NAV ── */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(27,67,50,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--dourado);
+    padding: 0 40px;
+  }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-inner a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 13px 16px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    color: rgba(255,255,255,0.65);
+    white-space: nowrap;
+    transition: color 0.2s, border-bottom-color 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+  }
+  .nav-inner a:hover {
+    color: var(--dourado-claro);
+    border-bottom-color: var(--dourado-claro);
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ── INTRO BOX ── */
+  .intro-box {
+    background: var(--verde-escuro);
+    color: rgba(255,255,255,0.85);
+    border-left: 4px solid var(--dourado);
+    padding: 24px 28px;
+    margin: 48px 0 0;
+    border-radius: 4px;
+    font-family: 'EB Garamond', serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+  .intro-box strong { color: var(--dourado-claro); }
+
+  /* ── CHAPTER ── */
+  .chapter {
+    margin-top: 56px;
+    scroll-margin-top: 70px;
+  }
+  .chapter-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+  .chapter-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--dourado);
+    min-width: 28px;
+  }
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--verde-escuro);
+    line-height: 1.2;
+  }
+  .chapter-rule {
+    height: 2px;
+    background: linear-gradient(90deg, var(--dourado), var(--dourado-claro) 40%, transparent);
+    margin-bottom: 20px;
+    border: none;
+  }
+  .chapter-desc {
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    color: var(--cinza-medio);
+    line-height: 1.75;
+    margin-bottom: 28px;
+    border-left: 3px solid var(--bege-escuro);
+    padding-left: 16px;
+  }
+
+  /* ── SECTION ── */
+  .section-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin: 32px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--bege-escuro);
+  }
+
+  /* ── BAIRROS TABLE ── */
+  .bairros-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 10px;
+    font-size: 14px;
+  }
+  .bairros-table thead th {
+    background: var(--verde-escuro);
+    color: var(--branco);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    padding: 10px 14px;
+  }
+  .bairros-table tbody tr { background: var(--branco); }
+  .bairros-table tbody tr:nth-child(even) { background: var(--bege); }
+  .bairros-table tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--bege-escuro);
+    color: var(--cinza-texto);
+  }
+  .bairros-table tbody td:first-child { font-weight: 600; color: var(--verde-medio); }
+
+  /* ── CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .card-full {
+    grid-column: 1 / -1;
+  }
+  .card {
+    background: var(--branco);
+    border: 1px solid var(--bege-escuro);
+    border-left: 4px solid var(--verde-medio);
+    border-radius: 6px;
+    padding: 16px 18px;
+    box-shadow: var(--sombra-card);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .card:hover {
+    box-shadow: 0 6px 28px rgba(27,67,50,0.14);
+    transform: translateY(-2px);
+  }
+  .card-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--verde-escuro);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .card-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    font-size: 12.5px;
+    color: var(--cinza-medio);
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .card-row .icon { min-width: 16px; font-size: 13px; }
+  .card-row a {
+    color: var(--verde-medio);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .card-row a:hover { text-decoration: underline; color: var(--dourado); }
+  .card-extra {
+    margin-top: 8px;
+    font-family: 'EB Garamond', serif;
+    font-size: 13.5px;
+    font-style: italic;
+    color: var(--cinza-claro);
+    line-height: 1.5;
+    border-top: 1px solid var(--bege-escuro);
+    padding-top: 7px;
+  }
+  .card.featured {
+    border-left-color: var(--dourado);
+    background: linear-gradient(135deg, #fffdf5 0%, var(--branco) 100%);
+  }
+  .card.featured .card-name { color: var(--dourado); }
+
+  /* ── LINK LIST ── */
+  .link-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 14px;
+    padding: 16px 20px;
+    background: var(--branco);
+    border: 1px solid var(--bege-escuro);
+    border-radius: 6px;
+  }
+  .link-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .link-list li::before {
+    content: '↗';
+    color: var(--verde-medio);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .link-list a {
+    color: var(--verde-medio);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .link-list a:hover { color: var(--dourado); text-decoration: underline; }
+  .link-list .url {
+    color: var(--cinza-claro);
+    font-size: 11px;
+    margin-left: 4px;
+    word-break: break-all;
+  }
+
+  /* ── LINKS SECTION ── */
+  .links-block { margin-bottom: 28px; }
+  .links-block-title {
+    font-weight: 600;
+    color: var(--verde-escuro);
+    font-size: 13.5px;
+    margin-bottom: 8px;
+  }
+
+  /* ── NOTE ── */
+  .note {
+    margin-top: 52px;
+    padding: 20px 24px;
+    background: var(--verde-escuro);
+    border-top: 3px solid var(--dourado);
+    border-radius: 4px;
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    line-height: 1.7;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--verde-escuro);
+    padding: 28px 40px;
+    text-align: center;
+    margin-top: 0;
+  }
+  footer p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.5px;
+  }
+  footer strong { color: var(--dourado-claro); }
+
+  /* ── PRINT ── */
+  @media print {
+    .sticky-nav { display: none; }
+    .chapter { page-break-before: always; }
+    .card { break-inside: avoid; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .container { padding: 0 20px 60px; }
+    .hero-inner { padding: 48px 20px 36px; }
+    .sticky-nav { padding: 0 20px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .card-full { grid-column: 1; }
+  }
+
+  /* ── SCROLL ANIM ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Guia Completo · São Paulo · 2026</div>
+    <h1>Guia dos <em>Jardins</em></h1>
+    <p class="hero-sub">Jardim América · Jardim Europa · Jardim Paulista · Jardins</p>
+    <div class="hero-tags">
+      <span class="hero-tag">🍽️ Gastronomia</span>
+      <span class="hero-tag">👗 Moda & Compras</span>
+      <span class="hero-tag">🛋️ Design & Arte</span>
+      <span class="hero-tag">🏨 Hotéis</span>
+      <span class="hero-tag">💆 Spas & Beleza</span>
+      <span class="hero-tag">🎭 Cultura & Lazer</span>
+      <span class="hero-tag">🍷 Mercados & Vinhos</span>
+    </div>
+  </div>
+</div>
+<div class="gold-bar"></div>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a href="#bairros">🏘️ Bairros</a>
+    <a href="#gastronomia">🍽️ Gastronomia</a>
+    <a href="#moda">👗 Moda</a>
+    <a href="#design">🛋️ Design</a>
+    <a href="#hoteis">🏨 Hotéis</a>
+    <a href="#saude">💆 Saúde</a>
+    <a href="#servicos">🚇 Serviços</a>
+    <a href="#cultura">🎭 Cultura</a>
+    <a href="#mercados">🍷 Mercados</a>
+    <a href="#links">🔗 Links</a>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="container">
+
+  <div class="intro-box fade-in">
+    Este guia reúne os principais estabelecimentos e serviços dos bairros Jardins de São Paulo:
+    <strong>restaurantes premiados, lojas de luxo, hotéis, spas, galerias de arte, decoração e muito mais</strong>
+    — com endereços, telefones e links diretos para facilitar sua visita ou pesquisa.
+    Todos os links são clicáveis e abrem diretamente o site de cada estabelecimento.
+  </div>
+
+  <!-- ══════════════════ 1. BAIRROS ══════════════════ -->
+  <section class="chapter fade-in" id="bairros">
+    <div class="chapter-header">
+      <span class="chapter-num">01</span>
+      <h2 class="chapter-title">Sobre os Bairros Jardins</h2>
+    </div>
+    <hr class="chapter-rule">
+    <p class="chapter-desc">
+      A região dos Jardins é formada por um conjunto de bairros nobres na zona oeste de São Paulo —
+      <strong>Jardim América, Jardim Europa, Jardim Paulista</strong> e Jardim Paulistano.
+      Inspirados nos bairros-jardim ingleses do início do século XX, suas ruas arborizadas,
+      residências de alto padrão e comércio sofisticado fazem desta região um dos endereços
+      mais valorizados do Brasil.
+    </p>
+    <table class="bairros-table">
+      <thead>
+        <tr>
+          <th>Bairro</th>
+          <th>Caráter</th>
+          <th>Principais Eixos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Jardim América</td>
+          <td>Residencial / Comercial</td>
+          <td>Al. Gabriel Monteiro da Silva · Av. Brasil</td>
+        </tr>
+        <tr>
+          <td>Jardim Europa</td>
+          <td>Ultra residencial</td>
+          <td>Av. Europa · R. Estados Unidos · Spas de luxo</td>
+        </tr>
+        <tr>
+          <td>Jardim Paulista</td>
+          <td>Comercial / Gastronômico</td>
+          <td>Av. Paulista · R. Oscar Freire · Bares e restaurantes</td>
+        </tr>
+        <tr>
+          <td>Jardins (Cerqueira César)</td>
+          <td>Fashion / Gastronômico</td>
+          <td>R. Oscar Freire · R. Haddock Lobo · Al. Lorena</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul class="link-list">
+      <li><a href="https://portal.loft.com.br/restaurantes-jardins-sp/" target="_blank">Portal Loft — Guia dos Jardins</a> <span class="url">portal.loft.com.br</span></li>
+      <li><a href="https://olhardecorretora.com.br/blog/onde-comer-bem-nos-jardins-lista-melhores-restaurantes" target="_blank">Olhar de Corretora — Onde comer nos Jardins</a> <span class="url">olhardecorretora.com.br</span></li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ 2. GASTRONOMIA ══════════════════ -->
+  <section class="chapter fade-in" id="gastronomia">
+    <div class="chapter-header">
+      <span class="chapter-num">02</span>
+      <h2 class="chapter-title">Gastronomia</h2>
+    </div>
+    <hr class="chapter-rule">
+    <p class="chapter-desc">
+      Os Jardins abrigam alguns dos restaurantes mais premiados do Brasil e da América Latina.
+      A região concentra desde bistros franceses e trattorias italianas até a cozinha autoral
+      de chefs renomados com estrelas Michelin. A seguir, uma seleção dos melhores por categoria.
+    </p>
+
+    <div class="section-title">⭐ Alta Gastronomia — Estrelados & Premiados</div>
+    <div class="cards-grid">
+      <div class="card featured card-full">
+        <div class="card-name">D.O.M. — Chef Alex Atala · 2 Estrelas Michelin</div>
+        <div class="card-row"><span class="icon">📍</span>Rua Barão de Capanema, 549 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3088-0761</div>
+        <div class="card-row"><span class="icon">🕐</span>Terça a Sábado — almoço e jantar</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://domrestaurante.com.br" target="_blank">domrestaurante.com.br</a></div>
+        <div class="card-extra">Cozinha brasileira contemporânea com ingredientes da Amazônia. Eleito entre os 50 melhores restaurantes do mundo pela lista World's 50 Best Restaurants.</div>
+      </div>
+      <div class="card featured card-full">
+        <div class="card-name">Maní — Chef Helena Rizzo</div>
+        <div class="card-row"><span class="icon">📍</span>Rua Joaquim Antunes, 210 — Jardim Paulistano</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3085-4148</div>
+        <div class="card-row"><span class="icon">🕐</span>Terça a Domingo — almoço e jantar</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://manirestaurante.com.br" target="_blank">manirestaurante.com.br</a></div>
+        <div class="card-extra">Cozinha autoral de alto nível. Vencedor Comer & Beber — Melhor Cozinha de Autor. Helena Rizzo eleita Melhor Chef Feminina da América Latina.</div>
+      </div>
+      <div class="card featured card-full">
+        <div class="card-name">Fasano Ristorante</div>
+        <div class="card-row"><span class="icon">📍</span>Rua Vitório Fasano, 88 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3896-4000</div>
+        <div class="card-row"><span class="icon">🕐</span>Diariamente — almoço e jantar</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.fasano.com.br" target="_blank">fasano.com.br</a></div>
+        <div class="card-extra">Alta cozinha italiana, ícone absoluto de São Paulo. Melhor Restaurante Italiano — Comer & Beber. Uma das maiores referências gastronômicas do Brasil.</div>
+      </div>
+      <div class="card featured">
+        <div class="card-name">Capim Santo — Chef Morena Leite</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Min. Rocha Azevedo, 471 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3068-8486</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.capimsanto.com.br" target="_blank">capimsanto.com.br</a></div>
+        <div class="card-extra">Cozinha brasileira saudável com influências baianas. Jardim ao ar livre.</div>
+      </div>
+      <div class="card featured">
+        <div class="card-name">Terraço Jardins — Renaissance Hotel</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Santos, 2233 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3069-2081</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.restauranteterracojardins.com.br" target="_blank">restauranteterracojardins.com.br</a></div>
+        <div class="card-extra">Melhor Restaurante de Hotel da América Latina — World Culinary Awards 2024. Chef Raul Vieira. Brunch premiado aos domingos.</div>
+      </div>
+    </div>
+
+    <div class="section-title">🍝 Italianos, Franceses & Mediterrâneos</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Arturito — Chef Paola Carosella</div>
+        <div class="card-row"><span class="icon">📍</span>R. Jerônimo da Veiga, 74 — Itaim/Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3078-0547</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.arturito.com.br" target="_blank">arturito.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Casa Europa</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 726</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3062-5199</div>
+        <div class="card-extra">Culinária italiana com massas artesanais.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Trattoria Fasano</div>
+        <div class="card-row"><span class="icon">📍</span>R. Vittorio Fasano, 88 — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.fasano.com.br" target="_blank">fasano.com.br</a></div>
+        <div class="card-extra">Versão bistrô do grupo Fasano — ambiente descontraído.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Tanit</div>
+        <div class="card-row"><span class="icon">📍</span>R. Padre João Manuel, 1187 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3082-6750</div>
+        <div class="card-extra">Cozinha mediterrânea moderna com bom cardápio de vinhos.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Le Jazz Brasserie</div>
+        <div class="card-row"><span class="icon">📍</span>R. Bela Cintra, 2238 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3062-3765</div>
+        <div class="card-extra">Bistrô francês com consultoria do grupo Alain Ducasse.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Miró Gastronomia</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Lorena, 2101 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3085-2942</div>
+        <div class="card-extra">Destaque: Beef Wellington e Ossobuco.</div>
+      </div>
+    </div>
+
+    <div class="section-title">🇧🇷 Brasileiros, Grills & Bares</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">A Figueira Rubaiyat</div>
+        <div class="card-row"><span class="icon">📍</span>R. Haddock Lobo, 1738 — Jardim América</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3087-1399</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.rubaiyat.com.br" target="_blank">rubaiyat.com.br</a></div>
+        <div class="card-extra">Sob a figueira centenária. Melhor churrasco do mundo (2023).</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Las Leñas Parrilla Uruguaya</div>
+        <div class="card-row"><span class="icon">📍</span>R. Pamplona, 1704 — Rooftop Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3253-2929</div>
+        <div class="card-extra">Rooftop com parrilla uruguaia e vista panorâmica.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Bar Astor</div>
+        <div class="card-row"><span class="icon">📍</span>R. Delfina, 163 — Vila Madalena/Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3815-1364</div>
+        <div class="card-extra">Drinks autorais e cardápio criativo. Ambiente vintage.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">São Benedito</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Lorena, 1430 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3083-2490</div>
+        <div class="card-extra">Comida caseira brasileira há mais de 20 anos.</div>
+      </div>
+    </div>
+
+    <div class="section-title">☕ Cafés, Padarias & Sorveterias</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Santo Grão</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 413 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3082-9969</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.santograo.com.br" target="_blank">santograo.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Suplicy Cafés Especiais</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 686 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3062-2413</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.suplicycafes.com.br" target="_blank">suplicycafes.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Bacio di Latte</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 136 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3063-5727</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.baciodilatte.com.br" target="_blank">baciodilatte.com.br</a></div>
+        <div class="card-extra">Gelateria italiana premiada. Sabores artesanais exclusivos.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Dengo Chocolates</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 689 — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.dengochocolates.com" target="_blank">dengochocolates.com</a></div>
+        <div class="card-extra">Chocolates artesanais brasileiros bean-to-bar.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Padaria Bella Paulista</div>
+        <div class="card-row"><span class="icon">📍</span>R. Treze de Maio, 608 — Bela Vista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3253-2966</div>
+        <div class="card-extra">Aberta 24 horas. Referência para café da manhã.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Confeitaria Dama</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 1896</div>
+        <div class="card-extra">Sobremesas artesanais e confeitaria de alta qualidade.</div>
+      </div>
+    </div>
+
+    <ul class="link-list">
+      <li><a href="https://www.drdiegoviajando.com.br/onde-comer-na-regiao-jardins-em-sao-paulo/" target="_blank">Dr. Diego Viajando — Onde comer nos Jardins</a></li>
+      <li><a href="https://portal.loft.com.br/restaurantes-jardins-sp/" target="_blank">Portal Loft — 16 restaurantes nos Jardins</a></li>
+      <li><a href="https://guide.michelin.com/br/pt_BR/sao-paulo-region/sao-paulo/restaurants" target="_blank">Guia Michelin São Paulo</a></li>
+      <li><a href="https://www.lflats.com.br/en/article/67b14c2c9f645c0c2bfb4aa3" target="_blank">LFlats — 25 Melhores Restaurantes por Faixa de Preço</a></li>
+      <li><a href="https://vitacon.com.br/conteudo/guia-de-bairros/6-melhores-restaurantes-do-jardins/" target="_blank">Vitacon — 6 melhores restaurantes dos Jardins</a></li>
+      <li><a href="https://www.ifood.com.br" target="_blank">iFood — Delivery Jardins</a></li>
+      <li><a href="https://www.rappi.com.br" target="_blank">Rappi — Delivery Jardins</a></li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ 3. MODA ══════════════════ -->
+  <section class="chapter fade-in" id="moda">
+    <div class="chapter-header">
+      <span class="chapter-num">03</span>
+      <h2 class="chapter-title">Moda, Luxo & Compras</h2>
+    </div>
+    <hr class="chapter-rule">
+    <p class="chapter-desc">
+      A <strong>Rua Oscar Freire</strong> é a 8ª rua mais luxuosa do mundo e a 2ª das Américas
+      (atrás apenas da 5ª Avenida de Nova York), segundo a Excellence Mystery Shopping International.
+      São 2,6 km de grifes nacionais e internacionais, boutiques exclusivas e lojas-conceito
+      que tornam o bairro um destino obrigatório para quem aprecia moda de alto padrão.
+    </p>
+
+    <div class="section-title">🌍 Grifes Internacionais — Rua Oscar Freire</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Louis Vuitton</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.louisvuitton.com" target="_blank">louisvuitton.com</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Gucci</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.gucci.com" target="_blank">gucci.com</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Cartier</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.cartier.com" target="_blank">cartier.com</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Montblanc</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 800 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3064-3760</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.montblanc.com" target="_blank">montblanc.com</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">H.Stern Joalheiros</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 652 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3068-5010</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.hstern.com.br" target="_blank">hstern.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">MaxMara</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.maxmara.com" target="_blank">maxmara.com</a></div>
+      </div>
+    </div>
+
+    <div class="section-title">🇧🇷 Marcas Nacionais & Lojas-Conceito</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Osklen</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 754 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3085-6678</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.osklen.com" target="_blank">osklen.com</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">NK Store</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 900 — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.nkstore.com.br" target="_blank">nkstore.com.br</a></div>
+        <div class="card-extra">Multimarcas premium — Tommy, Calvin Klein, Lacoste.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Galeria Melissa</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.melissa.com.br" target="_blank">melissa.com.br</a></div>
+        <div class="card-extra">Loja-conceito com instalações artísticas únicas temporárias.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Havaianas Concept Store</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.havaianas.com.br" target="_blank">havaianas.com.br</a></div>
+        <div class="card-extra">Flagship com arquitetura exclusiva e produtos únicos.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">PatBO</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.patbo.com.br" target="_blank">patbo.com.br</a></div>
+        <div class="card-extra">Moda feminina de alto padrão. Referência em festas.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Livraria da Vila</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.livrariabrasiliense.com.br" target="_blank">livrariabrasiliense.com.br</a></div>
+        <div class="card-extra">Livraria-conceito referência cultural de São Paulo.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Arezzo</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.arezzo.com.br" target="_blank">arezzo.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Schutz</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.schutz.com.br" target="_blank">schutz.com.br</a></div>
+      </div>
+    </div>
+
+    <div class="section-title">🏬 Galerias & Shoppings</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Galeria Jardins</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 566 — Jardins</div>
+        <div class="card-extra">Artesãos, estilistas e criações exclusivas.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Shopping Jardim Pamplona</div>
+        <div class="card-row"><span class="icon">📍</span>R. Pamplona, 1704 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3253-2929</div>
+        <div class="card-extra">Restaurantes, moda e serviços. Rooftop bar.</div>
+      </div>
+      <div class="card card-full">
+        <div class="card-name">Shopping Iguatemi São Paulo</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Brigadeiro Faria Lima, 2232 — Jardim Europa</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3816-6116</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.iguatemi.com.br/saopaulo" target="_blank">iguatemi.com.br/saopaulo</a></div>
+        <div class="card-extra">Um dos shoppings mais luxuosos do Brasil com as principais grifes internacionais.</div>
+      </div>
+    </div>
+    <ul class="link-list">
+      <li><a href="https://comerciosaopaulo.com.br/guia-da-rua-oscar-freire-25-lojas-essenciais-de-luxo-moda-e-gastronomia/" target="_blank">Guia Rua Oscar Freire — Comércio São Paulo</a></li>
+      <li><a href="https://saopaulosecreto.com/rua-oscar-freire/" target="_blank">Rua Oscar Freire — São Paulo Secreto</a></li>
+      <li><a href="https://www.zapimoveis.com.br/blog/guia-de-cidades/oscar-freire/" target="_blank">Rua Oscar Freire — ZAP Imóveis</a></li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ 4. DESIGN ══════════════════ -->
+  <section class="chapter fade-in" id="design">
+    <div class="chapter-header">
+      <span class="chapter-num">04</span>
+      <h2 class="chapter-title">Design, Decoração & Arte</h2>
+    </div>
+    <hr class="chapter-rule">
+    <p class="chapter-desc">
+      A <strong>Alameda Gabriel Monteiro da Silva</strong> é o maior polo de design e decoração de
+      luxo da América Latina, com mais de 140 lojas e showrooms em seus 2,4 km de extensão.
+      Para interiores e arquitetura, o endereço é tão referência quanto a Oscar Freire é para a moda.
+    </p>
+
+    <div class="section-title">🛋️ Showrooms — Al. Gabriel Monteiro da Silva</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Artefacto</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva — Jd. América</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.artefacto.com.br" target="_blank">artefacto.com.br</a></div>
+        <div class="card-extra">Móveis planejados de altíssimo padrão. Referência nacional.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Decameron Design</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 2136</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.decamerondesign.com.br" target="_blank">decamerondesign.com.br</a></div>
+        <div class="card-extra">Escritório de design e galeria. Projeto Marcio Kogan.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Natuzzi Italia</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 903</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.natuzzi.com.br" target="_blank">natuzzi.com.br</a></div>
+        <div class="card-extra">Flagship 100% made in Italy. Sofás e estofados premium.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Ornare</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva — Jd. América</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.ornare.com.br" target="_blank">ornare.com.br</a></div>
+        <div class="card-extra">Cozinhas e ambientes planejados de alto padrão.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Breton</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.breton.com.br" target="_blank">breton.com.br</a></div>
+        <div class="card-extra">Design brasileiro premium para residências sofisticadas.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Florense</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.florense.com.br" target="_blank">florense.com.br</a></div>
+        <div class="card-extra">Ambientes planejados de luxo — cozinha, dormitório e home office.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Casual Móveis</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 613–794</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3094-0520</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.casualmoveis.com.br" target="_blank">casualmoveis.com.br</a></div>
+        <div class="card-extra">Maior linha de produtos para áreas internas e externas.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Bali Express</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 863</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3083-4681</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.baliexpress.com.br" target="_blank">baliexpress.com.br</a></div>
+        <div class="card-extra">Decoração artesanal do Sudeste Asiático.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Criare Ambientes Planejados</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 1324</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 2659-3937</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://criaregabrielmonteiro.com.br" target="_blank">criaregabrielmonteiro.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Claridge</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 1824</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3088-6113</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.claridgehouse.com.br" target="_blank">claridgehouse.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Clami</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 1572</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3063-5291</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.clami.com.br" target="_blank">clami.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">789 Design</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 837</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3062-3826</div>
+        <div class="card-extra">Design autoral brasileiro contemporâneo.</div>
+      </div>
+    </div>
+
+    <div class="section-title">🖼️ Galerias de Arte</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Galeria Nara Roesler</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Europa, 655 — Jardim Europa</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 2039-5454</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.nararoesler.art" target="_blank">nararoesler.art</a></div>
+        <div class="card-extra">Uma das mais importantes galerias de arte contemporânea do Brasil.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Galeria Millan</div>
+        <div class="card-row"><span class="icon">📍</span>R. Fradique Coutinho, 1360 — Pinheiros</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3031-6007</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://galeriamillan.com.br" target="_blank">galeriamillan.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Arte Aplicada</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva — Jd. América</div>
+        <div class="card-extra">Arte contemporânea e objetos de design exclusivos.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Galeria Leme</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Valdemar Ferreira, 130 — Butantã</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://galerialeme.com" target="_blank">galerialeme.com</a></div>
+      </div>
+    </div>
+    <ul class="link-list">
+      <li><a href="https://comerciosaopaulo.com.br/guia-da-alameda-gabriel-monteiro-da-silva-25-lojas-essenciais-de-design-e-decoracao-de-luxo/" target="_blank">Guia Al. Gabriel Monteiro da Silva — Comércio SP</a></li>
+      <li><a href="https://alamedagabriel.com.br/" target="_blank">Site Oficial da Alameda Gabriel Monteiro da Silva</a></li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ 5. HOTÉIS ══════════════════ -->
+  <section class="chapter fade-in" id="hoteis">
+    <div class="chapter-header">
+      <span class="chapter-num">05</span>
+      <h2 class="chapter-title">Hotéis & Hospedagem</h2>
+    </div>
+    <hr class="chapter-rule">
+    <p class="chapter-desc">
+      A região dos Jardins concentra alguns dos hotéis mais premiados e exclusivos de São Paulo,
+      com opções que vão de boutique hotels ultra-luxuosos a flats bem localizados para estadias executivas.
+    </p>
+
+    <div class="section-title">🏨 Hotéis de Luxo — 5 Estrelas</div>
+    <div class="cards-grid">
+      <div class="card featured card-full">
+        <div class="card-name">Hotel Fasano São Paulo ★★★★★</div>
+        <div class="card-row"><span class="icon">📍</span>Rua Vitório Fasano, 88 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3896-4000</div>
+        <div class="card-row"><span class="icon">💰</span>Diárias a partir de R$ 2.000</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.fasano.com.br" target="_blank">fasano.com.br</a></div>
+        <div class="card-extra">Hotel boutique 5★ com 64 quartos, piscina, spa, restaurante estrelado. Considerado o melhor hotel de São Paulo.</div>
+      </div>
+      <div class="card featured card-full">
+        <div class="card-name">Renaissance São Paulo Hotel ★★★★★</div>
+        <div class="card-row"><span class="icon">📍</span>Alameda Santos, 2233 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3069-2833</div>
+        <div class="card-row"><span class="icon">💰</span>Diárias a partir de R$ 900</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.marriott.com/en-us/hotels/saobr-renaissance-sao-paulo-hotel" target="_blank">marriott.com — Renaissance SP</a></div>
+        <div class="card-extra">The Spa e Terraço Jardins — Melhor Restaurante de Hotel da América Latina 2024 (World Culinary Awards).</div>
+      </div>
+      <div class="card featured">
+        <div class="card-name">Tivoli Mofarrej São Paulo ★★★★★</div>
+        <div class="card-row"><span class="icon">📍</span>Alameda Santos, 1437 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3146-5900</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.tivolihotels.com/tivoli-mofarrej-sao-paulo" target="_blank">tivolihotels.com</a></div>
+        <div class="card-extra">Anantara Spa, terraço panorâmico, restaurante gourmet.</div>
+      </div>
+      <div class="card featured">
+        <div class="card-name">Hotel Unique São Paulo ★★★★★</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Brig. Luís Antônio, 4700 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3055-4700</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.hotelunique.com.br" target="_blank">hotelunique.com.br</a></div>
+        <div class="card-extra">Ícone arquitetônico de Ruy Ohtake. Rooftop bar Skye com vista 360°.</div>
+      </div>
+      <div class="card featured">
+        <div class="card-name">L'Hotel PortoBay São Paulo ★★★★★</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Campinas, 266 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 2183-0500</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.portobay.com/hotel/l-hotel-portobay-sao-paulo" target="_blank">portobay.com</a></div>
+        <div class="card-extra">Boutique 5★. Spa, piscina aquecida, localização privilegiada.</div>
+      </div>
+      <div class="card featured">
+        <div class="card-name">Meliá Jardim Europa ★★★★★</div>
+        <div class="card-row"><span class="icon">📍</span>Rua Europa, 1149 — Jardim Europa</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3704-0404</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.melia.com/en/hotels/brazil/sao-paulo/melia-jardim-europa" target="_blank">melia.com</a></div>
+        <div class="card-extra">No coração do Jardim Europa. Restaurante, bar e spa.</div>
+      </div>
+      <div class="card featured">
+        <div class="card-name">Radisson Hotel Oscar Freire</div>
+        <div class="card-row"><span class="icon">📍</span>Rua Oscar Freire, 384 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3069-6200</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.radisson.com" target="_blank">radisson.com</a></div>
+        <div class="card-extra">Boutique hotel no principal endereço de luxo da cidade.</div>
+      </div>
+    </div>
+
+    <div class="section-title">🏩 Hotéis Intermediários & Flats</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Transamerica Executive Jardins</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Lorena, 1748 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3062-1444</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.transamerica.com.br" target="_blank">transamerica.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Vila Galé Paulista</div>
+        <div class="card-row"><span class="icon">📍</span>R. Haddock Lobo, 741 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3179-2000</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.vilagale.com" target="_blank">vilagale.com</a></div>
+      </div>
+    </div>
+    <ul class="link-list">
+      <li><a href="https://www.booking.com/searchresults.html?ss=Jardins+S%C3%A3o+Paulo" target="_blank">Booking.com — Hotéis nos Jardins</a></li>
+      <li><a href="https://www.airbnb.com.br/s/Jardins--S%C3%A3o-Paulo" target="_blank">Airbnb — Aluguéis nos Jardins SP</a></li>
+      <li><a href="https://www.tripadvisor.com/Hotels-g303631-zff13-Sao_Paulo_State_of_Sao_Paulo-Hotels.html" target="_blank">TripAdvisor — Melhores hotéis Jardins SP</a></li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ 6. SAÚDE ══════════════════ -->
+  <section class="chapter fade-in" id="saude">
+    <div class="chapter-header">
+      <span class="chapter-num">06</span>
+      <h2 class="chapter-title">Saúde, Beleza & Bem-Estar</h2>
+    </div>
+    <hr class="chapter-rule">
+    <p class="chapter-desc">
+      A região conta com spas de nível internacional, clínicas especializadas e os melhores salões de beleza da cidade.
+      Seja para tratamentos estéticos, massagens ou saúde preventiva, os Jardins oferecem opções de altíssima qualidade.
+    </p>
+
+    <div class="section-title">💆 Spas & Centros de Bem-Estar</div>
+    <div class="cards-grid">
+      <div class="card featured card-full">
+        <div class="card-name">The Spa — Renaissance Hotel · Premiado Melhor Spa do Brasil</div>
+        <div class="card-row"><span class="icon">📍</span>Alameda Santos, 2233 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3069-2081</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.restauranteterracojardins.com.br" target="_blank">restauranteterracojardins.com.br</a></div>
+        <div class="card-extra">Premiado Spa do Brasil pela Luxury Travel Guide. Arquitetura, natureza e terapias multiculturais em ambiente único.</div>
+      </div>
+      <div class="card featured card-full">
+        <div class="card-name">Asaya by Guerlain Spa — Rosewood São Paulo · 1º spa Guerlain da América do Sul</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Paulista, 37 — próximo Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 4935-3800</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.rosewoodhotels.com" target="_blank">rosewoodhotels.com</a></div>
+        <div class="card-extra">Tratamento exclusivo Brazilian Feathers. Primeiro spa Guerlain da América do Sul.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Anantara Spa — Tivoli Mofarrej</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Santos, 1437 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3146-5900</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.anantara.com" target="_blank">anantara.com</a></div>
+        <div class="card-extra">Tratamentos Indonésia, Índia e Tailândia. Massagem Anantara Signature.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Spa Renata França</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Gabriel Monteiro da Silva, 1974 — Jd. Europa</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3062-0120</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.renatafranca.com" target="_blank">renatafranca.com</a></div>
+        <div class="card-extra">Drenagem linfática manual — método mundialmente reconhecido.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Buddha Spa — Jardim América</div>
+        <div class="card-row"><span class="icon">📍</span>R. Estados Unidos, 2212 — Jardim América</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3062-7790</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.buddhaspa.com.br" target="_blank">buddhaspa.com.br</a></div>
+        <div class="card-extra">Maior rede de spas urbanos do Brasil. Massagens, drenagem e beleza.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Buddha Spa — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📍</span>Rua Tutóia, 77 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3052-0226</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.buddhaspa.com.br" target="_blank">buddhaspa.com.br</a></div>
+        <div class="card-extra">Pacotes avulsos e day spa completo.</div>
+      </div>
+    </div>
+
+    <div class="section-title">💊 Hospitais & Saúde de Referência</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Hospital Albert Einstein</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Albert Einstein, 627 — Morumbi</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 2151-1233</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.einstein.br" target="_blank">einstein.br</a></div>
+        <div class="card-extra">Referência hospitalar da região. Melhor hospital do Brasil.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Hospital Sírio-Libanês</div>
+        <div class="card-row"><span class="icon">📍</span>R. Dona Adma Jafet, 91 — Bela Vista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3155-0200</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.hospitalsiriolibanes.org.br" target="_blank">hospitalsiriolibanes.org.br</a></div>
+        <div class="card-extra">Referência em oncologia, cardiologia e neurologia.</div>
+      </div>
+    </div>
+
+    <div class="section-title">🏋️ Academias & Fitness</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Bodytech Jardins</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 1301 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3085-4644</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.bodytech.com.br" target="_blank">bodytech.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Smart Fit Jardins</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Paulista — próximo Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.smartfit.com.br" target="_blank">smartfit.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Carpe Diem Pilates</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Santos, 1827 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3060-5433</div>
+        <div class="card-extra">Pilates clínico e reabilitação de alto padrão.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Komplex Athletics</div>
+        <div class="card-row"><span class="icon">📍</span>R. João Cachoeira — Itaim/Jardins</div>
+        <div class="card-extra">CrossFit e treino funcional de alto rendimento.</div>
+      </div>
+    </div>
+    <ul class="link-list">
+      <li><a href="https://elle.com.br/lifestyle/spa-em-sao-paulo" target="_blank">ELLE — Melhores Spas de São Paulo</a></li>
+      <li><a href="https://www.fresha.com/lp/en/bt/beauty-salons/in/br-s%C3%A3o-paulo/bairro-jardins" target="_blank">Fresha — Salões e Spas nos Jardins</a></li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ 7. SERVIÇOS ══════════════════ -->
+  <section class="chapter fade-in" id="servicos">
+    <div class="chapter-header">
+      <span class="chapter-num">07</span>
+      <h2 class="chapter-title">Serviços, Educação & Transporte</h2>
+    </div>
+    <hr class="chapter-rule">
+
+    <div class="section-title">📚 Escolas Bilíngues & Educação</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">St. Paul's School</div>
+        <div class="card-row"><span class="icon">📍</span>Rua Juquiá, 166 — Jardim Europa</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3087-3399</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.stpauls.br" target="_blank">stpauls.br</a></div>
+        <div class="card-extra">Uma das melhores escolas bilíngues do Brasil. Currículo britânico.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Escola Americana de SP (EABSP)</div>
+        <div class="card-row"><span class="icon">📍</span>R. Tenente Negrão, 74 — Itaim Bibi</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3747-4800</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.eabsp.com.br" target="_blank">eabsp.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Graded School</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Giovanni Gronchi, 4710 — Morumbi</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.graded.br" target="_blank">graded.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">FAAP</div>
+        <div class="card-row"><span class="icon">📍</span>R. Alagoas, 903 — Higienópolis</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3662-7000</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.faap.br" target="_blank">faap.br</a></div>
+      </div>
+    </div>
+
+    <div class="section-title">🚇 Transporte Público & Mobilidade</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Metrô — Estação Trianon-MASP (Linha 2 Verde)</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Paulista — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.metro.sp.gov.br" target="_blank">metro.sp.gov.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">Metrô — Estação Oscar Freire (Linha 4 Amarela)</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire / Av. Rebouças — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.metro.sp.gov.br" target="_blank">metro.sp.gov.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">SPTrans — Ônibus Municipal</div>
+        <div class="card-row"><span class="icon">📞</span>156 (atendimento)</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.sptrans.com.br" target="_blank">sptrans.com.br</a></div>
+        <div class="card-extra">Linhas 107N, 9022, 675A, 8012 entre outras cobrem a região.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Uber / 99 Moto</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.uber.com/br/" target="_blank">uber.com/br</a></div>
+        <div class="card-extra">Cobertura total da região. App mais utilizado.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 8. CULTURA ══════════════════ -->
+  <section class="chapter fade-in" id="cultura">
+    <div class="chapter-header">
+      <span class="chapter-num">08</span>
+      <h2 class="chapter-title">Cultura, Lazer & Pontos Turísticos</h2>
+    </div>
+    <hr class="chapter-rule">
+    <p class="chapter-desc">
+      A proximidade com a Avenida Paulista posiciona os Jardins como polo cultural de São Paulo,
+      com museus de classe mundial, parques icônicos e uma programação cultural intensa ao longo do ano.
+    </p>
+
+    <div class="section-title">🎭 Museus & Centros Culturais</div>
+    <div class="cards-grid">
+      <div class="card featured card-full">
+        <div class="card-name">MASP — Museu de Arte de São Paulo</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Paulista, 1578 — Bela Vista/Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3149-5959</div>
+        <div class="card-row"><span class="icon">🕐</span>Terça a Domingo 10h–18h | Quinta até 20h | Gratuito às Terças</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://masp.org.br" target="_blank">masp.org.br</a></div>
+        <div class="card-extra">Um dos mais importantes museus da América Latina. Acervo com obras de Raphael, Velázquez, Picasso e artistas brasileiros.</div>
+      </div>
+      <div class="card featured">
+        <div class="card-name">Instituto Moreira Salles (IMS)</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Paulista, 2424 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 2842-9120</div>
+        <div class="card-row"><span class="icon">🕐</span>Terça a Domingo 10h–20h | Entrada Gratuita</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://ims.com.br" target="_blank">ims.com.br</a></div>
+        <div class="card-extra">Fotografia, música, literatura e artes visuais.</div>
+      </div>
+      <div class="card featured">
+        <div class="card-name">Museu Casa Brasileira (MCB)</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Brig. Faria Lima, 2705 — Jardim Europa</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3032-3727</div>
+        <div class="card-row"><span class="icon">🕐</span>Terça a Domingo 10h–18h</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.mcb.org.br" target="_blank">mcb.org.br</a></div>
+        <div class="card-extra">Design brasileiro e arquitetura residencial. Prêmio MCB anual.</div>
+      </div>
+    </div>
+
+    <div class="section-title">🌿 Parques & Espaços Verdes</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Parque Ibirapuera</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Pedro Álvares Cabral — próx. Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 5574-5045</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://parqueibirapuera.org" target="_blank">parqueibirapuera.org</a></div>
+        <div class="card-extra">Principal parque de SP. Museu Afro, MAC, OCA, lago artificial.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Parque Trianon — SESC</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Paulista, 1938 — Jardim Paulista</div>
+        <div class="card-extra">Mata nativa tombada. Jardim botânico urbano. Entrada gratuita.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Parque Augusta</div>
+        <div class="card-row"><span class="icon">📍</span>R. Augusta — Consolação/Jardins</div>
+        <div class="card-extra">Parque urbano com hortas comunitárias e fauna local.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Ruas Arborizadas — Jardim Europa</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Franca · Av. Europa · R. Estados Unidos</div>
+        <div class="card-extra">Passeio a pé por mansões e arborização densa. Um dos roteiros mais agradáveis da cidade.</div>
+      </div>
+    </div>
+
+    <div class="section-title">🎬 Cinemas & Teatro</div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-name">Cinemark Paulista — Conjunto Nacional</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Paulista, 2073 — Jardim Paulista</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 4003-5640</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.cinemark.com.br" target="_blank">cinemark.com.br</a></div>
+      </div>
+      <div class="card">
+        <div class="card-name">CineSesc</div>
+        <div class="card-row"><span class="icon">📍</span>R. Augusta, 2075 — Cerqueira César</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3087-0500</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.sescsp.org.br" target="_blank">sescsp.org.br</a></div>
+        <div class="card-extra">Cinema independente, mostras de arte e entrada acessível.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Sala São Paulo — OSESP</div>
+        <div class="card-row"><span class="icon">📍</span>Praça Júlio Prestes, 16 — Campos Elíseos</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3367-9500</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.saladosaopaulo.com.br" target="_blank">saladosaopaulo.com.br</a></div>
+        <div class="card-extra">Uma das melhores salas de concerto da América Latina.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Teatro Augusta</div>
+        <div class="card-row"><span class="icon">📍</span>R. Augusta, 943 — Consolação/Jardins</div>
+        <div class="card-extra">Teatro de médio porte com agenda cultural variada.</div>
+      </div>
+    </div>
+    <ul class="link-list">
+      <li><a href="https://masp.org.br/programacao" target="_blank">MASP — Programação e Ingressos</a></li>
+      <li><a href="https://ims.com.br" target="_blank">IMS — Exposições e Acervo</a></li>
+      <li><a href="https://parqueibirapuera.org" target="_blank">Parque Ibirapuera — Programação</a></li>
+      <li><a href="https://www.sympla.com.br/sao-paulo" target="_blank">Sympla — Eventos em São Paulo</a></li>
+      <li><a href="https://www.prefeitura.sp.gov.br/cidade/secretarias/cultura/" target="_blank">Agenda Cultural SP — Prefeitura</a></li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ 9. MERCADOS ══════════════════ -->
+  <section class="chapter fade-in" id="mercados">
+    <div class="chapter-header">
+      <span class="chapter-num">09</span>
+      <h2 class="chapter-title">Mercados, Empórios & Vinhos</h2>
+    </div>
+    <hr class="chapter-rule">
+    <p class="chapter-desc">
+      Os Jardins possuem alguns dos melhores empórios e lojas de vinho de São Paulo,
+      com produtos importados, delicatessen e experiências gastronômicas para quem aprecia culinária de qualidade.
+    </p>
+
+    <div class="cards-grid">
+      <div class="card featured card-full">
+        <div class="card-name">Casa Santa Luzia · Desde 1943</div>
+        <div class="card-row"><span class="icon">📍</span>Alameda Lorena, 1471 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3897-5000</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.casasantaluzia.com.br" target="_blank">casasantaluzia.com.br</a></div>
+        <div class="card-extra">Empório gourmet referência em São Paulo. Importados, vinhos, frios, delicatessen e produtos exclusivos.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Grand Cru</div>
+        <div class="card-row"><span class="icon">📍</span>R. Oscar Freire, 896 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3063-5778</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.grandcru.com.br" target="_blank">grandcru.com.br</a></div>
+        <div class="card-extra">Vinhos importados e nacionais, acessórios e cursos de vinho.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Mistral Vinhos e Gastronomia</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Lorena, 1758 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3062-0100</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.mistral.com.br" target="_blank">mistral.com.br</a></div>
+        <div class="card-extra">Importadora premium, loja, restaurante e escola de vinhos.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Eataly São Paulo</div>
+        <div class="card-row"><span class="icon">📍</span>Av. Pres. Juscelino Kubitschek, 1489 — Itaim</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.eataly.com.br" target="_blank">eataly.com.br</a></div>
+        <div class="card-extra">Mercado italiano com restaurantes, vinhos e aulas de culinária.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Empório São Paulo</div>
+        <div class="card-row"><span class="icon">📍</span>R. Haddock Lobo, 1582 — Jardins</div>
+        <div class="card-row"><span class="icon">📞</span>(11) 3062-6866</div>
+        <div class="card-extra">Produtos nacionais e importados premium.</div>
+      </div>
+      <div class="card">
+        <div class="card-name">Pão de Açúcar Premium</div>
+        <div class="card-row"><span class="icon">📍</span>Al. Lorena, 1400 — Jardins</div>
+        <div class="card-row"><span class="icon">🌐</span><a href="https://www.gpabr.com" target="_blank">gpabr.com</a></div>
+        <div class="card-extra">Supermercado premium com seção gourmet completa.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ 10. LINKS ══════════════════ -->
+  <section class="chapter fade-in" id="links">
+    <div class="chapter-header">
+      <span class="chapter-num">10</span>
+      <h2 class="chapter-title">Links Úteis & Referências</h2>
+    </div>
+    <hr class="chapter-rule">
+    <p class="chapter-desc">
+      Portais, aplicativos e guias online para aprofundar a pesquisa ou usar no dia a dia nos Jardins.
+    </p>
+
+    <div class="links-block">
+      <div class="links-block-title">🍽️ Gastronomia</div>
+      <ul class="link-list">
+        <li><a href="https://guide.michelin.com/br/pt_BR/sao-paulo-region/sao-paulo/restaurants" target="_blank">Guia Michelin São Paulo</a></li>
+        <li><a href="https://maps.google.com/?q=restaurantes+jardins+sao+paulo" target="_blank">Google Maps — Restaurantes nos Jardins</a></li>
+        <li><a href="https://www.tripadvisor.com/Restaurants-g303631-zfn7593164-Sao_Paulo_State_of_Sao_Paulo.html" target="_blank">TripAdvisor — Jardins SP</a></li>
+        <li><a href="https://www.ifood.com.br" target="_blank">iFood — Delivery nos Jardins</a></li>
+        <li><a href="https://www.rappi.com.br" target="_blank">Rappi — Delivery e muito mais</a></li>
+      </ul>
+    </div>
+
+    <div class="links-block">
+      <div class="links-block-title">🛍️ Compras & Moda</div>
+      <ul class="link-list">
+        <li><a href="https://www.zapimoveis.com.br/blog/guia-de-cidades/oscar-freire/" target="_blank">Rua Oscar Freire — Guia Completo ZAP</a></li>
+        <li><a href="https://www.iguatemi.com.br/saopaulo" target="_blank">Shopping Iguatemi São Paulo</a></li>
+        <li><a href="https://alamedagabriel.com.br/" target="_blank">Al. Gabriel Monteiro da Silva — Site Oficial</a></li>
+        <li><a href="https://comerciosaopaulo.com.br" target="_blank">Comércio São Paulo — Guias de Ruas</a></li>
+      </ul>
+    </div>
+
+    <div class="links-block">
+      <div class="links-block-title">🏨 Hospedagem</div>
+      <ul class="link-list">
+        <li><a href="https://www.booking.com/searchresults.html?ss=Jardins+S%C3%A3o+Paulo" target="_blank">Booking.com — Jardins SP</a></li>
+        <li><a href="https://www.airbnb.com.br/s/Jardins--S%C3%A3o-Paulo" target="_blank">Airbnb — Aluguéis nos Jardins</a></li>
+        <li><a href="https://www.tripadvisor.com/Hotels-g303631-zff13-Sao_Paulo_State_of_Sao_Paulo-Hotels.html" target="_blank">TripAdvisor — Melhores Hotéis</a></li>
+      </ul>
+    </div>
+
+    <div class="links-block">
+      <div class="links-block-title">🗺️ Navegação & Mobilidade</div>
+      <ul class="link-list">
+        <li><a href="https://maps.google.com/?q=Jardins+Sao+Paulo" target="_blank">Google Maps — Jardins SP</a></li>
+        <li><a href="https://www.waze.com" target="_blank">Waze</a></li>
+        <li><a href="https://www.metro.sp.gov.br" target="_blank">Metrô SP — Horários e Linhas</a></li>
+        <li><a href="https://www.sptrans.com.br" target="_blank">SPTrans — Ônibus SP</a></li>
+        <li><a href="https://www.uber.com/br/" target="_blank">Uber — Corridas</a></li>
+      </ul>
+    </div>
+
+    <div class="links-block">
+      <div class="links-block-title">🎭 Cultura & Eventos</div>
+      <ul class="link-list">
+        <li><a href="https://masp.org.br/programacao" target="_blank">MASP — Programação</a></li>
+        <li><a href="https://ims.com.br" target="_blank">IMS — Exposições</a></li>
+        <li><a href="https://parqueibirapuera.org" target="_blank">Parque Ibirapuera</a></li>
+        <li><a href="https://www.sympla.com.br/sao-paulo" target="_blank">Sympla — Eventos SP</a></li>
+        <li><a href="https://www.prefeitura.sp.gov.br/cidade/secretarias/cultura/" target="_blank">Agenda Cultural — Prefeitura SP</a></li>
+      </ul>
+    </div>
+
+    <div class="links-block">
+      <div class="links-block-title">📰 Portais & Guias</div>
+      <ul class="link-list">
+        <li><a href="https://portal.loft.com.br" target="_blank">Portal Loft — Bairros de SP</a></li>
+        <li><a href="https://olhardecorretora.com.br/blog/" target="_blank">Olhar de Corretora — Blog</a></li>
+        <li><a href="https://saopaulosecreto.com" target="_blank">São Paulo Secreto</a></li>
+        <li><a href="https://comerciosaopaulo.com.br" target="_blank">Comércio São Paulo</a></li>
+        <li><a href="https://www.drdiegoviajando.com.br" target="_blank">Dr. Diego Viajando</a></li>
+      </ul>
+    </div>
+
+    <div class="note">
+      Guia elaborado em fevereiro de 2026. Endereços, horários e preços estão sujeitos a alterações.
+      Consulte sempre os sites e telefones indicados para confirmar as informações antes da visita.
+    </div>
+  </section>
+
+</div><!-- .container -->
+
+<footer>
+  <p><strong>Guia dos Bairros Jardins</strong> &nbsp;·&nbsp; São Paulo, SP &nbsp;·&nbsp; 2026</p>
+  <p style="margin-top:6px;">Jardim América · Jardim Europa · Jardim Paulista · Jardins (Cerqueira César)</p>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

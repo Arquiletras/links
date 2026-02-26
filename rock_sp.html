@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock da Noite Paulistana</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e8001c;
+    --yellow: #f5c800;
+    --black: #0a0a0a;
+    --dark: #111111;
+    --mid: #1a1a1a;
+    --light: #cccccc;
+    --white: #f0f0f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  header {
+    padding: 60px 40px 30px;
+    border-bottom: 3px solid var(--red);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::after {
+    content: '🎸';
+    position: absolute;
+    font-size: 200px;
+    right: -20px;
+    top: -30px;
+    opacity: 0.06;
+    transform: rotate(-15deg);
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 4px 12px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(42px, 8vw, 96px);
+    line-height: 0.9;
+    text-transform: uppercase;
+    color: var(--white);
+    animation: flicker 4s infinite;
+  }
+
+  h1 span {
+    color: var(--red);
+    display: block;
+  }
+
+  @keyframes flicker {
+    0%, 95%, 100% { opacity: 1; }
+    96% { opacity: 0.85; }
+    97% { opacity: 1; }
+    98% { opacity: 0.9; }
+    99% { opacity: 1; }
+  }
+
+  .subtitle {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  main {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    border-left: 3px solid var(--yellow);
+    padding-left: 12px;
+    margin: 50px 0 24px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+
+  .card {
+    background: var(--dark);
+    border: 1px solid #222;
+    padding: 24px;
+    position: relative;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    animation: fadeIn 0.5s ease both;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.10s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.20s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.30s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--red);
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+    transform-origin: bottom;
+  }
+
+  .card:hover::before { transform: scaleY(1); }
+
+  .card:hover {
+    background: var(--mid);
+    border-color: #333;
+    transform: translateX(4px);
+  }
+
+  .card-num {
+    font-size: 10px;
+    color: #444;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .card-name {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+
+  .card-genre {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .card-desc {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .card-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid #333;
+    color: #888;
+    transition: all 0.15s;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .btn-link:hover {
+    border-color: var(--red);
+    color: var(--red);
+    background: rgba(232,0,28,0.05);
+  }
+
+  .btn-link.yt:hover {
+    border-color: #ff0000;
+    color: #ff0000;
+  }
+
+  /* BARES */
+  .bars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2px;
+  }
+
+  .bar-card {
+    background: var(--dark);
+    border: 1px solid #1e1e1e;
+    padding: 20px;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .bar-card:hover {
+    background: var(--mid);
+    border-color: var(--yellow);
+  }
+
+  .bar-name {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .bar-address {
+    font-size: 10px;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  footer {
+    margin-top: 80px;
+    padding: 30px 40px;
+    border-top: 1px solid #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+  }
+
+  footer p {
+    font-size: 10px;
+    color: #333;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .agenda-link {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    text-decoration: none;
+    border-bottom: 1px solid var(--red);
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .agenda-link:hover { opacity: 0.7; }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--red), transparent);
+    margin: 40px 0 0;
+    opacity: 0.3;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tag">São Paulo · Rock Scene</div>
+  <h1>Rock da<span>Noite Paulistana</span></h1>
+  <p class="subtitle">Bandas · Bares · Casas de Show</p>
+</header>
+
+<main>
+
+  <!-- BANDAS COVER -->
+  <div class="section-title">Bandas Cover & Tributo</div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-num">01</div>
+      <div class="card-name">High Voltage</div>
+      <div class="card-genre">Tributo AC/DC</div>
+      <div class="card-desc">Uma das mais respeitadas bandas tributo ao AC/DC do Brasil, com shows altamente energéticos.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=High+Voltage+tributo+ACDC+São+Paulo" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=High+Voltage+banda+tributo+ACDC+São+Paulo" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">02</div>
+      <div class="card-name">Vulcano</div>
+      <div class="card-genre">Tributo Metallica</div>
+      <div class="card-desc">Tributo ao Metallica com precisão técnica e presença de palco marcante na cena SP.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=Vulcano+tributo+Metallica+São+Paulo" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=Vulcano+banda+tributo+Metallica+SP" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">03</div>
+      <div class="card-name">Sgt. Peppers</div>
+      <div class="card-genre">Tributo The Beatles</div>
+      <div class="card-desc">Show completo em homenagem aos Beatles, com figurinos e setlists que atravessam toda a discografia da banda.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=Sgt+Peppers+tributo+Beatles+São+Paulo" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=Sgt+Peppers+tributo+Beatles+SP" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">04</div>
+      <div class="card-name">Banda Fellini</div>
+      <div class="card-genre">Cover Rock / Pop Rock</div>
+      <div class="card-desc">Banda cover com vasto repertório dos anos 80 e 90, presença frequente nos bares de Pinheiros e Vila Madalena.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=Banda+Fellini+São+Paulo+rock" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=Banda+Fellini+São+Paulo" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">05</div>
+      <div class="card-name">Banda Locomotiva</div>
+      <div class="card-genre">Rock Clássico / Cover</div>
+      <div class="card-desc">Referência na cena de bailes e casas de show paulistanas, com repertório de rock clássico nacional e internacional.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=Banda+Locomotiva+São+Paulo+rock" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=Banda+Locomotiva+SP" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">06</div>
+      <div class="card-name">SOS Band</div>
+      <div class="card-genre">Cover Rock Internacional</div>
+      <div class="card-desc">Repertório de grandes clássicos do rock internacional, muito contratada para eventos e shows em bares de SP.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=SOS+Band+cover+rock+São+Paulo" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=SOS+Band+rock+São+Paulo" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BANDAS AUTORAIS -->
+  <div class="section-title">Bandas Autorais da Cena SP</div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-num">07</div>
+      <div class="card-name">CPM 22</div>
+      <div class="card-genre">Pop Punk / Rock</div>
+      <div class="card-desc">Uma das bandas de rock mais conhecidas de São Paulo, com carreira consolidada desde os anos 2000.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=CPM+22+ao+vivo" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=CPM+22+banda" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">08</div>
+      <div class="card-name">Ratos de Porão</div>
+      <div class="card-genre">Punk Hardcore</div>
+      <div class="card-desc">Lenda do punk/hardcore brasileiro, formada em SP em 1981. Ativa até hoje e referência mundial no gênero.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=Ratos+de+Porão+ao+vivo" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=Ratos+de+Porão+banda" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">09</div>
+      <div class="card-name">Garotos Podres</div>
+      <div class="card-genre">Punk Rock</div>
+      <div class="card-desc">Uma das bandas punk mais importantes do Brasil, com décadas de estrada e shows constantes na noite paulistana.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=Garotos+Podres+ao+vivo" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=Garotos+Podres+banda+SP" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">10</div>
+      <div class="card-name">Korzus</div>
+      <div class="card-genre">Thrash Metal</div>
+      <div class="card-desc">Banda de thrash metal de São Paulo reconhecida internacionalmente, com shows poderosos e álbuns clássicos.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=Korzus+ao+vivo" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=Korzus+banda+SP" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">11</div>
+      <div class="card-name">Dr. Sin</div>
+      <div class="card-genre">Hard Rock / Heavy Metal</div>
+      <div class="card-desc">Clássico do hard rock paulistano desde os anos 90, com sonoridade pesada e muita presença de palco.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=Dr+Sin+ao+vivo" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=Dr+Sin+banda+SP" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">12</div>
+      <div class="card-name">Hateen</div>
+      <div class="card-genre">Pop Punk / Emo</div>
+      <div class="card-desc">Banda paulistana do circuito alternativo com forte presença nos bares e festivais de SP.</div>
+      <div class="card-links">
+        <a class="btn-link yt" href="https://www.youtube.com/results?search_query=Hateen+ao+vivo+São+Paulo" target="_blank">▶ YouTube</a>
+        <a class="btn-link" href="https://www.google.com/search?q=Hateen+banda+SP" target="_blank">⌕ Google</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BARES -->
+  <div class="section-title">Onde Elas Tocam — Bares & Casas de Show</div>
+  <div class="bars-grid">
+
+    <a class="bar-card" href="https://www.google.com/search?q=Manifesto+Rock+Bar+São+Paulo" target="_blank">
+      <div class="bar-name">Manifesto Rock Bar</div>
+      <div class="bar-address">R. Ramos Batista, 207 · Vila Olímpia<br>Só toca rock, sem exceção</div>
+    </a>
+
+    <a class="bar-card" href="https://www.google.com/search?q=Morrison+Rock+Bar+Pinheiros+São+Paulo" target="_blank">
+      <div class="bar-name">Morrison Rock Bar</div>
+      <div class="bar-address">R. Fidalga, 531 · Pinheiros<br>Nome em homenagem a Jim Morrison</div>
+    </a>
+
+    <a class="bar-card" href="https://www.google.com/search?q=Fofinhos+Rock+Club+Tatuapé+São+Paulo" target="_blank">
+      <div class="bar-name">Fofinhos Rock Club</div>
+      <div class="bar-address">Av. Celso Garcia, 2728 · Tatuapé<br>+50 anos de história</div>
+    </a>
+
+    <a class="bar-card" href="https://www.google.com/search?q=Café+Piu+Piu+São+Paulo" target="_blank">
+      <div class="bar-name">Café Piu Piu</div>
+      <div class="bar-address">R. Treze de Maio, 134 · Bela Vista<br>+40 anos de rock ao vivo</div>
+    </a>
+
+    <a class="bar-card" href="https://www.google.com/search?q=Stones+Music+Bar+São+Paulo" target="_blank">
+      <div class="bar-name">Stones Music Bar</div>
+      <div class="bar-address">Av. Prof. L. Anhaia Mello, 2935 · V. Prudente</div>
+    </a>
+
+    <a class="bar-card" href="https://www.google.com/search?q=Inferno+Club+São+Paulo" target="_blank">
+      <div class="bar-name">Inferno Club</div>
+      <div class="bar-address">Centro · São Paulo<br>Metal e rock pesado</div>
+    </a>
+
+    <a class="bar-card" href="https://www.google.com/search?q=Republic+Pub+Vila+Madalena+São+Paulo" target="_blank">
+      <div class="bar-name">Republic Pub</div>
+      <div class="bar-address">Vila Madalena · São Paulo</div>
+    </a>
+
+    <a class="bar-card" href="https://www.google.com/search?q=Kia+Ora+Bar+São+Paulo" target="_blank">
+      <div class="bar-name">Kia Ora Bar</div>
+      <div class="bar-address">São Paulo · Referência desde 2004</div>
+    </a>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- AGENDA ONLINE -->
+  <div class="section-title">Agenda Online</div>
+  <div style="display:flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;">
+    <a class="btn-link" style="padding: 12px 20px; font-size: 11px;" href="https://www.sympla.com.br/eventos/sao-paulo-sp?tag=rock" target="_blank">⌕ Sympla – Shows de Rock em SP</a>
+    <a class="btn-link" style="padding: 12px 20px; font-size: 11px;" href="https://www.instagram.com/baladasrocksp/" target="_blank">⌕ @baladasrocksp no Instagram</a>
+    <a class="btn-link yt" style="padding: 12px 20px; font-size: 11px;" href="https://www.youtube.com/results?search_query=rock+ao+vivo+São+Paulo+bar+2024" target="_blank">▶ YouTube – Rock ao vivo SP</a>
+  </div>
+
+</main>
+
+<footer>
+  <p>Rock da Noite Paulistana · 2025</p>
+  <a class="agenda-link" href="https://www.sympla.com.br/eventos/sao-paulo-sp?tag=rock" target="_blank">Ver agenda completa →</a>
+</footer>
+
+</body>
+</html>

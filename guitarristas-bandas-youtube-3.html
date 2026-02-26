@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎸 Rock, Jazz & Blues Universe</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #2a2a3a;
+    --accent: #ff3c00;
+    --accent2: #ffaa00;
+    --accent3: #00e5ff;
+    --text: #e8e8f0;
+    --muted: #888899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 10% 20%, rgba(255,60,0,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 80%, rgba(0,229,255,0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  header {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 2.5rem 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-family: 'Black Ops One', cursive;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  header p { color: var(--muted); font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .guitar-icon { font-size: 2.5rem; display: block; margin-bottom: 0.4rem; animation: strum 2s ease-in-out infinite alternate; }
+  @keyframes strum { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+
+  .search-wrap {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.93);
+    backdrop-filter: blur(12px);
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .search-wrap input {
+    width: 100%; max-width: 500px; display: block; margin: 0 auto;
+    background: var(--card); border: 1px solid var(--border); border-radius: 30px;
+    padding: 0.55rem 1.4rem; color: var(--text);
+    font-family: 'Rajdhani', sans-serif; font-size: 1rem; outline: none;
+    transition: border-color 0.3s;
+  }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap input::placeholder { color: var(--muted); }
+
+  .tabs {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 0.4rem; padding: 1.2rem 1rem 0.5rem;
+    position: relative; z-index: 1;
+  }
+  .tab-btn {
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--muted); padding: 0.45rem 1.1rem; border-radius: 30px;
+    font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer;
+    transition: all 0.25s;
+  }
+  .tab-btn.active, .tab-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .section { position: relative; z-index: 1; max-width: 1300px; margin: 0 auto; padding: 0.5rem 1rem 2rem; display: none; }
+  .section.visible { display: block; }
+
+  .section-title {
+    font-family: 'Black Ops One', cursive;
+    font-size: 1.2rem; letter-spacing: 0.08em;
+    margin: 2rem 0 0.8rem;
+    color: var(--accent2); text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+    margin-left: 0.5rem;
+  }
+
+  .grid {
+    display: grid; grid-template-columns: 1fr; gap: 0.45rem;
+  }
+  @media (min-width: 560px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 9px; overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 6px 24px rgba(255,60,0,0.13); }
+  .card a { display: flex; align-items: center; gap: 0.6rem; padding: 0.65rem 0.9rem; text-decoration: none; color: var(--text); }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 7px; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .card-info { min-width: 0; flex: 1; }
+  .card-name { font-weight: 700; font-size: 0.97rem; white-space: normal; line-height: 1.25; letter-spacing: 0.02em; }
+  .card-sub { font-size: 0.76rem; color: var(--muted); }
+  .yt-badge { background: #ff0000; color: #fff; font-size: 0.58rem; font-weight: 700; padding: 2px 5px; border-radius: 3px; letter-spacing: 0.04em; flex-shrink: 0; }
+
+  .country-flag { font-size: 0.75rem; margin-left: 3px; }
+
+  footer { position: relative; z-index: 1; text-align: center; padding: 2rem; color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="guitar-icon">🎸</span>
+  <h1>Rock, Jazz & Blues Universe</h1>
+  <p>Guitarristas • Bandas • Músicos • 1964 até hoje</p>
+</header>
+
+<div class="search-wrap">
+  <input type="text" id="searchInput" placeholder="🔍 Filtrar artistas e bandas..." oninput="filterCards()">
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('guitarristas', this)">🎸 Guitarristas</button>
+  <button class="tab-btn" onclick="showTab('rock-classico', this)">🤘 Rock Clássico</button>
+  <button class="tab-btn" onclick="showTab('rock-pesado', this)">💀 Metal & Hard</button>
+  <button class="tab-btn" onclick="showTab('rock-alternativo', this)">⚡ Grunge & Alt</button>
+  <button class="tab-btn" onclick="showTab('prog-punk', this)">⚙️ Prog & Punk</button>
+  <button class="tab-btn" onclick="showTab('jazz', this)">🎷 Jazz</button>
+  <button class="tab-btn" onclick="showTab('blues', this)">🎵 Blues</button>
+  <button class="tab-btn" onclick="showTab('australianos', this)">🦘 Australianos</button>
+  <button class="tab-btn" onclick="showTab('internacionais', this)">🌍 Internacionais</button>
+  <button class="tab-btn" onclick="showTab('modernos', this)">🔥 Modernos</button>
+</div>
+
+<!-- ===== GUITARRISTAS ===== -->
+<div class="section visible" id="guitarristas">
+  <div class="section-title">⚡ Lendas Absolutas</div>
+  <div class="grid" id="g-lendas"></div>
+  <div class="section-title">🔥 Hard Rock & Heavy Metal</div>
+  <div class="grid" id="g-hard"></div>
+  <div class="section-title">🌊 Blues & Psicodélico</div>
+  <div class="grid" id="g-blues"></div>
+  <div class="section-title">🎯 Virtuosos & Shredders</div>
+  <div class="grid" id="g-shred"></div>
+  <div class="section-title">🎶 Alternativos & Modernos</div>
+  <div class="grid" id="g-modern"></div>
+  <div class="section-title">🎸 Solistas & Fusão</div>
+  <div class="grid" id="g-solo"></div>
+</div>
+
+<!-- ===== ROCK CLÁSSICO ===== -->
+<div class="section" id="rock-classico">
+  <div class="section-title">🇺🇸 Rock Americano Clássico</div>
+  <div class="grid" id="rc-usa"></div>
+  <div class="section-title">🇬🇧 Rock Britânico Clássico</div>
+  <div class="grid" id="rc-uk"></div>
+  <div class="section-title">🌿 Southern & Roots Rock</div>
+  <div class="grid" id="rc-southern"></div>
+  <div class="section-title">🌀 Rock Psicodélico & Acid Rock</div>
+  <div class="grid" id="rc-psych"></div>
+  <div class="section-title">🏟️ Arena & Soft Rock 70s/80s</div>
+  <div class="grid" id="rc-arena"></div>
+</div>
+
+<!-- ===== METAL & HARD ===== -->
+<div class="section" id="rock-pesado">
+  <div class="section-title">⚙️ Heavy Metal Pioneiro</div>
+  <div class="grid" id="rp-pioneer"></div>
+  <div class="section-title">💀 Thrash & Speed Metal</div>
+  <div class="grid" id="rp-thrash"></div>
+  <div class="section-title">🔱 Death, Doom & Black Metal</div>
+  <div class="grid" id="rp-extreme"></div>
+  <div class="section-title">🦁 Glam & Hair Metal</div>
+  <div class="grid" id="rp-glam"></div>
+  <div class="section-title">🔥 Nu Metal & Modern Heavy</div>
+  <div class="grid" id="rp-nu"></div>
+</div>
+
+<!-- ===== GRUNGE & ALT ===== -->
+<div class="section" id="rock-alternativo">
+  <div class="section-title">🌧️ Grunge & Seattle Sound</div>
+  <div class="grid" id="ra-grunge"></div>
+  <div class="section-title">📻 Alternative & Indie Rock</div>
+  <div class="grid" id="ra-alt"></div>
+  <div class="section-title">🎙️ New Wave & Post-Punk</div>
+  <div class="grid" id="ra-newwave"></div>
+</div>
+
+<!-- ===== PROG & PUNK ===== -->
+<div class="section" id="prog-punk">
+  <div class="section-title">🔬 Progressive Rock</div>
+  <div class="grid" id="pp-prog"></div>
+  <div class="section-title">⚡ Punk Rock</div>
+  <div class="grid" id="pp-punk"></div>
+  <div class="section-title">🎸 Folk & Country Rock</div>
+  <div class="grid" id="pp-folk"></div>
+</div>
+
+<!-- ===== JAZZ ===== -->
+<div class="section" id="jazz">
+  <div class="section-title">🎺 Lendas do Jazz — Instrumentistas</div>
+  <div class="grid" id="j-lendas"></div>
+  <div class="section-title">🎹 Piano & Teclados</div>
+  <div class="grid" id="j-piano"></div>
+  <div class="section-title">🎷 Saxofone & Sopros</div>
+  <div class="grid" id="j-sax"></div>
+  <div class="section-title">🎸 Jazz Guitar</div>
+  <div class="grid" id="j-guitar"></div>
+  <div class="section-title">🌀 Jazz Fusion & Contemporâneo</div>
+  <div class="grid" id="j-fusion"></div>
+  <div class="section-title">🎤 Vozes do Jazz</div>
+  <div class="grid" id="j-vocal"></div>
+</div>
+
+<!-- ===== BLUES ===== -->
+<div class="section" id="blues">
+  <div class="section-title">🌑 Delta & Chicago Blues</div>
+  <div class="grid" id="b-classic"></div>
+  <div class="section-title">⚡ Blues Rock</div>
+  <div class="grid" id="b-rock"></div>
+  <div class="section-title">🎤 Vozes do Blues</div>
+  <div class="grid" id="b-vocal"></div>
+  <div class="section-title">🔥 Blues Moderno</div>
+  <div class="grid" id="b-modern"></div>
+</div>
+
+<!-- ===== AUSTRALIANOS ===== -->
+<div class="section" id="australianos">
+  <div class="section-title">🦘 Bandas Australianas</div>
+  <div class="grid" id="aus-bands"></div>
+  <div class="section-title">🎤 Artistas Solos Australianos</div>
+  <div class="grid" id="aus-solo"></div>
+</div>
+
+<!-- ===== INTERNACIONAIS ===== -->
+<div class="section" id="internacionais">
+  <div class="section-title">🇮🇪 Irlandeses & Escoceses</div>
+  <div class="grid" id="int-celtic"></div>
+  <div class="section-title">🇮🇹 Italianos</div>
+  <div class="grid" id="int-italy"></div>
+  <div class="section-title">🇨🇦 Canadenses</div>
+  <div class="grid" id="int-canada"></div>
+  <div class="section-title">🌍 Europa & Resto do Mundo</div>
+  <div class="grid" id="int-world"></div>
+</div>
+
+<!-- ===== MODERNOS ===== -->
+<div class="section" id="modernos">
+  <div class="section-title">🚀 Rock Moderno (2000s–hoje)</div>
+  <div class="grid" id="mod-rock"></div>
+  <div class="section-title">🎸 Blues & Soul Contemporâneo</div>
+  <div class="grid" id="mod-blues"></div>
+  <div class="section-title">🔥 Metal Moderno</div>
+  <div class="grid" id="mod-metal"></div>
+</div>
+
+<footer>🎸 Todos os links abrem a busca oficial do YouTube • Sem links quebrados • Rock, Jazz & Blues de 1964 até hoje</footer>
+
+<script>
+function yt(q){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(q); }
+const icons=['🎸','🎵','🎶','⚡','🔥','💥','🤘','🎙️','🎼','🎷','🎺','🎹','🥁','🎻'];
+
+const DATA = {
+  /* ========= GUITARRISTAS ========= */
+  'g-lendas': [
+    {name:'Jimi Hendrix',sub:'Rock Psicodélico 🇺🇸',q:'Jimi Hendrix'},
+    {name:'Eric Clapton',sub:'Blues Rock 🇬🇧',q:'Eric Clapton'},
+    {name:'Jimmy Page',sub:'Led Zeppelin 🇬🇧',q:'Jimmy Page guitar'},
+    {name:'Keith Richards',sub:'Rolling Stones 🇬🇧',q:'Keith Richards guitar'},
+    {name:'Chuck Berry',sub:'Rock n Roll 🇺🇸',q:'Chuck Berry'},
+    {name:'Carlos Santana',sub:'Latin Rock 🇺🇸',q:'Santana guitar'},
+    {name:'Pete Townshend',sub:'The Who 🇬🇧',q:'Pete Townshend guitar'},
+    {name:'Angus Young',sub:'AC/DC 🇦🇺',q:'Angus Young guitar'},
+    {name:'Tony Iommi',sub:'Black Sabbath 🇬🇧',q:'Tony Iommi guitar'},
+    {name:'Ritchie Blackmore',sub:'Deep Purple 🇬🇧',q:'Ritchie Blackmore guitar'},
+    {name:'Jeff Beck',sub:'Rock & Blues 🇬🇧',q:'Jeff Beck guitar'},
+    {name:'Mark Knopfler',sub:'Dire Straits 🇬🇧',q:'Mark Knopfler guitar'},
+    {name:'David Gilmour',sub:'Pink Floyd 🇬🇧',q:'David Gilmour guitar solo'},
+    {name:'Brian May',sub:'Queen 🇬🇧',q:'Brian May guitar solo'},
+    {name:'George Harrison',sub:'The Beatles 🇬🇧',q:'George Harrison guitar'},
+    {name:'Mike Bloomfield',sub:'Electric Flag 🇺🇸',q:'Mike Bloomfield guitar'},
+  ],
+  'g-hard': [
+    {name:'Eddie Van Halen',sub:'Van Halen 🇺🇸',q:'Eddie Van Halen'},
+    {name:'Slash',sub:"Guns N' Roses 🇬🇧",q:'Slash guitar solo'},
+    {name:'Dave Murray',sub:'Iron Maiden 🇬🇧',q:'Dave Murray Iron Maiden'},
+    {name:'Dave Mustaine',sub:'Megadeth 🇺🇸',q:'Dave Mustaine Megadeth'},
+    {name:'Kirk Hammett',sub:'Metallica 🇺🇸',q:'Kirk Hammett Metallica'},
+    {name:'James Hetfield',sub:'Metallica 🇺🇸',q:'James Hetfield riff'},
+    {name:'Randy Rhoads',sub:'Ozzy Osbourne 🇺🇸',q:'Randy Rhoads guitar'},
+    {name:'Zakk Wylde',sub:'Black Label Society 🇺🇸',q:'Zakk Wylde guitar'},
+    {name:'Michael Schenker',sub:'Scorpions/UFO 🇩🇪',q:'Michael Schenker guitar'},
+    {name:'Gary Moore',sub:'Blues Metal 🇮🇪',q:'Gary Moore guitar'},
+    {name:'George Lynch',sub:'Dokken 🇺🇸',q:'George Lynch guitar'},
+    {name:'Alex Lifeson',sub:'Rush 🇨🇦',q:'Alex Lifeson Rush guitar'},
+    {name:'Adrian Smith',sub:'Iron Maiden 🇬🇧',q:'Adrian Smith Iron Maiden guitar'},
+    {name:'Vivian Campbell',sub:'Def Leppard 🇮🇪',q:'Vivian Campbell guitar'},
+    {name:'Ace Frehley',sub:'KISS 🇺🇸',q:'Ace Frehley guitar'},
+    {name:'Ted Nugent',sub:'Motor City Madman 🇺🇸',q:'Ted Nugent guitar'},
+  ],
+  'g-blues': [
+    {name:'Stevie Ray Vaughan',sub:'Texas Blues 🇺🇸',q:'Stevie Ray Vaughan'},
+    {name:'John Lee Hooker',sub:'Delta Blues 🇺🇸',q:'John Lee Hooker guitar'},
+    {name:'Muddy Waters',sub:'Chicago Blues 🇺🇸',q:'Muddy Waters guitar'},
+    {name:'B.B. King',sub:'Blues Legend 🇺🇸',q:'BB King guitar'},
+    {name:'Duane Allman',sub:'Allman Brothers 🇺🇸',q:'Duane Allman guitar'},
+    {name:'Dickey Betts',sub:'Allman Brothers 🇺🇸',q:'Dickey Betts guitar'},
+    {name:'Peter Green',sub:'Fleetwood Mac 🇬🇧',q:'Peter Green guitar'},
+    {name:'Rory Gallagher',sub:'Irish Blues Rock 🇮🇪',q:'Rory Gallagher guitar'},
+    {name:'Albert King',sub:'Blues King 🇺🇸',q:'Albert King guitar'},
+    {name:'Buddy Guy',sub:'Chicago Blues 🇺🇸',q:'Buddy Guy guitar'},
+    {name:'Freddie King',sub:'Texas Blues 🇺🇸',q:'Freddie King guitar'},
+    {name:'Albert Collins',sub:'Master of Telecaster 🇺🇸',q:'Albert Collins guitar'},
+    {name:'Johnny Winter',sub:'Texas Blues Rock 🇺🇸',q:'Johnny Winter guitar'},
+    {name:'Robin Trower',sub:'Blues Rock 🇬🇧',q:'Robin Trower guitar'},
+    {name:'Luther Allison',sub:'Chicago Blues 🇺🇸',q:'Luther Allison guitar'},
+    {name:'Lonnie Mack',sub:'Blues Pioneer 🇺🇸',q:'Lonnie Mack guitar'},
+  ],
+  'g-shred': [
+    {name:'Steve Vai',sub:'Guitar God 🇺🇸',q:'Steve Vai guitar'},
+    {name:'Joe Satriani',sub:'Shockwave Supernova 🇺🇸',q:'Joe Satriani guitar'},
+    {name:'Yngwie Malmsteen',sub:'Neo-Classical 🇸🇪',q:'Yngwie Malmsteen guitar'},
+    {name:'Paul Gilbert',sub:'Mr. Big 🇺🇸',q:'Paul Gilbert guitar'},
+    {name:'John Petrucci',sub:'Dream Theater 🇺🇸',q:'John Petrucci guitar'},
+    {name:'Guthrie Govan',sub:'Aristocrats 🇬🇧',q:'Guthrie Govan guitar'},
+    {name:'Tosin Abasi',sub:'Animals as Leaders 🇺🇸',q:'Tosin Abasi guitar'},
+    {name:'Buckethead',sub:'Mysterious Shredder 🇺🇸',q:'Buckethead guitar'},
+    {name:'Nuno Bettencourt',sub:'Extreme 🇵🇹',q:'Nuno Bettencourt guitar'},
+    {name:'Warren DeMartini',sub:'Ratt 🇺🇸',q:'Warren DeMartini guitar'},
+    {name:'Marty Friedman',sub:'Megadeth/Solo 🇺🇸',q:'Marty Friedman guitar'},
+    {name:'Jason Becker',sub:'Cacophony 🇺🇸',q:'Jason Becker guitar'},
+    {name:'Shawn Lane',sub:'Fusion Shredder 🇺🇸',q:'Shawn Lane guitar'},
+    {name:'Michael Angelo Batio',sub:'Nitro 🇺🇸',q:'Michael Angelo Batio guitar'},
+    {name:'Greg Howe',sub:'Fusion/Shred 🇺🇸',q:'Greg Howe guitar'},
+  ],
+  'g-modern': [
+    {name:'Tom Morello',sub:'Rage Against Machine 🇺🇸',q:'Tom Morello guitar'},
+    {name:'Jack White',sub:'White Stripes 🇺🇸',q:'Jack White guitar'},
+    {name:'John Frusciante',sub:'Red Hot Chili Peppers 🇺🇸',q:'John Frusciante guitar'},
+    {name:'Kurt Cobain',sub:'Nirvana 🇺🇸',q:'Kurt Cobain guitar'},
+    {name:'Adam Jones',sub:'Tool 🇺🇸',q:'Adam Jones Tool guitar'},
+    {name:'Dimebag Darrell',sub:'Pantera 🇺🇸',q:'Dimebag Darrell guitar'},
+    {name:'Synyster Gates',sub:'Avenged Sevenfold 🇺🇸',q:'Synyster Gates guitar'},
+    {name:'Matt Bellamy',sub:'Muse 🇬🇧',q:'Matt Bellamy guitar'},
+    {name:'Jim Root',sub:'Slipknot 🇺🇸',q:'Jim Root Slipknot guitar'},
+    {name:'Gary Clark Jr.',sub:'Modern Blues 🇺🇸',q:'Gary Clark Jr guitar'},
+    {name:'Derek Trucks',sub:'Tedeschi Trucks 🇺🇸',q:'Derek Trucks guitar'},
+    {name:'Marcus King',sub:'Blues/Rock Moderno 🇺🇸',q:'Marcus King guitar'},
+    {name:'Dan Auerbach',sub:'The Black Keys 🇺🇸',q:'Dan Auerbach guitar'},
+    {name:'Matt Heafy',sub:'Trivium 🇺🇸',q:'Matt Heafy guitar'},
+  ],
+  'g-solo': [
+    {name:'Al Di Meola',sub:'Fusion Legend 🇺🇸',q:'Al Di Meola guitar'},
+    {name:'John McLaughlin',sub:'Mahavishnu Orchestra 🇬🇧',q:'John McLaughlin guitar'},
+    {name:'Pat Metheny',sub:'Jazz/Fusion 🇺🇸',q:'Pat Metheny guitar'},
+    {name:'Robert Fripp',sub:'King Crimson 🇬🇧',q:'Robert Fripp guitar'},
+    {name:'Larry Carlton',sub:'Steely Dan / Solo 🇺🇸',q:'Larry Carlton guitar'},
+    {name:'Lee Ritenour',sub:'Fusion / Session 🇺🇸',q:'Lee Ritenour guitar'},
+    {name:'Wes Montgomery',sub:'Jazz Guitar Legend 🇺🇸',q:'Wes Montgomery guitar'},
+    {name:'Django Reinhardt',sub:'Jazz Guitar Pioneer 🇧🇪',q:'Django Reinhardt guitar'},
+    {name:'Joe Pass',sub:'Bossa & Jazz 🇺🇸',q:'Joe Pass guitar'},
+    {name:'George Benson',sub:'Jazz/R&B 🇺🇸',q:'George Benson guitar'},
+    {name:'John Scofield',sub:'Jazz Fusion 🇺🇸',q:'John Scofield guitar'},
+    {name:'Mike Stern',sub:'Jazz Rock 🇺🇸',q:'Mike Stern guitar'},
+  ],
+
+  /* ========= ROCK CLÁSSICO ========= */
+  'rc-usa': [
+    {name:'Led Zeppelin',sub:'Hard Rock 🇬🇧',q:'Led Zeppelin official'},
+    {name:'The Rolling Stones',sub:'Rock n Roll 🇬🇧',q:'Rolling Stones official'},
+    {name:'Aerosmith',sub:'Hard Rock 🇺🇸',q:'Aerosmith official'},
+    {name:'Van Halen',sub:'Hard Rock 🇺🇸',q:'Van Halen official'},
+    {name:'Doobie Brothers',sub:'Rock/Soul 🇺🇸',q:'Doobie Brothers official'},
+    {name:'Steely Dan',sub:'Rock/Jazz Fusion 🇺🇸',q:'Steely Dan official'},
+    {name:'Eagles',sub:'Country Rock 🇺🇸',q:'Eagles band official'},
+    {name:'Creedence Clearwater Revival',sub:'Swamp Rock 🇺🇸',q:'CCR Creedence Clearwater Revival'},
+    {name:'Grand Funk Railroad',sub:'Hard Rock 🇺🇸',q:'Grand Funk Railroad official'},
+    {name:'Tom Petty & Heartbreakers',sub:'Rock 🇺🇸',q:'Tom Petty Heartbreakers official'},
+    {name:'Bruce Springsteen',sub:'Heartland Rock 🇺🇸',q:'Bruce Springsteen E Street Band official'},
+    {name:'Steve Miller Band',sub:'Classic Rock 🇺🇸',q:'Steve Miller Band official'},
+    {name:'ZZ Top',sub:'Blues Rock 🇺🇸',q:'ZZ Top official'},
+    {name:'Santana',sub:'Latin Rock 🇺🇸',q:'Santana band official'},
+    {name:'Chicago',sub:'Rock/Jazz 🇺🇸',q:'Chicago band official'},
+    {name:'Grateful Dead',sub:'Psychedelic/Jam 🇺🇸',q:'Grateful Dead official'},
+    {name:'Jefferson Airplane',sub:'Psychedelic 🇺🇸',q:'Jefferson Airplane official'},
+    {name:'The Doors',sub:'Psychedelic 🇺🇸',q:'The Doors official'},
+    {name:'Simon & Garfunkel',sub:'Folk Rock 🇺🇸',q:'Simon Garfunkel official'},
+    {name:'Crosby Stills Nash & Young',sub:'Folk Rock 🇺🇸',q:'Crosby Stills Nash Young official'},
+    {name:'America',sub:'Soft Rock 🇺🇸',q:'America band official'},
+    {name:'Three Dog Night',sub:'Rock/Pop 🇺🇸',q:'Three Dog Night official'},
+    {name:'Blood Sweat & Tears',sub:'Jazz Rock 🇺🇸',q:'Blood Sweat and Tears official'},
+    {name:'The Band',sub:'Roots Rock 🇨🇦',q:'The Band official music'},
+    {name:'Canned Heat',sub:'Blues Rock 🇺🇸',q:'Canned Heat official'},
+    {name:'Mountain',sub:'Heavy Blues Rock 🇺🇸',q:'Mountain band Leslie West official'},
+    {name:'Edgar Winter Group',sub:'Rock/Jazz 🇺🇸',q:'Edgar Winter Group official'},
+    {name:'J. Geils Band',sub:'Blues Rock 🇺🇸',q:'J Geils Band official'},
+    {name:'Poco',sub:'Country Rock 🇺🇸',q:'Poco band official'},
+    {name:'Spirit',sub:'Psychedelic Rock 🇺🇸',q:'Spirit band official'},
+    {name:'Quicksilver Messenger Service',sub:'Acid Rock 🇺🇸',q:'Quicksilver Messenger Service official'},
+    {name:'Country Joe & The Fish',sub:'Psychedelic 🇺🇸',q:'Country Joe and the Fish official'},
+  ],
+  'rc-uk': [
+    {name:'The Beatles',sub:'Rock 🇬🇧',q:'The Beatles official'},
+    {name:'Pink Floyd',sub:'Psicodélico 🇬🇧',q:'Pink Floyd official'},
+    {name:'The Who',sub:'Mod Rock 🇬🇧',q:'The Who official'},
+    {name:'Cream',sub:'Blues Rock 🇬🇧',q:'Cream band Clapton'},
+    {name:'Deep Purple',sub:'Hard Rock 🇬🇧',q:'Deep Purple official'},
+    {name:'Fleetwood Mac',sub:'Blues/Pop Rock 🇬🇧',q:'Fleetwood Mac official'},
+    {name:'Black Sabbath',sub:'Heavy Metal 🇬🇧',q:'Black Sabbath official'},
+    {name:'Queen',sub:'Arena Rock 🇬🇧',q:'Queen official'},
+    {name:'David Bowie',sub:'Glam/Art Rock 🇬🇧',q:'David Bowie official'},
+    {name:'The Kinks',sub:'Rock Britânico 🇬🇧',q:'The Kinks official'},
+    {name:'The Animals',sub:'Blues Rock 🇬🇧',q:'The Animals official'},
+    {name:'Jethro Tull',sub:'Progressive 🇬🇧',q:'Jethro Tull official'},
+    {name:'Bad Company',sub:'Hard Rock 🇬🇧',q:'Bad Company official'},
+    {name:'Free',sub:'Hard Rock Blues 🇬🇧',q:'Free band Paul Rodgers official'},
+    {name:'Ten Years After',sub:'Blues Rock 🇬🇧',q:'Ten Years After official'},
+    {name:'Status Quo',sub:'Boogie Rock 🇬🇧',q:'Status Quo official'},
+    {name:'Whitesnake',sub:'Hard Rock 🇬🇧',q:'Whitesnake official'},
+    {name:'Uriah Heep',sub:'Hard Rock 🇬🇧',q:'Uriah Heep official'},
+    {name:'Wishbone Ash',sub:'Twin Guitar Rock 🇬🇧',q:'Wishbone Ash official'},
+    {name:'Roxy Music',sub:'Art Rock 🇬🇧',q:'Roxy Music official'},
+    {name:'T. Rex',sub:'Glam Rock 🇬🇧',q:'T Rex Marc Bolan official'},
+    {name:'Procol Harum',sub:'Baroque Rock 🇬🇧',q:'Procol Harum official'},
+    {name:'Traffic',sub:'Psychedelic/Jazz 🇬🇧',q:'Traffic Steve Winwood official'},
+    {name:'Blind Faith',sub:'Supergroup 🇬🇧',q:'Blind Faith Clapton official'},
+    {name:'Small Faces',sub:'Mod Rock 🇬🇧',q:'Small Faces official'},
+    {name:'Yardbirds',sub:'Blues Rock Pioneiro 🇬🇧',q:'Yardbirds official'},
+    {name:'Savoy Brown',sub:'Blues Rock 🇬🇧',q:'Savoy Brown official'},
+    {name:'Spencer Davis Group',sub:'R&B 🇬🇧',q:'Spencer Davis Group official'},
+    {name:'Dire Straits',sub:'Rock/Blues 🇬🇧',q:'Dire Straits official'},
+    {name:'Foghat',sub:'Boogie Rock 🇬🇧',q:'Foghat band official'},
+  ],
+  'rc-southern': [
+    {name:'Lynyrd Skynyrd',sub:'Southern Rock 🇺🇸',q:'Lynyrd Skynyrd official'},
+    {name:'Allman Brothers Band',sub:'Southern Rock 🇺🇸',q:'Allman Brothers Band official'},
+    {name:'Marshall Tucker Band',sub:'Southern Rock 🇺🇸',q:'Marshall Tucker Band official'},
+    {name:'Charlie Daniels Band',sub:'Southern/Country 🇺🇸',q:'Charlie Daniels Band official'},
+    {name:'Molly Hatchet',sub:'Southern Rock 🇺🇸',q:'Molly Hatchet official'},
+    {name:'Wet Willie',sub:'Southern Rock/Soul 🇺🇸',q:'Wet Willie band official'},
+    {name:'Blackfoot',sub:'Southern Hard Rock 🇺🇸',q:'Blackfoot band official'},
+    {name:'38 Special',sub:'Southern Rock 🇺🇸',q:'38 Special band official'},
+    {name:'Pure Prairie League',sub:'Country Rock 🇺🇸',q:'Pure Prairie League official'},
+    {name:'Outlaws',sub:'Southern Rock 🇺🇸',q:'The Outlaws band official'},
+  ],
+  'rc-psych': [
+    {name:'Jefferson Airplane',sub:'Psychedelic 🇺🇸',q:'Jefferson Airplane official'},
+    {name:'Grateful Dead',sub:'Jam/Psychedelic 🇺🇸',q:'Grateful Dead official'},
+    {name:'Quicksilver Messenger Service',sub:'Acid Rock 🇺🇸',q:'Quicksilver Messenger Service official'},
+    {name:'Moody Blues',sub:'Prog/Psychedelic 🇬🇧',q:'Moody Blues official'},
+    {name:'Love',sub:'Psychedelic 🇺🇸',q:'Love band Arthur Lee official'},
+    {name:'13th Floor Elevators',sub:'Garage Psychedelic 🇺🇸',q:'13th Floor Elevators official'},
+    {name:'The Pretty Things',sub:'Psychedelic 🇬🇧',q:'The Pretty Things official'},
+    {name:'Pink Floyd',sub:'Space Rock 🇬🇧',q:'Pink Floyd official'},
+    {name:'Soft Machine',sub:'Psychedelic Jazz 🇬🇧',q:'Soft Machine official'},
+    {name:'Hawkwind',sub:'Space Rock 🇬🇧',q:'Hawkwind official'},
+  ],
+  'rc-arena': [
+    {name:'Boston',sub:'Arena Rock 🇺🇸',q:'Boston band official'},
+    {name:'Foreigner',sub:'Arena Rock 🇺🇸',q:'Foreigner band official'},
+    {name:'REO Speedwagon',sub:'Arena Rock 🇺🇸',q:'REO Speedwagon official'},
+    {name:'Styx',sub:'Progressive/Arena 🇺🇸',q:'Styx band official'},
+    {name:'Kansas',sub:'Progressive Rock 🇺🇸',q:'Kansas band official'},
+    {name:'Heart',sub:'Hard Rock 🇺🇸',q:'Heart band official'},
+    {name:'Supertramp',sub:'Progressive/Pop 🇬🇧',q:'Supertramp official'},
+    {name:'Toto',sub:'Soft Rock/AOR 🇺🇸',q:'Toto band official'},
+    {name:'Asia',sub:'Progressive/AOR 🇬🇧',q:'Asia band official'},
+    {name:'Journey',sub:'Arena Rock 🇺🇸',q:'Journey band official'},
+    {name:'Night Ranger',sub:'AOR 🇺🇸',q:'Night Ranger official'},
+    {name:'Survivor',sub:'AOR 🇺🇸',q:'Survivor band Eye of the Tiger'},
+    {name:'38 Special',sub:'Southern/AOR 🇺🇸',q:'38 Special band official'},
+    {name:'Cheap Trick',sub:'Power Pop/Rock 🇺🇸',q:'Cheap Trick official'},
+    {name:'Blue Öyster Cult',sub:'Hard Rock 🇺🇸',q:'Blue Oyster Cult official'},
+    {name:'Elton John',sub:'Pop Rock/Glam 🇬🇧',q:'Elton John official'},
+  ],
+
+  /* ========= METAL & HARD ========= */
+  'rp-pioneer': [
+    {name:'Black Sabbath',sub:'Heavy Metal 🇬🇧',q:'Black Sabbath official'},
+    {name:'Judas Priest',sub:'Heavy Metal 🇬🇧',q:'Judas Priest official'},
+    {name:'Iron Maiden',sub:'NWOBHM 🇬🇧',q:'Iron Maiden official'},
+    {name:'Deep Purple',sub:'Hard Rock 🇬🇧',q:'Deep Purple official'},
+    {name:'AC/DC',sub:'Hard Rock 🇦🇺',q:'ACDC official'},
+    {name:'Motörhead',sub:'Speed Metal 🇬🇧',q:'Motörhead official'},
+    {name:'Rainbow',sub:'Hard Rock 🇬🇧',q:'Rainbow Ritchie Blackmore official'},
+    {name:'UFO',sub:'Hard Rock 🇬🇧',q:'UFO band official'},
+    {name:'Thin Lizzy',sub:'Hard Rock 🇮🇪',q:'Thin Lizzy official'},
+    {name:'Nazareth',sub:'Hard Rock 🏴󠁧󠁢󠁳󠁣󠁴󠁿',q:'Nazareth band official'},
+    {name:'Humble Pie',sub:'Hard Rock 🇬🇧',q:'Humble Pie official'},
+    {name:'Scorpions',sub:'Hard Rock 🇩🇪',q:'Scorpions official'},
+    {name:'Def Leppard',sub:'Glam Metal 🇬🇧',q:'Def Leppard official'},
+    {name:"Guns N' Roses",sub:'Hard Rock 🇺🇸',q:'Guns N Roses official'},
+    {name:'Ozzy Osbourne',sub:'Heavy Metal 🇬🇧',q:'Ozzy Osbourne official'},
+    {name:'KISS',sub:'Glam Rock/Metal 🇺🇸',q:'KISS band official'},
+  ],
+  'rp-thrash': [
+    {name:'Metallica',sub:'Thrash Metal 🇺🇸',q:'Metallica official'},
+    {name:'Megadeth',sub:'Thrash Metal 🇺🇸',q:'Megadeth official'},
+    {name:'Slayer',sub:'Thrash Metal 🇺🇸',q:'Slayer official'},
+    {name:'Anthrax',sub:'Thrash Metal 🇺🇸',q:'Anthrax official'},
+    {name:'Testament',sub:'Thrash Metal 🇺🇸',q:'Testament band official'},
+    {name:'Exodus',sub:'Bay Area Thrash 🇺🇸',q:'Exodus band official'},
+    {name:'Pantera',sub:'Groove Metal 🇺🇸',q:'Pantera official'},
+    {name:'Sepultura',sub:'Metal Brasileiro 🇧🇷',q:'Sepultura official'},
+    {name:'Kreator',sub:'German Thrash 🇩🇪',q:'Kreator official'},
+    {name:'Destruction',sub:'German Thrash 🇩🇪',q:'Destruction band official'},
+    {name:'Overkill',sub:'Thrash Metal 🇺🇸',q:'Overkill band official'},
+    {name:'Nuclear Assault',sub:'Thrash Metal 🇺🇸',q:'Nuclear Assault official'},
+  ],
+  'rp-extreme': [
+    {name:'Death',sub:'Death Metal Pioneiro 🇺🇸',q:'Death band Chuck Schuldiner'},
+    {name:'Obituary',sub:'Death Metal 🇺🇸',q:'Obituary band official'},
+    {name:'Morbid Angel',sub:'Death Metal 🇺🇸',q:'Morbid Angel official'},
+    {name:'Cannibal Corpse',sub:'Death Metal 🇺🇸',q:'Cannibal Corpse official'},
+    {name:'Paradise Lost',sub:'Gothic/Doom 🇬🇧',q:'Paradise Lost band official'},
+    {name:'My Dying Bride',sub:'Doom Metal 🇬🇧',q:'My Dying Bride official'},
+    {name:'Mayhem',sub:'Black Metal 🇳🇴',q:'Mayhem band official'},
+    {name:'Emperor',sub:'Black Metal 🇳🇴',q:'Emperor band official'},
+    {name:'Darkthrone',sub:'Black Metal 🇳🇴',q:'Darkthrone official'},
+    {name:'Opeth',sub:'Progressive Death 🇸🇪',q:'Opeth official'},
+    {name:'Amon Amarth',sub:'Melodic Death 🇸🇪',q:'Amon Amarth official'},
+    {name:'In Flames',sub:'Melodic Death 🇸🇪',q:'In Flames official'},
+  ],
+  'rp-glam': [
+    {name:'Mötley Crüe',sub:'Glam Metal 🇺🇸',q:'Motley Crue official'},
+    {name:'Poison',sub:'Glam Metal 🇺🇸',q:'Poison band official'},
+    {name:'Twisted Sister',sub:'Glam Metal 🇺🇸',q:'Twisted Sister official'},
+    {name:'Warrant',sub:'Glam Metal 🇺🇸',q:'Warrant band official'},
+    {name:'Cinderella',sub:'Glam Metal 🇺🇸',q:'Cinderella band official'},
+    {name:'Ratt',sub:'Glam Metal 🇺🇸',q:'Ratt band official'},
+    {name:'Dokken',sub:'Glam Metal 🇺🇸',q:'Dokken official'},
+    {name:'Winger',sub:'Glam Metal 🇺🇸',q:'Winger band official'},
+    {name:'White Lion',sub:'Glam Metal 🇩🇰',q:'White Lion band official'},
+    {name:'Great White',sub:'Hard Rock 🇺🇸',q:'Great White band official'},
+    {name:'Quiet Riot',sub:'Glam Metal 🇺🇸',q:'Quiet Riot official'},
+    {name:'Whitesnake',sub:'Glam/Hard Rock 🇬🇧',q:'Whitesnake official'},
+  ],
+  'rp-nu': [
+    {name:'Slipknot',sub:'Nu Metal 🇺🇸',q:'Slipknot official'},
+    {name:'System of a Down',sub:'Metal Alternativo 🇺🇸',q:'System of a Down official'},
+    {name:'Korn',sub:'Nu Metal 🇺🇸',q:'Korn official'},
+    {name:'Limp Bizkit',sub:'Nu Metal 🇺🇸',q:'Limp Bizkit official'},
+    {name:'Linkin Park',sub:'Nu Metal 🇺🇸',q:'Linkin Park official'},
+    {name:'Deftones',sub:'Alternative Metal 🇺🇸',q:'Deftones official'},
+    {name:'Tool',sub:'Progressive Metal 🇺🇸',q:'Tool band official'},
+    {name:'Avenged Sevenfold',sub:'Heavy Metal 🇺🇸',q:'Avenged Sevenfold official'},
+    {name:'Lamb of God',sub:'Groove Metal 🇺🇸',q:'Lamb of God official'},
+    {name:'Mastodon',sub:'Progressive Metal 🇺🇸',q:'Mastodon official'},
+    {name:'Five Finger Death Punch',sub:'Heavy Metal 🇺🇸',q:'Five Finger Death Punch official'},
+    {name:'Breaking Benjamin',sub:'Hard Rock 🇺🇸',q:'Breaking Benjamin official'},
+    {name:'Disturbed',sub:'Heavy Metal 🇺🇸',q:'Disturbed official'},
+    {name:'Rammstein',sub:'Industrial Metal 🇩🇪',q:'Rammstein official'},
+    {name:'Rob Zombie',sub:'Industrial Metal 🇺🇸',q:'Rob Zombie official'},
+  ],
+
+  /* ========= GRUNGE & ALT ========= */
+  'ra-grunge': [
+    {name:'Nirvana',sub:'Grunge 🇺🇸',q:'Nirvana official'},
+    {name:'Pearl Jam',sub:'Grunge 🇺🇸',q:'Pearl Jam official'},
+    {name:'Soundgarden',sub:'Grunge/Metal 🇺🇸',q:'Soundgarden official'},
+    {name:'Alice in Chains',sub:'Grunge Dark 🇺🇸',q:'Alice in Chains official'},
+    {name:'Stone Temple Pilots',sub:'Post Grunge 🇺🇸',q:'Stone Temple Pilots official'},
+    {name:'Screaming Trees',sub:'Grunge 🇺🇸',q:'Screaming Trees official'},
+    {name:'Mudhoney',sub:'Grunge Original 🇺🇸',q:'Mudhoney band official'},
+    {name:'Pixies',sub:'Alternative 🇺🇸',q:'Pixies band official'},
+    {name:'Smashing Pumpkins',sub:'Alternative 🇺🇸',q:'Smashing Pumpkins official'},
+    {name:'Silverchair',sub:'Grunge Australiano 🇦🇺',q:'Silverchair official'},
+    {name:'Bush',sub:'Post Grunge 🇬🇧',q:'Bush band official'},
+    {name:'Live',sub:'Post Grunge 🇺🇸',q:'Live band official'},
+    {name:'Collective Soul',sub:'Post Grunge 🇺🇸',q:'Collective Soul official'},
+    {name:'Creed',sub:'Post Grunge 🇺🇸',q:'Creed band official'},
+  ],
+  'ra-alt': [
+    {name:'Red Hot Chili Peppers',sub:'Funk Rock 🇺🇸',q:'Red Hot Chili Peppers official'},
+    {name:'Rage Against the Machine',sub:'Rap Metal 🇺🇸',q:'Rage Against the Machine official'},
+    {name:'Radiohead',sub:'Alternative 🇬🇧',q:'Radiohead official'},
+    {name:'R.E.M.',sub:'Alternative Rock 🇺🇸',q:'REM official'},
+    {name:'The Cure',sub:'Gothic/New Wave 🇬🇧',q:'The Cure official'},
+    {name:'Depeche Mode',sub:'Synth Rock 🇬🇧',q:'Depeche Mode official'},
+    {name:'Nine Inch Nails',sub:'Industrial Rock 🇺🇸',q:'Nine Inch Nails official'},
+    {name:'Oasis',sub:'Britpop 🇬🇧',q:'Oasis official'},
+    {name:'Blur',sub:'Britpop 🇬🇧',q:'Blur band official'},
+    {name:'Weezer',sub:'Alternative Rock 🇺🇸',q:'Weezer official'},
+    {name:'Beck',sub:'Alternative 🇺🇸',q:'Beck musician official'},
+    {name:'Violent Femmes',sub:'Alternative 🇺🇸',q:'Violent Femmes official'},
+    {name:"Jane's Addiction",sub:'Alternative 🇺🇸',q:'Janes Addiction official'},
+    {name:'Primus',sub:'Funk Metal 🇺🇸',q:'Primus band official'},
+    {name:'Faith No More',sub:'Alternative Metal 🇺🇸',q:'Faith No More official'},
+    {name:'Mr. Bungle',sub:'Avant-garde 🇺🇸',q:'Mr Bungle official'},
+  ],
+  'ra-newwave': [
+    {name:'The Police',sub:'New Wave 🇬🇧',q:'The Police band official'},
+    {name:'Talking Heads',sub:'New Wave/Art Rock 🇺🇸',q:'Talking Heads official'},
+    {name:'Blondie',sub:'New Wave/Punk 🇺🇸',q:'Blondie official'},
+    {name:'Devo',sub:'New Wave 🇺🇸',q:'Devo official'},
+    {name:'XTC',sub:'New Wave 🇬🇧',q:'XTC band official'},
+    {name:'Elvis Costello',sub:'New Wave 🇬🇧',q:'Elvis Costello official'},
+    {name:'The Cars',sub:'New Wave 🇺🇸',q:'The Cars band official'},
+    {name:'Pretenders',sub:'New Wave/Rock 🇬🇧',q:'Pretenders band official'},
+    {name:'Echo & The Bunnymen',sub:'Post-Punk 🇬🇧',q:'Echo Bunnymen official'},
+    {name:'Joy Division / New Order',sub:'Post-Punk 🇬🇧',q:'New Order Joy Division official'},
+    {name:'Bauhaus',sub:'Gothic Rock 🇬🇧',q:'Bauhaus band official'},
+    {name:'Siouxsie & The Banshees',sub:'Post-Punk 🇬🇧',q:'Siouxsie and the Banshees official'},
+    {name:'Human League',sub:'Synth Pop 🇬🇧',q:'Human League official'},
+    {name:'Simple Minds',sub:'New Wave 🏴󠁧󠁢󠁳󠁣󠁴󠁿',q:'Simple Minds official'},
+  ],
+
+  /* ========= PROG & PUNK ========= */
+  'pp-prog': [
+    {name:'Rush',sub:'Progressive Rock 🇨🇦',q:'Rush band official'},
+    {name:'Dream Theater',sub:'Progressive Metal 🇺🇸',q:'Dream Theater official'},
+    {name:'Yes',sub:'Progressive Rock 🇬🇧',q:'Yes band official'},
+    {name:'Genesis',sub:'Art Rock 🇬🇧',q:'Genesis band official'},
+    {name:'King Crimson',sub:'Progressive 🇬🇧',q:'King Crimson official'},
+    {name:'Emerson Lake & Palmer',sub:'Progressive Rock 🇬🇧',q:'Emerson Lake Palmer official'},
+    {name:'Porcupine Tree',sub:'Progressive 🇬🇧',q:'Porcupine Tree official'},
+    {name:'Queensrÿche',sub:'Progressive Metal 🇺🇸',q:'Queensryche official'},
+    {name:'Coheed and Cambria',sub:'Progressive Rock 🇺🇸',q:'Coheed and Cambria official'},
+    {name:'Animals as Leaders',sub:'Progressive Metal 🇺🇸',q:'Animals as Leaders official'},
+    {name:'Tool',sub:'Progressive Metal 🇺🇸',q:'Tool band official'},
+    {name:'Gentle Giant',sub:'Progressive Rock 🇬🇧',q:'Gentle Giant official'},
+    {name:'Van der Graaf Generator',sub:'Prog Rock 🇬🇧',q:'Van der Graaf Generator official'},
+    {name:'Camel',sub:'Progressive Rock 🇬🇧',q:'Camel band official'},
+    {name:'Marillion',sub:'Neo-Prog 🇬🇧',q:'Marillion official'},
+  ],
+  'pp-punk': [
+    {name:'The Ramones',sub:'Punk Rock 🇺🇸',q:'Ramones official'},
+    {name:'Sex Pistols',sub:'Punk Britânico 🇬🇧',q:'Sex Pistols official'},
+    {name:'The Clash',sub:'Punk/New Wave 🇬🇧',q:'The Clash official'},
+    {name:'Green Day',sub:'Pop Punk 🇺🇸',q:'Green Day official'},
+    {name:'The Offspring',sub:'Punk Rock 🇺🇸',q:'The Offspring official'},
+    {name:'Blink-182',sub:'Pop Punk 🇺🇸',q:'Blink 182 official'},
+    {name:'Bad Religion',sub:'Melodic Hardcore 🇺🇸',q:'Bad Religion official'},
+    {name:'NOFX',sub:'Punk Rock 🇺🇸',q:'NOFX band official'},
+    {name:'Pennywise',sub:'Punk Rock 🇺🇸',q:'Pennywise band official'},
+    {name:'Social Distortion',sub:'Punk Rock 🇺🇸',q:'Social Distortion official'},
+    {name:'Descendents',sub:'Hardcore Punk 🇺🇸',q:'Descendents band official'},
+    {name:'Dead Kennedys',sub:'Hardcore Punk 🇺🇸',q:'Dead Kennedys official'},
+    {name:'Black Flag',sub:'Hardcore Punk 🇺🇸',q:'Black Flag band official'},
+    {name:'The Misfits',sub:'Horror Punk 🇺🇸',q:'Misfits band official'},
+    {name:'Buzzcocks',sub:'Punk Rock 🇬🇧',q:'Buzzcocks official'},
+  ],
+  'pp-folk': [
+    {name:'Neil Young',sub:'Folk/Grunge Godfather 🇨🇦',q:'Neil Young official'},
+    {name:'Bob Dylan',sub:'Folk Rock 🇺🇸',q:'Bob Dylan official'},
+    {name:'The Byrds',sub:'Folk Rock 🇺🇸',q:'The Byrds official'},
+    {name:'Buffalo Springfield',sub:'Folk Rock 🇺🇸',q:'Buffalo Springfield official'},
+    {name:'Crosby Stills Nash & Young',sub:'Folk Rock 🇺🇸',q:'Crosby Stills Nash Young official'},
+    {name:'Eagles',sub:'Country Rock 🇺🇸',q:'Eagles band official'},
+    {name:'Poco',sub:'Country Rock 🇺🇸',q:'Poco band official'},
+    {name:'Pure Prairie League',sub:'Country Rock 🇺🇸',q:'Pure Prairie League official'},
+    {name:'Emmylou Harris',sub:'Country Rock 🇺🇸',q:'Emmylou Harris official'},
+    {name:'Lucinda Williams',sub:'Americana 🇺🇸',q:'Lucinda Williams official'},
+    {name:'Ryan Adams',sub:'Alt Country 🇺🇸',q:'Ryan Adams official'},
+  ],
+
+  /* ========= JAZZ ========= */
+  'j-lendas': [
+    {name:'Miles Davis',sub:'Trompete — Jazz Legend 🇺🇸',q:'Miles Davis official'},
+    {name:'John Coltrane',sub:'Saxofone — Jazz Pioneer 🇺🇸',q:'John Coltrane official'},
+    {name:'Duke Ellington',sub:'Piano/Big Band 🇺🇸',q:'Duke Ellington official'},
+    {name:'Louis Armstrong',sub:'Trompete — Pai do Jazz 🇺🇸',q:'Louis Armstrong official'},
+    {name:'Charlie Parker',sub:'Saxofone — Bebop 🇺🇸',q:'Charlie Parker jazz official'},
+    {name:'Dizzy Gillespie',sub:'Trompete — Bebop 🇺🇸',q:'Dizzy Gillespie official'},
+    {name:'Thelonious Monk',sub:'Piano — Jazz Legend 🇺🇸',q:'Thelonious Monk official'},
+    {name:'Charles Mingus',sub:'Baixo — Compositor 🇺🇸',q:'Charles Mingus official'},
+    {name:'Ornette Coleman',sub:'Saxofone — Free Jazz 🇺🇸',q:'Ornette Coleman official'},
+    {name:'Art Blakey',sub:'Bateria — Hard Bop 🇺🇸',q:'Art Blakey Jazz Messengers official'},
+    {name:'Clifford Brown',sub:'Trompete — Hard Bop 🇺🇸',q:'Clifford Brown jazz official'},
+    {name:'Chet Baker',sub:'Trompete — Cool Jazz 🇺🇸',q:'Chet Baker official'},
+  ],
+  'j-piano': [
+    {name:'Herbie Hancock',sub:'Piano/Fusion 🇺🇸',q:'Herbie Hancock official'},
+    {name:'Chick Corea',sub:'Piano — Return to Forever 🇺🇸',q:'Chick Corea official'},
+    {name:'Bill Evans',sub:'Piano — Cool Jazz 🇺🇸',q:'Bill Evans piano official'},
+    {name:'Oscar Peterson',sub:'Piano Legend 🇨🇦',q:'Oscar Peterson piano official'},
+    {name:'McCoy Tyner',sub:'Piano — Coltrane Quartet 🇺🇸',q:'McCoy Tyner piano official'},
+    {name:'Keith Jarrett',sub:'Piano — Solo & Standards 🇺🇸',q:'Keith Jarrett piano official'},
+    {name:'Bud Powell',sub:'Piano — Bebop 🇺🇸',q:'Bud Powell piano official'},
+    {name:'Ahmad Jamal',sub:'Piano — Cool Jazz 🇺🇸',q:'Ahmad Jamal piano official'},
+    {name:'Dave Brubeck',sub:'Piano — Cool Jazz 🇺🇸',q:'Dave Brubeck official'},
+    {name:'Fats Domino',sub:'Piano/R&B 🇺🇸',q:'Fats Domino official'},
+    {name:'Ray Charles',sub:'Piano/Soul 🇺🇸',q:'Ray Charles official'},
+    {name:'Ramsey Lewis',sub:'Piano — Jazz/Soul 🇺🇸',q:'Ramsey Lewis official'},
+  ],
+  'j-sax': [
+    {name:'John Coltrane',sub:'Saxofone Tenor 🇺🇸',q:'John Coltrane saxophone'},
+    {name:'Charlie Parker',sub:'Saxofone Alto 🇺🇸',q:'Charlie Parker saxophone'},
+    {name:'Sonny Rollins',sub:'Saxofone Tenor 🇺🇸',q:'Sonny Rollins saxophone official'},
+    {name:'Wayne Shorter',sub:'Sax — Weather Report 🇺🇸',q:'Wayne Shorter saxophone official'},
+    {name:'Cannonball Adderley',sub:'Saxofone Alto 🇺🇸',q:'Cannonball Adderley official'},
+    {name:'Stan Getz',sub:'Bossa Nova/Jazz 🇺🇸',q:'Stan Getz saxophone official'},
+    {name:'Coleman Hawkins',sub:'Pai do Sax Jazz 🇺🇸',q:'Coleman Hawkins saxophone official'},
+    {name:'Lester Young',sub:'Saxofone — Cool Jazz 🇺🇸',q:'Lester Young saxophone official'},
+    {name:'Dexter Gordon',sub:'Saxofone Tenor 🇺🇸',q:'Dexter Gordon saxophone official'},
+    {name:'Michael Brecker',sub:'Saxofone Moderno 🇺🇸',q:'Michael Brecker saxophone official'},
+    {name:'Grover Washington Jr.',sub:'Smooth Jazz 🇺🇸',q:'Grover Washington Jr saxophone official'},
+    {name:'Kirk Whalum',sub:'Smooth Jazz 🇺🇸',q:'Kirk Whalum saxophone official'},
+  ],
+  'j-guitar': [
+    {name:'Wes Montgomery',sub:'Jazz Guitar Legend 🇺🇸',q:'Wes Montgomery guitar official'},
+    {name:'Django Reinhardt',sub:'Jazz Manouche 🇧🇪',q:'Django Reinhardt guitar official'},
+    {name:'Joe Pass',sub:'Bossa & Jazz Guitar 🇺🇸',q:'Joe Pass guitar official'},
+    {name:'George Benson',sub:'Jazz/R&B Guitar 🇺🇸',q:'George Benson guitar official'},
+    {name:'Pat Metheny',sub:'Jazz Fusion 🇺🇸',q:'Pat Metheny guitar official'},
+    {name:'John Scofield',sub:'Jazz Fusion 🇺🇸',q:'John Scofield guitar official'},
+    {name:'Mike Stern',sub:'Jazz Rock 🇺🇸',q:'Mike Stern guitar official'},
+    {name:'Grant Green',sub:'Hard Bop Jazz 🇺🇸',q:'Grant Green guitar official'},
+    {name:'Kenny Burrell',sub:'Jazz Guitar 🇺🇸',q:'Kenny Burrell guitar official'},
+    {name:'Barney Kessel',sub:'Jazz Guitar 🇺🇸',q:'Barney Kessel guitar official'},
+    {name:'Howard Roberts',sub:'Jazz Session Guitar 🇺🇸',q:'Howard Roberts guitar jazz'},
+    {name:'Larry Carlton',sub:'Jazz/Rock Fusion 🇺🇸',q:'Larry Carlton guitar official'},
+  ],
+  'j-fusion': [
+    {name:'Weather Report',sub:'Jazz Fusion 🇺🇸',q:'Weather Report jazz fusion official'},
+    {name:'Return to Forever',sub:'Jazz Fusion — Chick Corea 🇺🇸',q:'Return to Forever official'},
+    {name:'Mahavishnu Orchestra',sub:'Jazz Fusion — McLaughlin 🇬🇧',q:'Mahavishnu Orchestra official'},
+    {name:'Headhunters',sub:'Jazz Funk — Herbie Hancock 🇺🇸',q:'Herbie Hancock Headhunters official'},
+    {name:'Yellowjackets',sub:'Jazz Fusion 🇺🇸',q:'Yellowjackets jazz official'},
+    {name:'Spyro Gyra',sub:'Smooth Jazz Fusion 🇺🇸',q:'Spyro Gyra official'},
+    {name:'Hiromi Uehara',sub:'Piano Fusion 🇯🇵',q:'Hiromi Uehara piano official'},
+    {name:'Snarky Puppy',sub:'Jazz Fusion Moderno 🇺🇸',q:'Snarky Puppy official'},
+    {name:'Kamasi Washington',sub:'Jazz Moderno 🇺🇸',q:'Kamasi Washington official'},
+    {name:'Robert Glasper',sub:'Jazz/Hip-Hop 🇺🇸',q:'Robert Glasper official'},
+    {name:'Medeski Martin & Wood',sub:'Jazz Fusion 🇺🇸',q:'Medeski Martin Wood official'},
+  ],
+  'j-vocal': [
+    {name:'Frank Sinatra',sub:'Big Band/Jazz Vocal 🇺🇸',q:'Frank Sinatra official'},
+    {name:'Ella Fitzgerald',sub:'Jazz Vocal Legend 🇺🇸',q:'Ella Fitzgerald official'},
+    {name:'Billie Holiday',sub:'Jazz Vocal Legend 🇺🇸',q:'Billie Holiday official'},
+    {name:'Nat King Cole',sub:'Jazz Piano & Vocal 🇺🇸',q:'Nat King Cole official'},
+    {name:'Tony Bennett',sub:'Jazz/Swing Vocal 🇺🇸',q:'Tony Bennett official'},
+    {name:'Sarah Vaughan',sub:'Jazz Vocal 🇺🇸',q:'Sarah Vaughan official'},
+    {name:'Carmen McRae',sub:'Jazz Vocal 🇺🇸',q:'Carmen McRae official'},
+    {name:'Norah Jones',sub:'Jazz/Pop 🇺🇸',q:'Norah Jones official'},
+    {name:'Diana Krall',sub:'Jazz Piano & Vocal 🇨🇦',q:'Diana Krall official'},
+    {name:'Nina Simone',sub:'Jazz/Soul/Blues 🇺🇸',q:'Nina Simone official'},
+    {name:'Chet Baker',sub:'Trompete & Vocal 🇺🇸',q:'Chet Baker vocal official'},
+  ],
+
+  /* ========= BLUES ========= */
+  'b-classic': [
+    {name:'Muddy Waters',sub:'Chicago Blues 🇺🇸',q:'Muddy Waters official'},
+    {name:'B.B. King',sub:'Blues Legend 🇺🇸',q:'BB King official'},
+    {name:'Robert Johnson',sub:'Delta Blues 🇺🇸',q:'Robert Johnson blues official'},
+    {name:'John Lee Hooker',sub:'Delta Blues 🇺🇸',q:'John Lee Hooker official'},
+    {name:'Howlin Wolf',sub:'Chicago Blues 🇺🇸',q:'Howlin Wolf official'},
+    {name:'Little Walter',sub:'Blues Harmônica 🇺🇸',q:'Little Walter blues official'},
+    {name:'Sonny Boy Williamson',sub:'Blues Harmônica 🇺🇸',q:'Sonny Boy Williamson official'},
+    {name:'Lightning Hopkins',sub:'Texas Blues 🇺🇸',q:'Lightnin Hopkins official'},
+    {name:'Elmore James',sub:'Slide Guitar Blues 🇺🇸',q:'Elmore James official'},
+    {name:'Freddie King',sub:'Texas Blues 🇺🇸',q:'Freddie King blues official'},
+    {name:'Albert King',sub:'Blues King 🇺🇸',q:'Albert King blues official'},
+    {name:'T-Bone Walker',sub:'Electric Blues Pioneer 🇺🇸',q:'T Bone Walker official'},
+    {name:'Sonny Terry & Brownie McGhee',sub:'Piedmont Blues 🇺🇸',q:'Sonny Terry Brownie McGhee official'},
+    {name:'Chuck Berry',sub:'Rock n Roll / Blues 🇺🇸',q:'Chuck Berry official'},
+  ],
+  'b-rock': [
+    {name:'Eric Clapton',sub:'Blues Rock 🇬🇧',q:'Eric Clapton blues official'},
+    {name:'Stevie Ray Vaughan',sub:'Texas Blues Rock 🇺🇸',q:'Stevie Ray Vaughan official'},
+    {name:'Gary Moore',sub:'Blues Rock 🇮🇪',q:'Gary Moore blues official'},
+    {name:'Rory Gallagher',sub:'Irish Blues Rock 🇮🇪',q:'Rory Gallagher official'},
+    {name:'Paul Butterfield Blues Band',sub:'Blues Rock 🇺🇸',q:'Paul Butterfield Blues Band official'},
+    {name:'Canned Heat',sub:'Blues Rock 🇺🇸',q:'Canned Heat official'},
+    {name:'ZZ Top',sub:'Blues Rock 🇺🇸',q:'ZZ Top official'},
+    {name:'Peter Green',sub:'Fleetwood Mac 🇬🇧',q:'Peter Green blues official'},
+    {name:'Johnny Winter',sub:'Texas Blues Rock 🇺🇸',q:'Johnny Winter official'},
+    {name:'Robin Trower',sub:'Blues Rock 🇬🇧',q:'Robin Trower official'},
+    {name:'Savoy Brown',sub:'British Blues 🇬🇧',q:'Savoy Brown official'},
+    {name:'John Mayall & Bluesbreakers',sub:'British Blues 🇬🇧',q:'John Mayall Bluesbreakers official'},
+    {name:'Ten Years After',sub:'British Blues 🇬🇧',q:'Ten Years After official'},
+  ],
+  'b-vocal': [
+    {name:'Bessie Smith',sub:'Empress of Blues 🇺🇸',q:'Bessie Smith blues official'},
+    {name:'Ma Rainey',sub:'Mother of Blues 🇺🇸',q:'Ma Rainey blues official'},
+    {name:'Etta James',sub:'Soul/Blues 🇺🇸',q:'Etta James official'},
+    {name:'Janis Joplin',sub:'Blues Rock Vocal 🇺🇸',q:'Janis Joplin official'},
+    {name:'Koko Taylor',sub:'Queen of the Blues 🇺🇸',q:'Koko Taylor official'},
+    {name:'Big Mama Thornton',sub:'Blues 🇺🇸',q:'Big Mama Thornton official'},
+    {name:'Bobby Blue Bland',sub:'Blues/Soul 🇺🇸',q:'Bobby Blue Bland official'},
+    {name:'Otis Redding',sub:'Soul/Blues 🇺🇸',q:'Otis Redding official'},
+    {name:'Nina Simone',sub:'Jazz/Blues/Soul 🇺🇸',q:'Nina Simone official'},
+    {name:'Bonnie Raitt',sub:'Blues/Folk 🇺🇸',q:'Bonnie Raitt official'},
+    {name:'Susan Tedeschi',sub:'Blues Rock Vocal 🇺🇸',q:'Susan Tedeschi official'},
+  ],
+  'b-modern': [
+    {name:'Gary Clark Jr.',sub:'Modern Blues 🇺🇸',q:'Gary Clark Jr official'},
+    {name:'Joe Bonamassa',sub:'Blues Rock 🇺🇸',q:'Joe Bonamassa official'},
+    {name:'John Mayer',sub:'Modern Blues 🇺🇸',q:'John Mayer official'},
+    {name:'Christone "Kingfish" Ingram',sub:'New Blues 🇺🇸',q:'Kingfish Ingram official'},
+    {name:'Marcus King',sub:'Blues/Rock 🇺🇸',q:'Marcus King official'},
+    {name:'Tedeschi Trucks Band',sub:'Blues Rock 🇺🇸',q:'Tedeschi Trucks Band official'},
+    {name:'Kenny Wayne Shepherd',sub:'Modern Blues 🇺🇸',q:'Kenny Wayne Shepherd official'},
+    {name:'Robert Cray',sub:'Modern Blues 🇺🇸',q:'Robert Cray official'},
+    {name:'Jonny Lang',sub:'Modern Blues 🇺🇸',q:'Jonny Lang official'},
+    {name:'Beth Hart',sub:'Blues/Rock Vocal 🇺🇸',q:'Beth Hart official'},
+    {name:'Quinn Sullivan',sub:'Young Blues 🇺🇸',q:'Quinn Sullivan guitar official'},
+    {name:'Walter Trout',sub:'Blues Rock 🇺🇸',q:'Walter Trout official'},
+  ],
+
+  /* ========= AUSTRALIANOS ========= */
+  'aus-bands': [
+    {name:'AC/DC',sub:'Hard Rock Pioneiro',q:'ACDC official'},
+    {name:'INXS',sub:'New Wave/Rock',q:'INXS official'},
+    {name:'Midnight Oil',sub:'Political Rock',q:'Midnight Oil official'},
+    {name:'Cold Chisel',sub:'Pub Rock',q:'Cold Chisel official'},
+    {name:'Men at Work',sub:'New Wave/Pop Rock',q:'Men at Work official'},
+    {name:'Crowded House',sub:'Pop Rock 🇳🇿',q:'Crowded House official'},
+    {name:'Little River Band',sub:'AOR/Rock',q:'Little River Band official'},
+    {name:'The Easybeats',sub:'Beat Rock 60s',q:'The Easybeats official'},
+    {name:'Rose Tattoo',sub:'Hard Rock',q:'Rose Tattoo official'},
+    {name:'The Angels',sub:'Pub Rock',q:'The Angels Australian band official'},
+    {name:'Icehouse',sub:'New Wave/Synth',q:'Icehouse band official'},
+    {name:'Hoodoo Gurus',sub:'Alternative Rock',q:'Hoodoo Gurus official'},
+    {name:'Divinyls',sub:'Rock',q:'Divinyls official'},
+    {name:'Powderfinger',sub:'Alternative Rock',q:'Powderfinger official'},
+    {name:'Wolfmother',sub:'Classic Rock Revival',q:'Wolfmother official'},
+    {name:'Jet',sub:'Classic Rock Revival',q:'Jet band official'},
+    {name:'The Living End',sub:'Punk Rockabilly',q:'The Living End official'},
+    {name:'Silverchair',sub:'Grunge',q:'Silverchair official'},
+    {name:'The Church',sub:'Alternative Rock',q:'The Church Australian band official'},
+    {name:'Australian Crawl',sub:'Pub Rock',q:'Australian Crawl official'},
+    {name:'King Gizzard & The Lizard Wizard',sub:'Psychedelic/Prog',q:'King Gizzard Lizard Wizard official'},
+    {name:'Gang of Youths',sub:'Indie Rock Moderno',q:'Gang of Youths official'},
+    {name:'Teskey Brothers',sub:'Soul/Blues Moderno',q:'Teskey Brothers official'},
+    {name:'Ball Park Music',sub:'Indie Rock',q:'Ball Park Music official'},
+  ],
+  'aus-solo': [
+    {name:'Jimmy Barnes',sub:'Pub Rock / Cold Chisel',q:'Jimmy Barnes official'},
+    {name:'Paul Kelly',sub:'Rock/Songwriter',q:'Paul Kelly official'},
+    {name:'Nick Cave',sub:'Post-Punk / Alternative',q:'Nick Cave Bad Seeds official'},
+    {name:'John Farnham',sub:'Rock Vocal',q:'John Farnham official'},
+    {name:'Ian Moss',sub:'Blues Rock / Cold Chisel',q:'Ian Moss official'},
+    {name:'Dave Warner',sub:'Pub Rock',q:'Dave Warner band official'},
+    {name:'Angry Anderson',sub:'Rose Tattoo',q:'Angry Anderson official'},
+  ],
+
+  /* ========= INTERNACIONAIS ========= */
+  'int-celtic': [
+    {name:'U2',sub:'Rock Irlandês 🇮🇪',q:'U2 official'},
+    {name:'Thin Lizzy',sub:'Hard Rock Irlandês 🇮🇪',q:'Thin Lizzy official'},
+    {name:'The Cranberries',sub:'Alternative Irish 🇮🇪',q:'The Cranberries official'},
+    {name:'Rory Gallagher',sub:'Blues Rock 🇮🇪',q:'Rory Gallagher official'},
+    {name:'Gary Moore',sub:'Blues/Hard Rock 🇮🇪',q:'Gary Moore official'},
+    {name:"Sinéad O'Connor",sub:'Alternative 🇮🇪',q:'Sinead O Connor official'},
+    {name:'The Pogues',sub:'Folk Punk 🇮🇪',q:'The Pogues official'},
+    {name:'Horslips',sub:'Celtic Rock 🇮🇪',q:'Horslips official'},
+    {name:'Nazareth',sub:'Hard Rock Escocês 🏴󠁧󠁢󠁳󠁣󠁴󠁿',q:'Nazareth band official'},
+    {name:'Simple Minds',sub:'New Wave Escocês 🏴󠁧󠁢󠁳󠁣󠁴󠁿',q:'Simple Minds official'},
+    {name:'Travis',sub:'Britpop Escocês 🏴󠁧󠁢󠁳󠁣󠁴󠁿',q:'Travis band official'},
+    {name:'Teenage Fanclub',sub:'Alternative Escocês 🏴󠁧󠁢󠁳󠁣󠁴󠁿',q:'Teenage Fanclub official'},
+    {name:'Primal Scream',sub:'Rock Escocês 🏴󠁧󠁢󠁳󠁣󠁴󠁿',q:'Primal Scream official'},
+  ],
+  'int-italy': [
+    {name:'PFM (Premiata Forneria Marconi)',sub:'Progressive Rock 🇮🇹',q:'PFM Premiata Forneria Marconi official'},
+    {name:'Banco del Mutuo Soccorso',sub:'Progressive Rock 🇮🇹',q:'Banco del Mutuo Soccorso official'},
+    {name:'Le Orme',sub:'Progressive Rock 🇮🇹',q:'Le Orme official'},
+    {name:'Area',sub:'Progressive/Jazz Rock 🇮🇹',q:'Area band Italian official'},
+    {name:'Goblin',sub:'Progressive/Horror Rock 🇮🇹',q:'Goblin Italian band official'},
+    {name:'Formula 3',sub:'Progressive Rock 🇮🇹',q:'Formula 3 Italian band official'},
+    {name:'New Trolls',sub:'Prog/Psych Rock 🇮🇹',q:'New Trolls Italian official'},
+    {name:'Lucio Battisti',sub:'Pop/Rock 🇮🇹',q:'Lucio Battisti official'},
+    {name:'Maneskin',sub:'Rock Moderno 🇮🇹',q:'Maneskin official'},
+    {name:'Litfiba',sub:'New Wave/Rock 🇮🇹',q:'Litfiba official'},
+    {name:'Verdena',sub:'Alternative Rock 🇮🇹',q:'Verdena band official'},
+    {name:'Carmen Consoli',sub:'Alternative Rock 🇮🇹',q:'Carmen Consoli official'},
+  ],
+  'int-canada': [
+    {name:'Rush',sub:'Progressive Rock',q:'Rush band official'},
+    {name:'The Band',sub:'Roots Rock',q:'The Band official music'},
+    {name:'Neil Young',sub:'Folk/Rock',q:'Neil Young official'},
+    {name:'Bachman-Turner Overdrive',sub:'Hard Rock',q:'Bachman Turner Overdrive official'},
+    {name:'Guess Who',sub:'Rock Canadense',q:'The Guess Who official'},
+    {name:'April Wine',sub:'Hard Rock',q:'April Wine official'},
+    {name:'Triumph',sub:'Hard Rock',q:'Triumph band official'},
+    {name:'Loverboy',sub:'AOR',q:'Loverboy band official'},
+    {name:'Headpins',sub:'Hard Rock',q:'Headpins band official'},
+    {name:'Alanis Morissette',sub:'Alternative Rock',q:'Alanis Morissette official'},
+    {name:'Nickelback',sub:'Post Grunge',q:'Nickelback official'},
+    {name:'Arcade Fire',sub:'Indie Rock',q:'Arcade Fire official'},
+    {name:'Tragically Hip',sub:'Alternative Rock',q:'Tragically Hip official'},
+    {name:'Kim Mitchell',sub:'Hard Rock',q:'Kim Mitchell rock official'},
+  ],
+  'int-world': [
+    {name:'Scorpions',sub:'Hard Rock 🇩🇪',q:'Scorpions official'},
+    {name:'Rammstein',sub:'Industrial Metal 🇩🇪',q:'Rammstein official'},
+    {name:'Helloween',sub:'Power Metal 🇩🇪',q:'Helloween official'},
+    {name:'Accept',sub:'Heavy Metal 🇩🇪',q:'Accept band official'},
+    {name:'Kraftwerk',sub:'Electronic Rock 🇩🇪',q:'Kraftwerk official'},
+    {name:'Tokio Hotel',sub:'Rock Alemão 🇩🇪',q:'Tokio Hotel official'},
+    {name:'Nightwish',sub:'Symphonic Metal 🇫🇮',q:'Nightwish official'},
+    {name:'HIM',sub:'Gothic Rock 🇫🇮',q:'HIM band official'},
+    {name:'The Rasmus',sub:'Alternative Rock 🇫🇮',q:'The Rasmus official'},
+    {name:'Stratovarius',sub:'Power Metal 🇫🇮',q:'Stratovarius official'},
+    {name:'Roxette',sub:'Pop Rock 🇸🇪',q:'Roxette official'},
+    {name:'Europe',sub:'Glam/Power Rock 🇸🇪',q:'Europe band The Final Countdown official'},
+    {name:'Yngwie Malmsteen',sub:'Neoclassical 🇸🇪',q:'Yngwie Malmsteen official'},
+    {name:'Ghost',sub:'Rock Sueco 🇸🇪',q:'Ghost band official'},
+    {name:'Amon Amarth',sub:'Viking Metal 🇸🇪',q:'Amon Amarth official'},
+    {name:'The Gathering',sub:'Gothic/Prog 🇳🇱',q:'The Gathering band official'},
+    {name:'Héroes del Silencio',sub:'Rock Espanhol 🇪🇸',q:'Heroes del Silencio official'},
+    {name:'Soda Stereo',sub:'Rock Latino 🇦🇷',q:'Soda Stereo official'},
+    {name:'Los Fabulosos Cadillacs',sub:'Ska/Rock 🇦🇷',q:'Los Fabulosos Cadillacs official'},
+    {name:'Caetano Veloso',sub:'Tropicália/Rock 🇧🇷',q:'Caetano Veloso official'},
+    {name:'Os Mutantes',sub:'Tropicália/Psych Rock 🇧🇷',q:'Os Mutantes official'},
+  ],
+
+  /* ========= MODERNOS ========= */
+  'mod-rock': [
+    {name:'Muse',sub:'Alternative/Art Rock 🇬🇧',q:'Muse official'},
+    {name:'Foo Fighters',sub:'Alternative Rock 🇺🇸',q:'Foo Fighters official'},
+    {name:'Queens of the Stone Age',sub:'Desert Rock 🇺🇸',q:'Queens of the Stone Age official'},
+    {name:'The Black Keys',sub:'Blues Rock 🇺🇸',q:'The Black Keys official'},
+    {name:'Arctic Monkeys',sub:'Indie Rock 🇬🇧',q:'Arctic Monkeys official'},
+    {name:'Royal Blood',sub:'Rock Duo 🇬🇧',q:'Royal Blood official'},
+    {name:'Greta Van Fleet',sub:'Classic Rock Revival 🇺🇸',q:'Greta Van Fleet official'},
+    {name:'Rival Sons',sub:'Hard Rock Blues 🇺🇸',q:'Rival Sons official'},
+    {name:'The Strokes',sub:'Indie Rock 🇺🇸',q:'The Strokes official'},
+    {name:'White Stripes',sub:'Blues Rock Duo 🇺🇸',q:'White Stripes official'},
+    {name:'The Raconteurs',sub:'Rock 🇺🇸',q:'The Raconteurs official'},
+    {name:'Interpol',sub:'Post-Punk Revival 🇺🇸',q:'Interpol band official'},
+    {name:'Franz Ferdinand',sub:'Post-Punk 🏴󠁧󠁢󠁳󠁣󠁴󠁿',q:'Franz Ferdinand official'},
+    {name:'Bloc Party',sub:'Post-Punk 🇬🇧',q:'Bloc Party official'},
+    {name:'Tame Impala',sub:'Psychedelic Rock 🇦🇺',q:'Tame Impala official'},
+    {name:'Vampire Weekend',sub:'Indie Rock 🇺🇸',q:'Vampire Weekend official'},
+    {name:'Portugal. The Man',sub:'Alternative Rock 🇺🇸',q:'Portugal The Man official'},
+    {name:'Nathaniel Rateliff & Night Sweats',sub:'Soul/Rock 🇺🇸',q:'Nathaniel Rateliff official'},
+    {name:'Kaleo',sub:'Blues Rock 🇮🇸',q:'Kaleo band official'},
+    {name:'Ayron Jones',sub:'Rock/Blues 🇺🇸',q:'Ayron Jones official'},
+  ],
+  'mod-blues': [
+    {name:'Gary Clark Jr.',sub:'Modern Blues 🇺🇸',q:'Gary Clark Jr official'},
+    {name:'Joe Bonamassa',sub:'Blues Rock 🇺🇸',q:'Joe Bonamassa official'},
+    {name:'Tedeschi Trucks Band',sub:'Blues/Rock 🇺🇸',q:'Tedeschi Trucks Band official'},
+    {name:'Marcus King',sub:'Blues/Rock 🇺🇸',q:'Marcus King official'},
+    {name:'Christone Ingram',sub:'New Blues 🇺🇸',q:'Kingfish Ingram official'},
+    {name:'John Mayer',sub:'Blues/Pop 🇺🇸',q:'John Mayer official'},
+    {name:'Jonny Lang',sub:'Modern Blues 🇺🇸',q:'Jonny Lang official'},
+    {name:'Kenny Wayne Shepherd',sub:'Modern Blues 🇺🇸',q:'Kenny Wayne Shepherd official'},
+    {name:'Robert Cray',sub:'Blues 🇺🇸',q:'Robert Cray official'},
+    {name:'Beth Hart',sub:'Blues Vocal 🇺🇸',q:'Beth Hart official'},
+    {name:'Walter Trout',sub:'Blues Rock 🇺🇸',q:'Walter Trout official'},
+    {name:'Teskey Brothers',sub:'Soul/Blues 🇦🇺',q:'Teskey Brothers official'},
+  ],
+  'mod-metal': [
+    {name:'Avenged Sevenfold',sub:'Heavy Metal 🇺🇸',q:'Avenged Sevenfold official'},
+    {name:'Bring Me the Horizon',sub:'Metalcore 🇬🇧',q:'Bring Me the Horizon official'},
+    {name:'Trivium',sub:'Heavy Metal 🇺🇸',q:'Trivium official'},
+    {name:'Bullet for My Valentine',sub:'Metalcore 🇬🇧',q:'Bullet for My Valentine official'},
+    {name:'Parkway Drive',sub:'Metalcore 🇦🇺',q:'Parkway Drive official'},
+    {name:'Architects',sub:'Metalcore 🇬🇧',q:'Architects band official'},
+    {name:'Spiritbox',sub:'Metal Moderno 🇨🇦',q:'Spiritbox official'},
+    {name:'Code Orange',sub:'Progressive Hardcore 🇺🇸',q:'Code Orange band official'},
+    {name:'Knocked Loose',sub:'Hardcore 🇺🇸',q:'Knocked Loose official'},
+    {name:'Gojira',sub:'Progressive Metal 🇫🇷',q:'Gojira official'},
+    {name:'The Ocean',sub:'Prog Metal 🇩🇪',q:'The Ocean band official'},
+    {name:'Mastodon',sub:'Progressive Metal 🇺🇸',q:'Mastodon official'},
+  ],
+};
+
+function makeCard(item) {
+  const icon = icons[Math.floor(Math.random() * icons.length)];
+  return `<div class="card">
+    <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(item.q)}" target="_blank" rel="noopener">
+      <div class="card-icon">${icon}</div>
+      <div class="card-info">
+        <div class="card-name">${item.name}</div>
+        <div class="card-sub">${item.sub}</div>
+      </div>
+      <span class="yt-badge">YT</span>
+    </a>
+  </div>`;
+}
+
+Object.entries(DATA).forEach(([gridId, items]) => {
+  const el = document.getElementById(gridId);
+  if (el) el.innerHTML = items.map(makeCard).join('');
+});
+
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('visible');
+  btn.classList.add('active');
+  document.getElementById('searchInput').value = '';
+  filterCards();
+}
+
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.card').forEach(card => {
+    card.classList.toggle('hidden', !!(q && !card.innerText.toLowerCase().includes(q)));
+  });
+}
+</script>
+</body>
+</html>

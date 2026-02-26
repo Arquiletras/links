@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TV Utiná</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Zen+Old+Mincho:wght@400;700&family=Sawarabi+Mincho&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e0;
+      --red: #c0392b;
+      --orange: #e07b2a;
+      --green: #3a8c3f;
+      --ink: #1a1008;
+      --gold: #b8860b;
+      --soft: #e8e0c8;
+    }
+
+    body {
+      background-color: var(--cream);
+      font-family: 'Sawarabi Mincho', serif;
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Background pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(192,57,43,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(58,140,63,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 60% 10%, rgba(224,123,42,0.05) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Decorative corner lines */
+    .corner-tl, .corner-br {
+      position: fixed;
+      width: 120px;
+      height: 120px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .corner-tl { top: 0; left: 0; border-top: 3px solid var(--red); border-left: 3px solid var(--red); }
+    .corner-br { bottom: 0; right: 0; border-bottom: 3px solid var(--green); border-right: 3px solid var(--green); }
+
+    .wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* Header strip */
+    .strip {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeDown 0.8s ease forwards;
+    }
+    .strip-line { flex: 1; height: 1px; background: var(--gold); opacity: 0.5; }
+    .strip-text {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* Logo card */
+    .logo-card {
+      position: relative;
+      background: white;
+      border-radius: 4px;
+      padding: 40px 48px;
+      box-shadow:
+        0 2px 0 var(--red),
+        0 4px 0 var(--orange),
+        0 8px 40px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 480px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.2s forwards;
+    }
+
+    .logo-card::before {
+      content: '®';
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 10px;
+      color: var(--gold);
+      opacity: 0.6;
+    }
+
+    .logo-img {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 3px solid var(--soft);
+      box-shadow: 0 4px 20px rgba(192,57,43,0.15);
+    }
+
+    .logo-title {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .logo-subtitle {
+      font-size: 12px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 480px;
+      margin: 36px 0 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--ink); opacity: 0.15; }
+    .divider-flower { font-size: 18px; }
+
+    /* About */
+    .about {
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+      line-height: 1.9;
+      font-size: 15px;
+      color: #3a2e1a;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+
+    .about p + p { margin-top: 12px; }
+
+    .highlight {
+      display: inline-block;
+      background: linear-gradient(to bottom, transparent 60%, rgba(192,57,43,0.2) 60%);
+      font-weight: 700;
+    }
+
+    /* Links section */
+    .links-title {
+      margin-top: 44px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    .links-grid {
+      width: 100%;
+      max-width: 480px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.7s forwards;
+    }
+
+    .link-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      padding: 18px 20px;
+      background: white;
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--ink);
+      border-left: 3px solid transparent;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .link-card.youtube { border-left-color: var(--red); }
+    .link-card.youtube::after { background: rgba(192,57,43,0.04); }
+
+    .link-card.gvideo { border-left-color: var(--orange); }
+    .link-card.gvideo::after { background: rgba(224,123,42,0.04); }
+
+    .link-card.google { border-left-color: var(--green); }
+    .link-card.google::after { background: rgba(58,140,63,0.04); }
+
+    .link-card.channel { border-left-color: var(--gold); }
+    .link-card.channel::after { background: rgba(184,134,11,0.04); }
+
+    .link-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+    }
+    .link-card:hover::after { opacity: 1; }
+
+    .link-icon { font-size: 22px; }
+
+    .link-label {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .link-desc {
+      font-size: 11px;
+      color: #7a6a50;
+      letter-spacing: 0.3px;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 60px;
+      font-size: 11px;
+      color: #9a8a70;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.9s forwards;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .links-grid { grid-template-columns: 1fr; }
+      .logo-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="corner-tl"></div>
+  <div class="corner-br"></div>
+
+  <div class="wrapper">
+
+    <div class="strip">
+      <div class="strip-line"></div>
+      <span class="strip-text">Cultura Okinawana no Brasil</span>
+      <div class="strip-line"></div>
+    </div>
+
+    <div class="logo-card">
+      <img
+        class="logo-img"
+        src="1000162196.jpg"
+        alt="Logo TV Utiná"
+        onerror="this.style.display='none'"
+      />
+      <div class="logo-title">TV Utiná</div>
+      <div class="logo-subtitle">テレビ・ウチナー</div>
+    </div>
+
+    <div class="divider" style="animation-delay:0.4s">
+      <div class="divider-line"></div>
+      <span class="divider-flower">🌺</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="about">
+      <p>
+        A <span class="highlight">TV Utiná</span> é um programa televisivo dedicado à
+        preservação e difusão da <strong>cultura okinawana</strong> no Brasil,
+        com programação instrutiva, cultural e descontraída.
+      </p>
+      <p>
+        Comandada pela apresentadora <span class="highlight">Mieko Senaha</span> —
+        primeira mulher a ser nomeada Embaixadora da Boa Vontade de Okinawa no Brasil —
+        o programa vai ao ar aos <strong>domingos, às 21h30</strong>, pelo canal aberto <strong>55.1</strong>.
+      </p>
+      <p>
+        Em sua 10ª edição, a TV Utiná celebra a identidade <em>uchinanchu</em> (okinawana)
+        e fortalece os laços entre a comunidade e suas raízes no Japão.
+      </p>
+    </div>
+
+    <div class="links-title">Acesse • アクセス</div>
+
+    <div class="links-grid">
+
+      <a class="link-card youtube"
+         href="https://www.youtube.com/@tvutina6240"
+         target="_blank" rel="noopener">
+        <span class="link-icon">▶️</span>
+        <span class="link-label">Canal YouTube</span>
+        <span class="link-desc">@tvutina6240 — canal oficial</span>
+      </a>
+
+      <a class="link-card gvideo"
+         href="https://www.youtube.com/results?search_query=TV+Utin%C3%A1"
+         target="_blank" rel="noopener">
+        <span class="link-icon">🎬</span>
+        <span class="link-label">Vídeos no YouTube</span>
+        <span class="link-desc">Busca de todos os vídeos</span>
+      </a>
+
+      <a class="link-card google"
+         href="https://www.google.com/search?q=TV+Utin%C3%A1&tbm=vid"
+         target="_blank" rel="noopener">
+        <span class="link-icon">🎥</span>
+        <span class="link-label">Google Vídeos</span>
+        <span class="link-desc">Resultados em vídeo no Google</span>
+      </a>
+
+      <a class="link-card channel"
+         href="https://www.google.com/search?q=TV+Utin%C3%A1"
+         target="_blank" rel="noopener">
+        <span class="link-icon">🔍</span>
+        <span class="link-label">Pesquisar no Google</span>
+        <span class="link-desc">Todos os resultados</span>
+      </a>
+
+    </div>
+
+    <div class="footer">TV Utiná · ウチナーテレビ · Brasil</div>
+
+  </div>
+
+</body>
+</html>

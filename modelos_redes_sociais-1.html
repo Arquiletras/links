@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modelos — YouTube & TikTok</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f0e8;
+      --card: #ede6d8;
+      --border: #d6cbb8;
+      --accent-yt: #c0392b;
+      --accent-tt: #006f6a;
+      --gold: #8b6914;
+      --text: #2c2416;
+      --muted: #9e8f7a;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    header {
+      padding: 80px 40px 40px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: 'FASHION';
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-family: 'Playfair Display', serif;
+      font-size: 120px;
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px #d6cbb8;
+      letter-spacing: 20px;
+      pointer-events: none;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -1px;
+      color: var(--text);
+    }
+
+    h1 span {
+      color: var(--gold);
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Search + filter */
+    .controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 24px 40px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      padding: 10px 16px;
+      letter-spacing: 1px;
+      outline: none;
+      flex: 1;
+      min-width: 200px;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]::placeholder { color: var(--muted); }
+    input[type="text"]:focus { border-color: var(--gold); }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .count {
+      margin-left: auto;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      padding: 0;
+    }
+
+    .card {
+      background: var(--bg);
+      padding: 28px 32px;
+      transition: background 0.2s;
+      animation: fadeIn 0.4s ease both;
+    }
+    .card:hover { background: var(--card); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-number {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.5px;
+      padding: 7px 12px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .link-item.yt {
+      color: var(--accent-yt);
+      border-color: #e8ccc9;
+      background: #fdf5f5;
+    }
+    .link-item.yt:hover {
+      background: #f5dbd9;
+      border-color: var(--accent-yt);
+    }
+
+    .link-item.tt {
+      color: var(--accent-tt);
+      border-color: #b8d9d7;
+      background: #eef7f6;
+    }
+    .link-item.tt:hover {
+      background: #c8e8e6;
+      border-color: var(--accent-tt);
+    }
+
+    .link-label {
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.6;
+      white-space: nowrap;
+    }
+
+    .link-url {
+      opacity: 0.85;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .no-link {
+      font-size: 0.65rem;
+      color: #bfb49f;
+      letter-spacing: 2px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="subtitle">Diretório de Redes Sociais</p>
+  <h1>As <span>100</span> Modelos<br/>Mais Aclamadas</h1>
+</header>
+
+<div class="controls">
+  <input type="text" id="search" placeholder="Buscar modelo..." />
+  <button class="filter-btn active" data-filter="all">Todas</button>
+  <button class="filter-btn" data-filter="yt">YouTube</button>
+  <button class="filter-btn" data-filter="tt">TikTok</button>
+  <span class="count" id="count">100 modelos</span>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<footer>© 2025 — Links coletados para fins informativos</footer>
+
+<script>
+const models = [
+  // Supermodelos Clássicas 80-90
+  { name: "Naomi Campbell",          yt: "https://www.youtube.com/Naomi",                          tt: "https://www.tiktok.com/@naomi" },
+  { name: "Cindy Crawford",          yt: "https://www.youtube.com/@CindyCrawford",                 tt: "https://www.tiktok.com/@cindycrawford" },
+  { name: "Linda Evangelista",       yt: null,                                                      tt: null },
+  { name: "Christy Turlington",      yt: null,                                                      tt: null },
+  { name: "Claudia Schiffer",        yt: "https://www.youtube.com/@claudiaschiffer",               tt: "https://www.tiktok.com/@claudiaschiffer" },
+  { name: "Kate Moss",               yt: null,                                                      tt: null },
+  { name: "Tyra Banks",              yt: "https://www.youtube.com/@tyrabanks",                     tt: "https://www.tiktok.com/@tyrabanks" },
+  { name: "Elle Macpherson",         yt: "https://www.youtube.com/@ellemacpherson",                tt: "https://www.tiktok.com/@ellemacpherson" },
+  { name: "Stephanie Seymour",       yt: null,                                                      tt: null },
+  { name: "Tatjana Patitz",          yt: null,                                                      tt: null },
+  { name: "Karen Mulder",            yt: null,                                                      tt: null },
+  { name: "Nadja Auermann",          yt: null,                                                      tt: null },
+  { name: "Shalom Harlow",           yt: null,                                                      tt: null },
+  { name: "Helena Christensen",      yt: "https://www.youtube.com/@helenachristensen",             tt: "https://www.tiktok.com/@helenachristensen" },
+  { name: "Eva Herzigova",           yt: null,                                                      tt: null },
+  { name: "Amber Valletta",          yt: null,                                                      tt: null },
+  { name: "Stella Tennant",          yt: null,                                                      tt: null },
+  { name: "Kristen McMenamy",        yt: null,                                                      tt: null },
+  { name: "Niki Taylor",             yt: null,                                                      tt: null },
+  { name: "Laetitia Casta",          yt: "https://www.youtube.com/@laetitiacasta",                 tt: "https://www.tiktok.com/@laetitiacasta" },
+  // Anos 2000
+  { name: "Gisele Bündchen",         yt: "https://www.youtube.com/@gisele",                        tt: "https://www.tiktok.com/@gisele" },
+  { name: "Adriana Lima",            yt: "https://www.youtube.com/@adrianalima",                   tt: "https://www.tiktok.com/@adrianalima" },
+  { name: "Alessandra Ambrosio",     yt: "https://www.youtube.com/@alessandraambrosio",            tt: "https://www.tiktok.com/@alessandraambrosio" },
+  { name: "Heidi Klum",              yt: "https://www.youtube.com/@HeidiKlum",                     tt: "https://www.tiktok.com/@heidiklum" },
+  { name: "Miranda Kerr",            yt: "https://www.youtube.com/@MirandaKerr",                   tt: "https://www.tiktok.com/@mirandakerr" },
+  { name: "Karolína Kurková",        yt: null,                                                      tt: null },
+  { name: "Doutzen Kroes",           yt: "https://www.youtube.com/@doutzenkroes",                  tt: "https://www.tiktok.com/@doutzenkroes" },
+  { name: "Lily Donaldson",          yt: null,                                                      tt: null },
+  { name: "Jessica Stam",            yt: null,                                                      tt: null },
+  { name: "Gemma Ward",              yt: null,                                                      tt: null },
+  { name: "Natalia Vodianova",       yt: "https://www.youtube.com/@natasupernova",                 tt: "https://www.tiktok.com/@natasupernova" },
+  { name: "Lara Stone",              yt: null,                                                      tt: null },
+  { name: "Erin Wasson",             yt: null,                                                      tt: null },
+  { name: "Lily Cole",               yt: "https://www.youtube.com/@lilycole",                      tt: "https://www.tiktok.com/@lilycole" },
+  { name: "Abbey Lee Kershaw",       yt: null,                                                      tt: null },
+  { name: "Sasha Pivovarova",        yt: null,                                                      tt: null },
+  { name: "Raquel Zimmermann",       yt: null,                                                      tt: null },
+  { name: "Ana Beatriz Barros",      yt: null,                                                      tt: "https://www.tiktok.com/@anabeatrizbarros" },
+  { name: "Caroline Trentini",       yt: null,                                                      tt: null },
+  { name: "Isabeli Fontana",         yt: "https://www.youtube.com/@isabelifontana",                tt: "https://www.tiktok.com/@isabelifontana" },
+  // Anos 2010
+  { name: "Cara Delevingne",         yt: "https://www.youtube.com/@CaraDelevingne",                tt: "https://www.tiktok.com/@caradelevingne" },
+  { name: "Kendall Jenner",          yt: "https://www.youtube.com/@KendallJenner",                 tt: "https://www.tiktok.com/@kendalljenner" },
+  { name: "Gigi Hadid",              yt: "https://www.youtube.com/@GigiHadid",                     tt: "https://www.tiktok.com/@gigihadid" },
+  { name: "Bella Hadid",             yt: "https://www.youtube.com/@BellaHadid",                    tt: "https://www.tiktok.com/@bellahadid" },
+  { name: "Karlie Kloss",            yt: "https://www.youtube.com/@KarlieKloss",                   tt: "https://www.tiktok.com/@karliekloss" },
+  { name: "Joan Smalls",             yt: "https://www.youtube.com/@JoanSmalls",                    tt: "https://www.tiktok.com/@joansmalls" },
+  { name: "Liu Wen",                 yt: null,                                                      tt: "https://www.tiktok.com/@liuwen" },
+  { name: "Jourdan Dunn",            yt: "https://www.youtube.com/@jourdandunn",                   tt: "https://www.tiktok.com/@jourdandunn" },
+  { name: "Chanel Iman",             yt: null,                                                      tt: "https://www.tiktok.com/@chaneliman" },
+  { name: "Candice Swanepoel",       yt: "https://www.youtube.com/@candiceswanepoel",              tt: "https://www.tiktok.com/@candiceswanepoel" },
+  { name: "Rosie Huntington-Whiteley", yt: "https://www.youtube.com/@RosieHW",                    tt: "https://www.tiktok.com/@rosiehw" },
+  { name: "Bar Refaeli",             yt: "https://www.youtube.com/@barrefaeli",                    tt: "https://www.tiktok.com/@barrefaeli" },
+  { name: "Irina Shayk",             yt: "https://www.youtube.com/@irinashayk",                    tt: "https://www.tiktok.com/@irinashayk" },
+  { name: "Emily Ratajkowski",       yt: "https://www.youtube.com/@emrata",                        tt: "https://www.tiktok.com/@emrata" },
+  { name: "Winnie Harlow",           yt: "https://www.youtube.com/@WinnieHarlow",                  tt: "https://www.tiktok.com/@winnieharlow" },
+  { name: "Lineisy Montero",         yt: null,                                                      tt: null },
+  { name: "Adwoa Aboah",             yt: null,                                                      tt: "https://www.tiktok.com/@adwoaaboah" },
+  { name: "Leomie Anderson",         yt: null,                                                      tt: "https://www.tiktok.com/@leomieanderson" },
+  { name: "Maria Borges",            yt: null,                                                      tt: "https://www.tiktok.com/@mariaborges" },
+  { name: "Imaan Hammam",            yt: null,                                                      tt: "https://www.tiktok.com/@imaanhammam" },
+  { name: "Malaika Firth",           yt: null,                                                      tt: null },
+  { name: "Edie Campbell",           yt: null,                                                      tt: null },
+  { name: "Fei Fei Sun",             yt: null,                                                      tt: null },
+  { name: "Luma Grothe",             yt: null,                                                      tt: "https://www.tiktok.com/@lumagrothe" },
+  { name: "Xiao Wen Ju",             yt: null,                                                      tt: null },
+  // Anos 2020
+  { name: "Anok Yai",                yt: null,                                                      tt: "https://www.tiktok.com/@anokyai" },
+  { name: "Paloma Elsesser",         yt: null,                                                      tt: "https://www.tiktok.com/@palomija" },
+  { name: "Alton Mason",             yt: null,                                                      tt: "https://www.tiktok.com/@altonmason" },
+  { name: "Valentina Sampaio",       yt: null,                                                      tt: "https://www.tiktok.com/@valentina" },
+  { name: "Quannah Chasinghorse",    yt: null,                                                      tt: "https://www.tiktok.com/@quannahchasinghorse" },
+  { name: "Soo Joo Park",            yt: null,                                                      tt: null },
+  { name: "Vittoria Ceretti",        yt: "https://www.youtube.com/@vittoriaceretti",               tt: "https://www.tiktok.com/@vittoriaceretti" },
+  { name: "Kaia Gerber",             yt: "https://www.youtube.com/@KaiaGerber",                    tt: "https://www.tiktok.com/@kaiagerber" },
+  { name: "Lila Moss",               yt: null,                                                      tt: "https://www.tiktok.com/@lilamoss" },
+  { name: "Jordan Barrett",          yt: null,                                                      tt: "https://www.tiktok.com/@jordanbarrett" },
+  { name: "Deva Cassel",             yt: null,                                                      tt: "https://www.tiktok.com/@devacassel" },
+  { name: "Hiandra Martinez",        yt: null,                                                      tt: null },
+  { name: "Precious Lee",            yt: null,                                                      tt: "https://www.tiktok.com/@preciouslee" },
+  { name: "Ebonee Davis",            yt: null,                                                      tt: "https://www.tiktok.com/@eboneedavis" },
+  { name: "Ashley Graham",           yt: "https://www.youtube.com/@ashleygraham",                  tt: "https://www.tiktok.com/@ashleygraham" },
+  // Ícones Vintage
+  { name: "Twiggy",                  yt: "https://www.youtube.com/@twiggy",                        tt: null },
+  { name: "Jean Shrimpton",          yt: null,                                                      tt: null },
+  { name: "Veruschka",               yt: null,                                                      tt: null },
+  { name: "Lauren Hutton",           yt: null,                                                      tt: null },
+  { name: "Jerry Hall",              yt: null,                                                      tt: null },
+  { name: "Iman",                    yt: "https://www.youtube.com/@iman",                           tt: "https://www.tiktok.com/@iman" },
+  { name: "Christie Brinkley",       yt: "https://www.youtube.com/@christiebrinkley",              tt: "https://www.tiktok.com/@christiebrinkley" },
+  { name: "Beverly Johnson",         yt: null,                                                      tt: null },
+  { name: "Pat Cleveland",           yt: null,                                                      tt: null },
+  { name: "Lisa Taylor",             yt: null,                                                      tt: null },
+  { name: "Paulina Porizkova",       yt: "https://www.youtube.com/@paulinaporizkova",              tt: "https://www.tiktok.com/@paulinaporizkova" },
+  { name: "Carol Alt",               yt: "https://www.youtube.com/@carolalt",                      tt: null },
+  { name: "Grace Jones",             yt: "https://www.youtube.com/@gracejones",                    tt: null },
+  { name: "Donyale Luna",            yt: null,                                                      tt: null },
+  { name: "Marisa Berenson",         yt: null,                                                      tt: null },
+  { name: "Veronica Webb",           yt: null,                                                      tt: "https://www.tiktok.com/@veronicawebb" },
+  { name: "Beverly Peele",           yt: null,                                                      tt: null },
+  { name: "Yasmin Le Bon",           yt: null,                                                      tt: null },
+  { name: "Marie Helvin",            yt: null,                                                      tt: null },
+  { name: "Patti Hansen",            yt: null,                                                      tt: null },
+];
+
+const grid = document.getElementById('grid');
+const countEl = document.getElementById('count');
+const searchEl = document.getElementById('search');
+const filterBtns = document.querySelectorAll('.filter-btn');
+let currentFilter = 'all';
+
+function ytIcon() {
+  return `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/></svg>`;
+}
+
+function ttIcon() {
+  return `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.17 8.17 0 004.84 1.56V6.81a4.85 4.85 0 01-1.07-.12z"/></svg>`;
+}
+
+function render() {
+  const query = searchEl.value.toLowerCase();
+  let visible = 0;
+
+  grid.innerHTML = '';
+  models.forEach((m, i) => {
+    const matchSearch = m.name.toLowerCase().includes(query);
+    const matchFilter =
+      currentFilter === 'all' ||
+      (currentFilter === 'yt' && m.yt) ||
+      (currentFilter === 'tt' && m.tt);
+
+    if (!matchSearch || !matchFilter) return;
+    visible++;
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.animationDelay = `${(visible - 1) * 20}ms`;
+
+    const ytLink = m.yt
+      ? `<a class="link-item yt" href="${m.yt}" target="_blank" rel="noopener">
+          ${ytIcon()}
+          <span class="link-label">YouTube</span>
+          <span class="link-url">${m.yt.replace('https://www.youtube.com/', '')}</span>
+        </a>`
+      : `<span class="no-link">— YouTube não encontrado</span>`;
+
+    const ttLink = m.tt
+      ? `<a class="link-item tt" href="${m.tt}" target="_blank" rel="noopener">
+          ${ttIcon()}
+          <span class="link-label">TikTok</span>
+          <span class="link-url">${m.tt.replace('https://www.tiktok.com/', '')}</span>
+        </a>`
+      : `<span class="no-link">— TikTok não encontrado</span>`;
+
+    card.innerHTML = `
+      <div class="card-number">${String(i + 1).padStart(2, '0')}</div>
+      <div class="card-name">${m.name}</div>
+      <div class="links">${ytLink}${ttLink}</div>
+    `;
+    grid.appendChild(card);
+  });
+
+  countEl.textContent = `${visible} modelo${visible !== 1 ? 's' : ''}`;
+}
+
+searchEl.addEventListener('input', render);
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>

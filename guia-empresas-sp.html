@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Empresas SP — Jardins · Paulista · Pinheiros · Zona Sul</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #00c896;
+    --verde-escuro: #00a07a;
+    --amarelo: #f5c400;
+    --laranja: #ff6b35;
+    --azul: #1a1f3c;
+    --azul-medio: #2d3561;
+    --cinza-claro: #f4f5f7;
+    --cinza-texto: #6b7280;
+    --branco: #ffffff;
+    --sombra: 0 4px 24px rgba(0,0,0,0.10);
+    --sombra-hover: 0 8px 32px rgba(0,200,150,0.18);
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cinza-claro);
+    color: var(--azul);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--azul) 0%, var(--azul-medio) 60%, #3a4a8a 100%);
+    color: white;
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(0,200,150,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(245,196,0,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(0,200,150,0.18);
+    border: 1px solid rgba(0,200,150,0.4);
+    color: var(--verde);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 span { color: var(--verde); }
+  .hero p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    max-width: 540px;
+    margin: 0 auto 28px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat strong {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--verde);
+  }
+  .stat span {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* FILTROS */
+  .filtros-wrap {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .filtros {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    padding: 12px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    scrollbar-width: none;
+  }
+  .filtros::-webkit-scrollbar { display: none; }
+  .filtro-btn {
+    flex-shrink: 0;
+    padding: 8px 18px;
+    border-radius: 100px;
+    border: 1.5px solid #e5e7eb;
+    background: white;
+    color: var(--cinza-texto);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .filtro-btn:hover {
+    border-color: var(--verde);
+    color: var(--verde-escuro);
+  }
+  .filtro-btn.ativo {
+    background: var(--azul);
+    border-color: var(--azul);
+    color: white;
+  }
+
+  /* BUSCA */
+  .busca-wrap {
+    max-width: 1100px;
+    margin: 32px auto 0;
+    padding: 0 16px;
+  }
+  .busca-input {
+    width: 100%;
+    padding: 14px 20px 14px 48px;
+    border-radius: var(--radius);
+    border: 1.5px solid #e5e7eb;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--azul);
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 16px center;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .busca-input:focus { border-color: var(--verde); }
+  .busca-input::placeholder { color: #adb5bd; }
+
+  /* CONTEÚDO */
+  .conteudo {
+    max-width: 1100px;
+    margin: 28px auto 60px;
+    padding: 0 16px;
+  }
+
+  /* SEÇÃO REGIÃO */
+  .regiao {
+    margin-bottom: 48px;
+  }
+  .regiao-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .regiao-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .regiao-titulo {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--azul);
+  }
+  .regiao-sub {
+    font-size: 13px;
+    color: var(--cinza-texto);
+    margin-top: 2px;
+  }
+
+  /* SETOR GRUPO */
+  .setor-grupo {
+    margin-bottom: 20px;
+  }
+  .setor-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--cinza-texto);
+    margin-bottom: 12px;
+    padding: 4px 12px;
+    background: #f0f1f4;
+    border-radius: 100px;
+  }
+
+  /* GRID DE CARDS */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  /* CARD */
+  .card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    border: 1.5px solid #eef0f3;
+    text-decoration: none;
+    color: var(--azul);
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    transition: all 0.22s cubic-bezier(.4,0,.2,1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--verde);
+    transform: scaleY(0);
+    transition: transform 0.2s;
+    border-radius: 0 2px 2px 0;
+  }
+  .card:hover {
+    border-color: var(--verde);
+    box-shadow: var(--sombra-hover);
+    transform: translateY(-2px);
+  }
+  .card:hover::before { transform: scaleY(1); }
+  .card-emoji {
+    font-size: 22px;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cinza-claro);
+    border-radius: 10px;
+  }
+  .card-info { flex: 1; min-width: 0; }
+  .card-nome {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-setor {
+    font-size: 11px;
+    color: var(--cinza-texto);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-arrow {
+    color: var(--verde);
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+  .card:hover .card-arrow { opacity: 1; transform: translateX(3px); }
+  .card-gptw {
+    position: absolute;
+    top: 8px; right: 8px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: var(--amarelo);
+    color: #7a5c00;
+    padding: 2px 7px;
+    border-radius: 100px;
+    text-transform: uppercase;
+  }
+
+  /* PLATAFORMAS */
+  .plataformas-section {
+    background: var(--azul);
+    border-radius: 20px;
+    padding: 36px 32px;
+    margin-top: 48px;
+    color: white;
+  }
+  .plataformas-titulo {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .plataformas-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 24px;
+  }
+  .plataformas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .plataforma-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 16px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .plataforma-card:hover {
+    background: rgba(0,200,150,0.18);
+    border-color: var(--verde);
+  }
+  .plataforma-nome {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .plataforma-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+  .plataforma-link {
+    font-size: 12px;
+    color: var(--verde);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* CONTADOR */
+  .contador {
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    color: var(--cinza-texto);
+  }
+  .contador strong { color: var(--azul); }
+
+  /* OCULTAR */
+  .hidden { display: none !important; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 32px 16px;
+    font-size: 12px;
+    color: #adb5bd;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr 1fr; }
+    .hero { padding: 40px 16px 36px; }
+    .stats-row { gap: 20px; }
+    .plataformas-section { padding: 24px 16px; }
+  }
+  @media (max-width: 380px) {
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">📍 São Paulo · Guia Corporativo 2025</div>
+  <h1>Onde trabalhar<br>em <span>São Paulo?</span></h1>
+  <p>Guia completo com as melhores empresas nas regiões mais corporativas da cidade — clique e pesquise diretamente no Google.</p>
+  <div class="stats-row">
+    <div class="stat"><strong>+120</strong><span>Empresas</span></div>
+    <div class="stat"><strong>6</strong><span>Regiões</span></div>
+    <div class="stat"><strong>8</strong><span>Setores</span></div>
+    <div class="stat"><strong>100%</strong><span>Clicável</span></div>
+  </div>
+</div>
+
+<!-- FILTROS -->
+<div class="filtros-wrap">
+  <div class="filtros">
+    <button class="filtro-btn ativo" onclick="filtrar('todos')">🗺️ Todas as Regiões</button>
+    <button class="filtro-btn" onclick="filtrar('jardins')">🌿 Jardins</button>
+    <button class="filtro-btn" onclick="filtrar('paulista')">🏛️ Av. Paulista</button>
+    <button class="filtro-btn" onclick="filtrar('pinheiros')">💼 Faria Lima / Itaim</button>
+    <button class="filtro-btn" onclick="filtrar('sul-sp')">🏙️ Brooklin / Santo Amaro</button>
+    <button class="filtro-btn" onclick="filtrar('moema')">🏥 Moema / Vila Mariana</button>
+    <button class="filtro-btn" onclick="filtrar('abc')">🏭 ABC Paulista</button>
+  </div>
+</div>
+
+<!-- BUSCA -->
+<div class="busca-wrap">
+  <input type="text" class="busca-input" id="buscaInput" placeholder="Buscar empresa, setor ou bairro..." oninput="buscar(this.value)">
+</div>
+
+<div class="contador" id="contador">Exibindo <strong id="totalVisible">0</strong> empresas</div>
+
+<!-- CONTEÚDO -->
+<div class="conteudo" id="conteudo">
+
+  <!-- JARDINS -->
+  <div class="regiao" data-regiao="jardins">
+    <div class="regiao-header">
+      <div class="regiao-icon" style="background:#e8faf4;">🌿</div>
+      <div>
+        <div class="regiao-titulo">Jardins — Jardim Paulista, Jardim Europa, Cerqueira César</div>
+        <div class="regiao-sub">Saúde premium · Consultoria estratégica · Luxo & cosméticos</div>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">🏥 Saúde & Farmacêutica</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Hospital+Sirio+Libanes+vagas+trabalhar" target="_blank" data-nome="Hospital Sírio-Libanês" data-setor="Saúde">
+          <div class="card-emoji">🏥</div>
+          <div class="card-info"><div class="card-nome">Hospital Sírio-Libanês</div><div class="card-setor">Saúde de excelência</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Hospital+Alemao+Oswaldo+Cruz+vagas+trabalhar" target="_blank" data-nome="Hospital Alemão Oswaldo Cruz" data-setor="Saúde">
+          <div class="card-emoji">🏥</div>
+          <div class="card-info"><div class="card-nome">H. Alemão Oswaldo Cruz</div><div class="card-setor">Saúde & Pesquisa</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Johnson+Johnson+Brasil+vagas+trabalhar+Jardins" target="_blank" data-nome="Johnson & Johnson Brasil" data-setor="Farmacêutica">
+          <div class="card-emoji">💊</div>
+          <div class="card-info"><div class="card-nome">Johnson & Johnson</div><div class="card-setor">Farmacêutica multinacional</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Pfizer+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Pfizer Brasil" data-setor="Farmacêutica">
+          <div class="card-emoji">💊</div>
+          <div class="card-info"><div class="card-nome">Pfizer Brasil</div><div class="card-setor">Farmacêutica & Biotecnologia</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Roche+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Roche Brasil" data-setor="Farmacêutica">
+          <div class="card-emoji">💊</div>
+          <div class="card-info"><div class="card-nome">Roche Brasil</div><div class="card-setor">Oncologia & Biotech</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Novartis+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Novartis Brasil" data-setor="Farmacêutica">
+          <div class="card-emoji">💊</div>
+          <div class="card-info"><div class="card-nome">Novartis Brasil</div><div class="card-setor">Farmacêutica global</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=AstraZeneca+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="AstraZeneca Brasil" data-setor="Farmacêutica">
+          <div class="card-emoji">💊</div>
+          <div class="card-info"><div class="card-nome">AstraZeneca Brasil</div><div class="card-setor">Oncologia & Cardiologia</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">💼 Consultoria Estratégica</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=McKinsey+Company+Sao+Paulo+vagas+trabalhar+Jardins" target="_blank" data-nome="McKinsey & Company" data-setor="Consultoria">
+          <div class="card-emoji">📊</div>
+          <div class="card-info"><div class="card-nome">McKinsey & Company</div><div class="card-setor">Consultoria estratégica global</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">TOP 1</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Bain+Company+Brasil+vagas+trabalhar" target="_blank" data-nome="Bain & Company" data-setor="Consultoria">
+          <div class="card-emoji">📊</div>
+          <div class="card-info"><div class="card-nome">Bain & Company</div><div class="card-setor">Estratégia & Private Equity</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Roland+Berger+Brasil+vagas+trabalhar" target="_blank" data-nome="Roland Berger" data-setor="Consultoria">
+          <div class="card-emoji">📊</div>
+          <div class="card-info"><div class="card-nome">Roland Berger</div><div class="card-setor">Consultoria europeia premium</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Kearney+Brasil+vagas+trabalhar" target="_blank" data-nome="Kearney" data-setor="Consultoria">
+          <div class="card-emoji">📊</div>
+          <div class="card-info"><div class="card-nome">Kearney</div><div class="card-setor">Supply chain & Operações</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">✨ Luxo & Cosméticos</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=LOreal+Brasil+vagas+trabalhar" target="_blank" data-nome="L'Oréal Brasil" data-setor="Cosméticos">
+          <div class="card-emoji">✨</div>
+          <div class="card-info"><div class="card-nome">L'Oréal Brasil</div><div class="card-setor">Beleza & Cosméticos</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=LVMH+Brasil+vagas+trabalhar" target="_blank" data-nome="LVMH Brasil" data-setor="Luxo">
+          <div class="card-emoji">💎</div>
+          <div class="card-info"><div class="card-nome">LVMH Brasil</div><div class="card-setor">Grupo de luxo global</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Estee+Lauder+Brasil+vagas+trabalhar" target="_blank" data-nome="Estée Lauder" data-setor="Cosméticos">
+          <div class="card-emoji">✨</div>
+          <div class="card-info"><div class="card-nome">Estée Lauder</div><div class="card-setor">Cosméticos premium</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAULISTA -->
+  <div class="regiao" data-regiao="paulista">
+    <div class="regiao-header">
+      <div class="regiao-icon" style="background:#fff8e1;">🏛️</div>
+      <div>
+        <div class="regiao-titulo">Avenida Paulista</div>
+        <div class="regiao-sub">Centro financeiro histórico · Bancos · Big Four · Telecom</div>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">🏦 Bancos & Finanças</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Itau+Unibanco+vagas+trabalhar+Av+Paulista" target="_blank" data-nome="Itaú Unibanco" data-setor="Banco">
+          <div class="card-emoji">🏦</div>
+          <div class="card-info"><div class="card-nome">Itaú Unibanco</div><div class="card-setor">Maior banco da América Latina</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Bradesco+vagas+trabalhar+Faria+Lima" target="_blank" data-nome="Bradesco" data-setor="Banco">
+          <div class="card-emoji">🏦</div>
+          <div class="card-info"><div class="card-nome">Bradesco</div><div class="card-setor">Banco tradicional nacional</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Banco+Safra+vagas+trabalhar+Paulista" target="_blank" data-nome="Banco Safra" data-setor="Banco">
+          <div class="card-emoji">🏦</div>
+          <div class="card-info"><div class="card-nome">Banco Safra</div><div class="card-setor">Banco privado premium</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Citi+Brasil+vagas+trabalhar+Paulista" target="_blank" data-nome="Citi Brasil" data-setor="Banco">
+          <div class="card-emoji">🏦</div>
+          <div class="card-info"><div class="card-nome">Citi Brasil</div><div class="card-setor">Banco internacional global</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Deutsche+Bank+Brasil+vagas+trabalhar" target="_blank" data-nome="Deutsche Bank Brasil" data-setor="Banco">
+          <div class="card-emoji">🏦</div>
+          <div class="card-info"><div class="card-nome">Deutsche Bank Brasil</div><div class="card-setor">Banco alemão de investimentos</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Porto+Seguro+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Porto Seguro" data-setor="Seguros">
+          <div class="card-emoji">🔒</div>
+          <div class="card-info"><div class="card-nome">Porto Seguro</div><div class="card-setor">Seguros & Financeiro</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">📡 Telecom & Tecnologia</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Vivo+Telefonica+Brasil+vagas+trabalhar+Av+Paulista" target="_blank" data-nome="Vivo (Telefônica Brasil)" data-setor="Telecom">
+          <div class="card-emoji">📡</div>
+          <div class="card-info"><div class="card-nome">Vivo — Telefônica Brasil</div><div class="card-setor">Líder em Telecom no BR</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Claro+Brasil+vagas+trabalhar" target="_blank" data-nome="Claro Brasil" data-setor="Telecom">
+          <div class="card-emoji">📡</div>
+          <div class="card-info"><div class="card-nome">Claro Brasil</div><div class="card-setor">Telecom & Internet</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">📊 Big Four — Auditoria & Consultoria</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Deloitte+Brasil+vagas+trabalhar+Av+Paulista" target="_blank" data-nome="Deloitte" data-setor="Consultoria">
+          <div class="card-emoji">📋</div>
+          <div class="card-info"><div class="card-nome">Deloitte</div><div class="card-setor">Auditoria & Consultoria</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=PwC+Brasil+vagas+trabalhar+Faria+Lima" target="_blank" data-nome="PwC Brasil" data-setor="Consultoria">
+          <div class="card-emoji">📋</div>
+          <div class="card-info"><div class="card-nome">PwC Brasil</div><div class="card-setor">Estratégia & Auditoria</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=KPMG+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="KPMG Brasil" data-setor="Consultoria">
+          <div class="card-emoji">📋</div>
+          <div class="card-info"><div class="card-nome">KPMG Brasil</div><div class="card-setor">M&A & Deal Advisory</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=EY+Ernst+Young+Brasil+vagas+trabalhar" target="_blank" data-nome="EY (Ernst & Young)" data-setor="Consultoria">
+          <div class="card-emoji">📋</div>
+          <div class="card-info"><div class="card-nome">EY — Ernst & Young</div><div class="card-setor">Estratégia & Transações</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FARIA LIMA / ITAIM / BERRINI -->
+  <div class="regiao" data-regiao="pinheiros">
+    <div class="regiao-header">
+      <div class="regiao-icon" style="background:#e8f0ff;">💼</div>
+      <div>
+        <div class="regiao-titulo">Faria Lima · Itaim Bibi · Vila Olímpia · Berrini</div>
+        <div class="regiao-sub">Finanças de elite · Big Techs · Startups · Consultorias globais</div>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">💻 Tecnologia & Big Techs</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Google+Brasil+vagas+trabalhar+Vila+Olimpia" target="_blank" data-nome="Google Brasil" data-setor="Tecnologia">
+          <div class="card-emoji">🔍</div>
+          <div class="card-info"><div class="card-nome">Google Brasil</div><div class="card-setor">Big Tech — Vila Olímpia</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">TOP</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Meta+Facebook+Brasil+vagas+trabalhar+Itaim+Bibi" target="_blank" data-nome="Meta (Facebook) Brasil" data-setor="Tecnologia">
+          <div class="card-emoji">🌐</div>
+          <div class="card-info"><div class="card-nome">Meta (Facebook) Brasil</div><div class="card-setor">Big Tech — Itaim Bibi</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Microsoft+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Microsoft Brasil" data-setor="Tecnologia">
+          <div class="card-emoji">🪟</div>
+          <div class="card-info"><div class="card-nome">Microsoft Brasil</div><div class="card-setor">Big Tech — IA & Cloud</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Amazon+AWS+Brasil+vagas+trabalhar" target="_blank" data-nome="Amazon / AWS Brasil" data-setor="Tecnologia">
+          <div class="card-emoji">📦</div>
+          <div class="card-info"><div class="card-nome">Amazon / AWS Brasil</div><div class="card-setor">E-commerce & Cloud</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=SAP+Labs+Latin+America+vagas+trabalhar+Berrini" target="_blank" data-nome="SAP Labs Latin America" data-setor="Tecnologia">
+          <div class="card-emoji">⚙️</div>
+          <div class="card-info"><div class="card-nome">SAP Labs Latin America</div><div class="card-setor">#1 GPTW TI 2025 · Berrini</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">#1 TI</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=TOTVS+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="TOTVS" data-setor="Tecnologia">
+          <div class="card-emoji">🖥️</div>
+          <div class="card-info"><div class="card-nome">TOTVS</div><div class="card-setor">Maior empresa de TI nacional</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=IBM+Brasil+vagas+trabalhar+Berrini" target="_blank" data-nome="IBM Brasil" data-setor="Tecnologia">
+          <div class="card-emoji">💙</div>
+          <div class="card-info"><div class="card-nome">IBM Brasil</div><div class="card-setor">TI & Pesquisa · Berrini</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Oracle+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Oracle Brasil" data-setor="Tecnologia">
+          <div class="card-emoji">🔴</div>
+          <div class="card-info"><div class="card-nome">Oracle Brasil</div><div class="card-setor">Cloud & Banco de dados</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Salesforce+Brasil+vagas+trabalhar" target="_blank" data-nome="Salesforce Brasil" data-setor="Tecnologia">
+          <div class="card-emoji">☁️</div>
+          <div class="card-info"><div class="card-nome">Salesforce Brasil</div><div class="card-setor">CRM & Cloud</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Accenture+Brasil+vagas+trabalhar+Itaim+Bibi" target="_blank" data-nome="Accenture Brasil" data-setor="Tecnologia">
+          <div class="card-emoji">♾️</div>
+          <div class="card-info"><div class="card-nome">Accenture Brasil</div><div class="card-setor">Transformação digital — Itaim</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Thomson+Reuters+Brasil+Vila+Olimpia+vagas+trabalhar" target="_blank" data-nome="Thomson Reuters Brasil" data-setor="Tecnologia">
+          <div class="card-emoji">📰</div>
+          <div class="card-info"><div class="card-nome">Thomson Reuters Brasil</div><div class="card-setor">Dados jurídicos — Vila Olímpia</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Mercado+Livre+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Mercado Livre" data-setor="Tecnologia">
+          <div class="card-emoji">🛍️</div>
+          <div class="card-info"><div class="card-nome">Mercado Livre</div><div class="card-setor">E-commerce líder na AL</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">🦄 Startups & Fintechs</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Nubank+vagas+trabalhar+Vila+Olimpia" target="_blank" data-nome="Nubank" data-setor="Fintech">
+          <div class="card-emoji">💜</div>
+          <div class="card-info"><div class="card-nome">Nubank</div><div class="card-setor">Fintech #1 no Glassdoor BR</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">TOP</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=iFood+vagas+trabalhar+Itaim+Bibi" target="_blank" data-nome="iFood" data-setor="Startup">
+          <div class="card-emoji">🍔</div>
+          <div class="card-info"><div class="card-nome">iFood</div><div class="card-setor">Foodtech líder na AL</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=XP+Inc+vagas+trabalhar+Faria+Lima" target="_blank" data-nome="XP Inc." data-setor="Fintech">
+          <div class="card-emoji">📈</div>
+          <div class="card-info"><div class="card-nome">XP Inc.</div><div class="card-setor">Fintech de investimentos</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Creditas+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Creditas" data-setor="Fintech">
+          <div class="card-emoji">💳</div>
+          <div class="card-info"><div class="card-nome">Creditas</div><div class="card-setor">Crédito colateralizado</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=QuintoAndar+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="QuintoAndar" data-setor="Proptech">
+          <div class="card-emoji">🏠</div>
+          <div class="card-info"><div class="card-nome">QuintoAndar</div><div class="card-setor">Proptech & moradia digital</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=C6+Bank+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="C6 Bank" data-setor="Fintech">
+          <div class="card-emoji">🏦</div>
+          <div class="card-info"><div class="card-nome">C6 Bank</div><div class="card-setor">Neobank em crescimento</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=PagSeguro+PagBank+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="PagSeguro / PagBank" data-setor="Fintech">
+          <div class="card-emoji">💸</div>
+          <div class="card-info"><div class="card-nome">PagSeguro / PagBank</div><div class="card-setor">Pagamentos digitais</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Loft+startup+vagas+trabalhar" target="_blank" data-nome="Loft" data-setor="Proptech">
+          <div class="card-emoji">🏢</div>
+          <div class="card-info"><div class="card-nome">Loft</div><div class="card-setor">Proptech & imóveis digitais</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">💰 Bancos de Investimento & Asset Management</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=BTG+Pactual+vagas+trabalhar+Faria+Lima" target="_blank" data-nome="BTG Pactual" data-setor="Banco Investimento">
+          <div class="card-emoji">💰</div>
+          <div class="card-info"><div class="card-nome">BTG Pactual</div><div class="card-setor">Maior banco inv. da AL</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=JPMorgan+Chase+Brasil+vagas+trabalhar" target="_blank" data-nome="JPMorgan Chase Brasil" data-setor="Banco Investimento">
+          <div class="card-emoji">💵</div>
+          <div class="card-info"><div class="card-nome">JPMorgan Chase Brasil</div><div class="card-setor">Banco de elite americano</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Goldman+Sachs+Brasil+vagas+trabalhar+Faria+Lima" target="_blank" data-nome="Goldman Sachs Brasil" data-setor="Banco Investimento">
+          <div class="card-emoji">💵</div>
+          <div class="card-info"><div class="card-nome">Goldman Sachs Brasil</div><div class="card-setor">Referência global Wall Street</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Morgan+Stanley+Brasil+vagas+trabalhar" target="_blank" data-nome="Morgan Stanley Brasil" data-setor="Banco Investimento">
+          <div class="card-emoji">💵</div>
+          <div class="card-info"><div class="card-nome">Morgan Stanley Brasil</div><div class="card-setor">Gestão de patrimônio</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Bank+of+America+Merrill+Lynch+Brasil+vagas+trabalhar" target="_blank" data-nome="Bank of America Brasil" data-setor="Banco Investimento">
+          <div class="card-emoji">🏦</div>
+          <div class="card-info"><div class="card-nome">Bank of America Brasil</div><div class="card-setor">M&A & Crédito corporativo</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Itau+BBA+vagas+trabalhar+Faria+Lima" target="_blank" data-nome="Itaú BBA" data-setor="Banco Investimento">
+          <div class="card-emoji">💰</div>
+          <div class="card-info"><div class="card-nome">Itaú BBA</div><div class="card-setor">M&A, ECM e DCM</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Santander+Brasil+vagas+trabalhar+Itaim" target="_blank" data-nome="Santander Brasil" data-setor="Banco">
+          <div class="card-emoji">🔴</div>
+          <div class="card-info"><div class="card-nome">Santander Brasil</div><div class="card-setor">Banco global — Itaim Bibi</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">🎨 Marketing & Publicidade</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=AlmapBBDO+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="AlmapBBDO" data-setor="Publicidade">
+          <div class="card-emoji">🎨</div>
+          <div class="card-info"><div class="card-nome">AlmapBBDO</div><div class="card-setor">Agência mais premiada do BR</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">TOP</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Ogilvy+Brasil+vagas+trabalhar" target="_blank" data-nome="Ogilvy Brasil" data-setor="Publicidade">
+          <div class="card-emoji">🎨</div>
+          <div class="card-info"><div class="card-nome">Ogilvy Brasil</div><div class="card-setor">Brand & Estratégia</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=WPP+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="WPP Brasil" data-setor="Publicidade">
+          <div class="card-emoji">🌍</div>
+          <div class="card-info"><div class="card-nome">WPP Brasil</div><div class="card-setor">Maior grupo de comunicação do mundo</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Publicis+Groupe+Brasil+vagas+trabalhar" target="_blank" data-nome="Publicis Groupe Brasil" data-setor="Publicidade">
+          <div class="card-emoji">🎭</div>
+          <div class="card-info"><div class="card-nome">Publicis Groupe Brasil</div><div class="card-setor">Grupo Frances de comunicação</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=FCB+Brasil+agencia+vagas+trabalhar" target="_blank" data-nome="FCB Brasil" data-setor="Publicidade">
+          <div class="card-emoji">🖌️</div>
+          <div class="card-info"><div class="card-nome">FCB Brasil</div><div class="card-setor">Criação e campanhas integradas</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BROOKLIN / SANTO AMARO -->
+  <div class="regiao" data-regiao="sul-sp">
+    <div class="regiao-header">
+      <div class="regiao-icon" style="background:#fdf0e8;">🏙️</div>
+      <div>
+        <div class="regiao-titulo">Brooklin · Campo Belo · Santo Amaro · Ipiranga</div>
+        <div class="regiao-sub">Logística · Energia · Seguros · Serviços & RH</div>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">🔒 Seguros & Financeiro</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Zurich+Insurance+Brasil+vagas+trabalhar+Brooklin" target="_blank" data-nome="Zurich Insurance Brasil" data-setor="Seguros">
+          <div class="card-emoji">🛡️</div>
+          <div class="card-info"><div class="card-nome">Zurich Insurance Brasil</div><div class="card-setor">Seguros internacionais</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Tokio+Marine+Seguros+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Tokio Marine Seguros" data-setor="Seguros">
+          <div class="card-emoji">🛡️</div>
+          <div class="card-info"><div class="card-nome">Tokio Marine Seguros</div><div class="card-setor">Seguradora japonesa</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Aymore+CFI+vagas+trabalhar+Brooklin" target="_blank" data-nome="Aymoré CFI (Santander Group)" data-setor="Financeiro">
+          <div class="card-emoji">💳</div>
+          <div class="card-info"><div class="card-nome">Aymoré CFI</div><div class="card-setor">Crédito financiamento — Brooklin</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Edenred+Ticket+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Edenred Brasil (Ticket)" data-setor="Benefícios">
+          <div class="card-emoji">🎟️</div>
+          <div class="card-info"><div class="card-nome">Edenred (Ticket) Brasil</div><div class="card-setor">Benefícios corporativos</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">🚚 Logística</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=DHL+Brasil+vagas+trabalhar+Sao+Paulo+Zona+Sul" target="_blank" data-nome="DHL Brasil" data-setor="Logística">
+          <div class="card-emoji">🚚</div>
+          <div class="card-info"><div class="card-nome">DHL Brasil</div><div class="card-setor">Logística global</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=UPS+Brasil+vagas+trabalhar+Santo+Amaro" target="_blank" data-nome="UPS Brasil" data-setor="Logística">
+          <div class="card-emoji">🟤</div>
+          <div class="card-info"><div class="card-nome">UPS Brasil</div><div class="card-setor">Entregas expressas globais</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=FedEx+Brasil+vagas+trabalhar+Santo+Amaro+Sao+Paulo" target="_blank" data-nome="FedEx Brasil" data-setor="Logística">
+          <div class="card-emoji">🟣</div>
+          <div class="card-info"><div class="card-nome">FedEx Brasil</div><div class="card-setor">Logística expressa</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Grupo+Cosan+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Grupo Cosan" data-setor="Energia & Logística">
+          <div class="card-emoji">⛽</div>
+          <div class="card-info"><div class="card-nome">Grupo Cosan</div><div class="card-setor">Energia, logística e agro</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Raizen+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Raízen" data-setor="Energia">
+          <div class="card-emoji">🌿</div>
+          <div class="card-info"><div class="card-nome">Raízen</div><div class="card-setor">Energia & Biocombustíveis</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">👥 RH, Facilities & Serviços</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Sodexo+Brasil+Santo+Amaro+vagas+trabalhar" target="_blank" data-nome="Sodexo Brasil" data-setor="Facilities">
+          <div class="card-emoji">🍽️</div>
+          <div class="card-info"><div class="card-nome">Sodexo Brasil</div><div class="card-setor">Facilities & Alimentação</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=ManpowerGroup+Brasil+vagas+trabalhar+Santo+Amaro" target="_blank" data-nome="ManpowerGroup Brasil" data-setor="RH">
+          <div class="card-emoji">👥</div>
+          <div class="card-info"><div class="card-nome">ManpowerGroup Brasil</div><div class="card-setor">RH & Recrutamento</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Randstad+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Randstad Brasil" data-setor="RH">
+          <div class="card-emoji">👥</div>
+          <div class="card-info"><div class="card-nome">Randstad Brasil</div><div class="card-setor">RH & Recrutamento</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Adecco+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Adecco Brasil" data-setor="RH">
+          <div class="card-emoji">👥</div>
+          <div class="card-info"><div class="card-nome">Adecco Brasil</div><div class="card-setor">RH & Recrutamento</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOEMA / VILA MARIANA -->
+  <div class="regiao" data-regiao="moema">
+    <div class="regiao-header">
+      <div class="regiao-icon" style="background:#f3e8ff;">🏥</div>
+      <div>
+        <div class="regiao-titulo">Moema · Vila Mariana · Saúde</div>
+        <div class="regiao-sub">Saúde premium · Diagnósticos · Cosméticos · Educação</div>
+      </div>
+    </div>
+    <div class="setor-grupo">
+      <div class="setor-label">🏥 Saúde & Diagnósticos</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Hospital+do+Coracao+HCor+vagas+trabalhar+Vila+Mariana" target="_blank" data-nome="Hospital do Coração (HCor)" data-setor="Saúde">
+          <div class="card-emoji">❤️</div>
+          <div class="card-info"><div class="card-nome">Hospital do Coração (HCor)</div><div class="card-setor">Cardiologia de excelência</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Beneficencia+Portuguesa+BP+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="BP — Beneficência Portuguesa" data-setor="Saúde">
+          <div class="card-emoji">🏥</div>
+          <div class="card-info"><div class="card-nome">BP — Beneficência Portuguesa</div><div class="card-setor">Hospital de referência SP</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Hospital+Albert+Einstein+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Hospital Albert Einstein" data-setor="Saúde">
+          <div class="card-emoji">⭐</div>
+          <div class="card-info"><div class="card-nome">Hospital Albert Einstein</div><div class="card-setor">Top hospitalar nacional</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">TOP</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Fleury+Medicina+Saude+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Fleury Medicina e Saúde" data-setor="Diagnósticos">
+          <div class="card-emoji">🔬</div>
+          <div class="card-info"><div class="card-nome">Fleury Medicina e Saúde</div><div class="card-setor">Diagnósticos premium</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=DASA+Diagnosticos+da+America+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="DASA — Diagnósticos da América" data-setor="Diagnósticos">
+          <div class="card-emoji">🧪</div>
+          <div class="card-info"><div class="card-nome">DASA</div><div class="card-setor">Maior rede de diagnósticos BR</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=RD+Raia+Drogasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Drogasil / RD Saúde" data-setor="Farmácia">
+          <div class="card-emoji">💊</div>
+          <div class="card-info"><div class="card-nome">RD Saúde (Raia Drogasil)</div><div class="card-setor">Maior rede de farmácias BR</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Natura+%26Co+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Natura &Co" data-setor="Cosméticos">
+          <div class="card-emoji">🌸</div>
+          <div class="card-info"><div class="card-nome">Natura &Co</div><div class="card-setor">Beleza & sustentabilidade</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABC PAULISTA -->
+  <div class="regiao" data-regiao="abc">
+    <div class="regiao-header">
+      <div class="regiao-icon" style="background:#fff0e0;">🏭</div>
+      <div>
+        <div class="regiao-titulo">ABC Paulista — SBC · Santo André · São Caetano · Diadema</div>
+        <div class="regiao-sub">Maior polo industrial da América Latina · Automotivo · Química · Aço</div>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">🚗 Automotivo — São Bernardo do Campo</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Volkswagen+do+Brasil+vagas+trabalhar+Sao+Bernardo+do+Campo" target="_blank" data-nome="Volkswagen do Brasil" data-setor="Automotivo">
+          <div class="card-emoji">🚗</div>
+          <div class="card-info"><div class="card-nome">Volkswagen do Brasil</div><div class="card-setor">Automotivo — São Bernardo</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Mercedes-Benz+do+Brasil+vagas+trabalhar+Sao+Bernardo+do+Campo" target="_blank" data-nome="Mercedes-Benz do Brasil" data-setor="Automotivo">
+          <div class="card-emoji">⭐</div>
+          <div class="card-info"><div class="card-nome">Mercedes-Benz do Brasil</div><div class="card-setor">Automotivo & Indústria 4.0</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Scania+Latin+America+vagas+trabalhar+Sao+Bernardo+do+Campo" target="_blank" data-nome="Scania Latin America" data-setor="Automotivo">
+          <div class="card-emoji">🚛</div>
+          <div class="card-info"><div class="card-nome">Scania Latin America</div><div class="card-setor">Caminhões & Transporte</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=General+Motors+Brasil+vagas+trabalhar+Sao+Caetano+do+Sul" target="_blank" data-nome="General Motors do Brasil" data-setor="Automotivo">
+          <div class="card-emoji">🚙</div>
+          <div class="card-info"><div class="card-nome">General Motors Brasil (HQ)</div><div class="card-setor">Automotivo — São Caetano</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Stellantis+PSA+Brasil+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Stellantis Brasil" data-setor="Automotivo">
+          <div class="card-emoji">🚗</div>
+          <div class="card-info"><div class="card-nome">Stellantis Brasil</div><div class="card-setor">Fiat, Peugeot, Citroën...</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Mahle+Metal+Leve+vagas+trabalhar+Sao+Bernardo" target="_blank" data-nome="Mahle Metal Leve" data-setor="Autopeças">
+          <div class="card-emoji">🔧</div>
+          <div class="card-info"><div class="card-nome">Mahle Metal Leve</div><div class="card-setor">Autopeças — São Bernardo</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Bosch+do+Brasil+vagas+trabalhar+ABC" target="_blank" data-nome="Bosch do Brasil" data-setor="Autopeças / Tecnologia">
+          <div class="card-emoji">⚙️</div>
+          <div class="card-info"><div class="card-nome">Bosch do Brasil</div><div class="card-setor">Autopeças & Tecnologia</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Johnson+Controls+Brasil+vagas+trabalhar+Diadema" target="_blank" data-nome="Johnson Controls" data-setor="Autopeças">
+          <div class="card-emoji">🔩</div>
+          <div class="card-info"><div class="card-nome">Johnson Controls</div><div class="card-setor">Autopeças & Energia — Diadema</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">🧪 Química & Indústria</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=BASF+Brasil+vagas+trabalhar+Sao+Bernardo+do+Campo" target="_blank" data-nome="BASF Brasil" data-setor="Química">
+          <div class="card-emoji">🧪</div>
+          <div class="card-info"><div class="card-nome">BASF Brasil</div><div class="card-setor">Química — São Bernardo</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Braskem+vagas+trabalhar+Sao+Paulo" target="_blank" data-nome="Braskem" data-setor="Petroquímica">
+          <div class="card-emoji">⚗️</div>
+          <div class="card-info"><div class="card-nome">Braskem</div><div class="card-setor">Petroquímica nacional líder</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Rhodia+Solvay+Brasil+vagas+trabalhar" target="_blank" data-nome="Rhodia Solvay Brasil" data-setor="Química">
+          <div class="card-emoji">🧫</div>
+          <div class="card-info"><div class="card-nome">Rhodia Solvay Brasil</div><div class="card-setor">Química especialidades</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Usiminas+vagas+trabalhar+ABC+Sao+Caetano" target="_blank" data-nome="Usiminas" data-setor="Siderurgia">
+          <div class="card-emoji">🔩</div>
+          <div class="card-info"><div class="card-nome">Usiminas</div><div class="card-setor">Siderurgia & Aço</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=PPG+Industries+Brasil+vagas+trabalhar+Sao+Bernardo" target="_blank" data-nome="PPG Industries Brasil" data-setor="Química">
+          <div class="card-emoji">🎨</div>
+          <div class="card-info"><div class="card-nome">PPG Industries Brasil</div><div class="card-setor">Tintas automotivas</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="setor-grupo">
+      <div class="setor-label">🍫 Alimentos & Consumo</div>
+      <div class="cards-grid">
+        <a class="card" href="https://www.google.com/search?q=Nestle+Brasil+vagas+trabalhar+Sao+Bernardo+do+Campo" target="_blank" data-nome="Nestlé Brasil" data-setor="Alimentos">
+          <div class="card-emoji">🍫</div>
+          <div class="card-info"><div class="card-nome">Nestlé Brasil</div><div class="card-setor">Alimentos — São Bernardo</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Ajinomoto+do+Brasil+vagas+trabalhar+Santo+Andre" target="_blank" data-nome="Ajinomoto do Brasil" data-setor="Alimentos">
+          <div class="card-emoji">🍱</div>
+          <div class="card-info"><div class="card-nome">Ajinomoto do Brasil</div><div class="card-setor">Alimentos — Santo André</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Colgate-Palmolive+Brasil+vagas+trabalhar+Sao+Bernardo" target="_blank" data-nome="Colgate-Palmolive Brasil" data-setor="Bens de Consumo">
+          <div class="card-emoji">🪥</div>
+          <div class="card-info"><div class="card-nome">Colgate-Palmolive Brasil</div><div class="card-setor">Higiene & Bens de consumo</div></div>
+          <div class="card-arrow">→</div>
+          <div class="card-gptw">GPTW</div>
+        </a>
+        <a class="card" href="https://www.google.com/search?q=Bombril+vagas+trabalhar+Sao+Bernardo+do+Campo" target="_blank" data-nome="Bombril" data-setor="Bens de Consumo">
+          <div class="card-emoji">🧹</div>
+          <div class="card-info"><div class="card-nome">Bombril</div><div class="card-setor">Limpeza & Bens de consumo</div></div>
+          <div class="card-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLATAFORMAS -->
+  <div class="plataformas-section">
+    <div class="plataformas-titulo">🔗 Plataformas de Vagas & Rankings</div>
+    <div class="plataformas-sub">Pesquise diretamente nas melhores fontes para candidaturas e avaliações</div>
+    <div class="plataformas-grid">
+      <a class="plataforma-card" href="https://www.google.com/search?q=glassdoor+melhores+empresas+para+trabalhar+Sao+Paulo+2025" target="_blank">
+        <div class="plataforma-nome">Glassdoor SP</div>
+        <div class="plataforma-desc">Salários reais + avaliações de funcionários</div>
+        <div class="plataforma-link">Acessar →</div>
+      </a>
+      <a class="plataforma-card" href="https://www.google.com/search?q=GPTW+TI+2025+ranking+melhores+empresas+tecnologia+Brasil" target="_blank">
+        <div class="plataforma-nome">GPTW TI 2025</div>
+        <div class="plataforma-desc">140 melhores empresas de TI certificadas</div>
+        <div class="plataforma-link">Acessar →</div>
+      </a>
+      <a class="plataforma-card" href="https://www.google.com/search?q=GPTW+100+melhores+empresas+trabalhar+Sao+Paulo+2025" target="_blank">
+        <div class="plataforma-nome">GPTW SP 2025</div>
+        <div class="plataforma-desc">100 melhores empresas de SP — todos setores</div>
+        <div class="plataforma-link">Acessar →</div>
+      </a>
+      <a class="plataforma-card" href="https://www.google.com/search?q=linkedin+vagas+abertas+Sao+Paulo+Faria+Lima+Itaim+Berrini+2025" target="_blank">
+        <div class="plataforma-nome">LinkedIn Jobs SP</div>
+        <div class="plataforma-desc">Vagas abertas agora — Faria Lima, Paulista, Berrini</div>
+        <div class="plataforma-link">Acessar →</div>
+      </a>
+      <a class="plataforma-card" href="https://www.google.com/search?q=indeed+empregos+Sao+Paulo+Jardins+Paulista+Itaim+2025" target="_blank">
+        <div class="plataforma-nome">Indeed SP</div>
+        <div class="plataforma-desc">Vagas por bairro e salário</div>
+        <div class="plataforma-link">Acessar →</div>
+      </a>
+      <a class="plataforma-card" href="https://www.google.com/search?q=infojobs+vagas+Sao+Paulo+Jardins+Paulista+Itaim+Berrini" target="_blank">
+        <div class="plataforma-nome">Infojobs SP</div>
+        <div class="plataforma-desc">Vagas com filtro por região</div>
+        <div class="plataforma-link">Acessar →</div>
+      </a>
+      <a class="plataforma-card" href="https://www.google.com/search?q=catho+vagas+Sao+Paulo+2025+melhores+empresas" target="_blank">
+        <div class="plataforma-nome">Catho SP</div>
+        <div class="plataforma-desc">Empregos com foco no mercado brasileiro</div>
+        <div class="plataforma-link">Acessar →</div>
+      </a>
+      <a class="plataforma-card" href="https://www.google.com/search?q=vagas+ABC+Paulista+Sao+Bernardo+Santo+Andre+2025+glassdoor" target="_blank">
+        <div class="plataforma-nome">Glassdoor ABC</div>
+        <div class="plataforma-desc">Avaliações do polo industrial do ABC</div>
+        <div class="plataforma-link">Acessar →</div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Guia corporativo SP 2025 · Dados baseados em GPTW, Glassdoor e pesquisa de mercado · Clique nas empresas para buscar vagas diretamente no Google
+</div>
+
+<script>
+  let regiaoAtiva = 'todos';
+
+  function filtrar(regiao) {
+    regiaoAtiva = regiao;
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+    event.target.classList.add('ativo');
+    document.getElementById('buscaInput').value = '';
+    atualizarVisibilidade();
+  }
+
+  function buscar(termo) {
+    regiaoAtiva = 'todos';
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+    document.querySelector('.filtro-btn').classList.add('ativo');
+    atualizarVisibilidade(termo.toLowerCase());
+  }
+
+  function atualizarVisibilidade(termoBusca = '') {
+    let total = 0;
+    document.querySelectorAll('.regiao').forEach(regiao => {
+      const regiaoId = regiao.dataset.regiao;
+      const regiaoVisible = regiaoAtiva === 'todos' || regiaoId === regiaoAtiva;
+      let algumCardVisivel = false;
+
+      regiao.querySelectorAll('.card').forEach(card => {
+        const nome = (card.dataset.nome || '').toLowerCase();
+        const setor = (card.dataset.setor || '').toLowerCase();
+        const matchBusca = !termoBusca || nome.includes(termoBusca) || setor.includes(termoBusca);
+        const visivel = regiaoVisible && matchBusca;
+        card.style.display = visivel ? 'flex' : 'none';
+        if (visivel) { algumCardVisivel = true; total++; }
+      });
+
+      regiao.style.display = (regiaoVisible && algumCardVisivel) ? 'block' : 'none';
+    });
+
+    document.getElementById('totalVisible').textContent = total;
+  }
+
+  // Inicializar contador
+  window.addEventListener('load', atualizarVisibilidade);
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Atlas das Franquias dos EUA por Setor</title>
+<style>
+body { font-family: Arial; background:#f4f6f8; margin:30px; }
+h1 { text-align:center; }
+h2 { background:#1e3a5f; color:white; padding:8px; margin-top:30px; }
+.column { columns: 3; }
+a { color:#0b63c7; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.search { text-align:center; margin-bottom:20px; }
+input { padding:10px; width:280px; font-size:16px; }
+</style>
+
+<script>
+function searchList() {
+  let input = document.getElementById('search').value.toLowerCase();
+  let links = document.querySelectorAll('a');
+  links.forEach(link => {
+    link.style.display = link.textContent.toLowerCase().includes(input) ? "" : "none";
+  });
+}
+</script>
+
+</head>
+<body>
+
+<h1>Atlas das Franquias dos EUA</h1>
+
+<div class="search">
+<input type="text" id="search" onkeyup="searchList()" placeholder="Buscar franquia...">
+</div>
+<h2>🍔 Alimentação & Restaurantes</h2><div class='column'><a href='https://www.mcdonalds.com' target='_blank'>McDonald's</a><br><a href='https://www.subway.com' target='_blank'>Subway</a><br><a href='https://www.bk.com' target='_blank'>Burger King</a><br><a href='https://www.tacobell.com' target='_blank'>Taco Bell</a><br><a href='https://www.kfc.com' target='_blank'>KFC</a><br><a href='https://www.pizzahut.com' target='_blank'>Pizza Hut</a><br><a href='https://www.dominos.com' target='_blank'>Domino’s</a><br><a href='https://www.papajohns.com' target='_blank'>Papa John’s</a><br><a href='https://www.chick-fil-a.com' target='_blank'>Chick-fil-A</a><br><a href='https://www.wendys.com' target='_blank'>Wendy’s</a><br><a href='https://www.fiveguys.com' target='_blank'>Five Guys</a><br><a href='https://www.chipotle.com' target='_blank'>Chipotle</a><br><a href='https://www.wingstop.com' target='_blank'>Wingstop</a><br><a href='https://www.buffalowildwings.com' target='_blank'>Buffalo Wild Wings</a><br><a href='https://www.littlecaesars.com' target='_blank'>Little Caesars</a><br><a href='https://www.jersey-mikes.com' target='_blank'>Jersey Mike’s</a><br><a href='https://www.firehousesubs.com' target='_blank'>Firehouse Subs</a><br><a href='https://www.jimmyjohns.com' target='_blank'>Jimmy John’s</a><br><a href='https://www.panerabread.com' target='_blank'>Panera Bread</a><br><a href='https://www.pandaexpress.com' target='_blank'>Panda Express</a><br></div><h2>☕ Cafés & Docerias</h2><div class='column'><a href='https://www.starbucks.com' target='_blank'>Starbucks</a><br><a href='https://www.dunkin.com' target='_blank'>Dunkin'</a><br><a href='https://www.timhortons.com' target='_blank'>Tim Hortons</a><br><a href='https://www.krispykreme.com' target='_blank'>Krispy Kreme</a><br><a href='https://www.baskinrobbins.com' target='_blank'>Baskin Robbins</a><br><a href='https://www.dairyqueen.com' target='_blank'>Dairy Queen</a><br><a href='https://www.cinnabon.com' target='_blank'>Cinnabon</a><br><a href='https://www.auntieannes.com' target='_blank'>Auntie Anne’s</a><br><a href='https://www.coldstonecreamery.com' target='_blank'>Cold Stone Creamery</a><br></div><h2>🏋️ Fitness & Saúde</h2><div class='column'><a href='https://www.anytimefitness.com' target='_blank'>Anytime Fitness</a><br><a href='https://www.planetfitness.com' target='_blank'>Planet Fitness</a><br><a href='https://www.goldsgym.com' target='_blank'>Gold’s Gym</a><br><a href='https://www.snapfitness.com' target='_blank'>Snap Fitness</a><br><a href='https://www.orangetheory.com' target='_blank'>Orangetheory Fitness</a><br><a href='https://f45training.com' target='_blank'>F45 Training</a><br><a href='https://www.clubpilates.com' target='_blank'>Club Pilates</a><br><a href='https://www.purebarre.com' target='_blank'>Pure Barre</a><br><a href='https://www.stretchlab.com' target='_blank'>StretchLab</a><br></div><h2>🏠 Serviços Residenciais</h2><div class='column'><a href='https://www.servpro.com' target='_blank'>SERVPRO</a><br><a href='https://rainbowrestores.com' target='_blank'>Rainbow Restoration</a><br><a href='https://www.mrhandyman.com' target='_blank'>Mr. Handyman</a><br><a href='https://www.mollymaid.com' target='_blank'>Molly Maid</a><br><a href='https://www.merrymaids.com' target='_blank'>Merry Maids</a><br><a href='https://www.jan-pro.com' target='_blank'>JAN-PRO</a><br><a href='https://www.servicemasterclean.com' target='_blank'>ServiceMaster Clean</a><br><a href='https://www.windowgenie.com' target='_blank'>Window Genie</a><br><a href='https://www.budgetblinds.com' target='_blank'>Budget Blinds</a><br></div><h2>🚗 Automotivo</h2><div class='column'><a href='https://www.midas.com' target='_blank'>Midas</a><br><a href='https://www.jiffylube.com' target='_blank'>Jiffy Lube</a><br><a href='https://www.meineke.com' target='_blank'>Meineke</a><br><a href='https://www.aamco.com' target='_blank'>AAMCO</a><br><a href='https://www.take5oilchange.com' target='_blank'>Take 5 Oil Change</a><br><a href='https://www.tuffy.com' target='_blank'>Tuffy Tire</a><br><a href='https://www.grease-monkey.com' target='_blank'>Grease Monkey</a><br></div><h2>📦 Serviços & Negócios</h2><div class='column'><a href='https://www.theupsstore.com' target='_blank'>The UPS Store</a><br><a href='https://www.postnet.com' target='_blank'>PostNet</a><br><a href='https://www.pakmail.com' target='_blank'>Pak Mail</a><br><a href='https://www.fastsigns.com' target='_blank'>FASTSIGNS</a><br><a href='https://www.alphagraphics.com' target='_blank'>AlphaGraphics</a><br><a href='https://www.minutemanpress.com' target='_blank'>Minuteman Press</a><br></div><h2>🛍️ Varejo & Conveniência</h2><div class='column'><a href='https://www.7-eleven.com' target='_blank'>7‑Eleven</a><br><a href='https://www.circlek.com' target='_blank'>Circle K</a><br><a href='https://www.gnc.com' target='_blank'>GNC</a><br><a href='https://www.batteriesplus.com' target='_blank'>Batteries Plus</a><br><a href='https://www.acehardware.com' target='_blank'>Ace Hardware</a><br><a href='https://www.hallmark.com' target='_blank'>Hallmark</a><br><a href='https://www.playitagainsports.com' target='_blank'>Play It Again Sports</a><br></div><h2>🐾 Pet Services</h2><div class='column'><a href='https://www.petsuppliesplus.com' target='_blank'>Pet Supplies Plus</a><br><a href='https://www.dogtopia.com' target='_blank'>Dogtopia</a><br><a href='https://www.campbowwow.com' target='_blank'>Camp Bow Wow</a><br><a href='https://www.houndstownusa.com' target='_blank'>Hounds Town USA</a><br></div><h2>🏨 Hotelaria</h2><div class='column'><a href='https://www.hilton.com' target='_blank'>Hilton</a><br><a href='https://www.marriott.com' target='_blank'>Marriott</a><br><a href='https://www.ihg.com/holidayinnexpress' target='_blank'>Holiday Inn Express</a><br><a href='https://www.wyndhamhotels.com/days-inn' target='_blank'>Days Inn</a><br><a href='https://www.wyndhamhotels.com/super-8' target='_blank'>Super 8</a><br><a href='https://www.motel6.com' target='_blank'>Motel 6</a><br></div><h2>👶 Educação & Infantil</h2><div class='column'><a href='https://www.kumon.com' target='_blank'>Kumon</a><br><a href='https://www.mathnasium.com' target='_blank'>Mathnasium</a><br><a href='https://www.sylvanlearning.com' target='_blank'>Sylvan Learning</a><br><a href='https://www.goddardschool.com' target='_blank'>The Goddard School</a><br><a href='https://www.primroseschools.com' target='_blank'>Primrose Schools</a><br><a href='https://huntingtonhelps.com' target='_blank'>Huntington Learning Center</a><br></div>
+<p><b>Arquivo organizado por setores.</b></p>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bolsas de Valores do Mundo — Gráficos do Dia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --surface: #111827;
+      --surface2: #1a2235;
+      --border: #1e2d45;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --blue: #3b82f6;
+      --green: #10b981;
+      --text: #e2e8f0;
+      --muted: #64748b;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    header {
+      background: linear-gradient(135deg, #0a0e17 0%, #0f1e35 60%, #0a1628 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 32px 36px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      font-weight: 900; color: #fff; letter-spacing: -0.02em; position: relative;
+    }
+    header h1 span { color: var(--gold); }
+    header p { margin-top: 10px; color: var(--muted); font-size: 0.95rem; font-weight: 300; position: relative; }
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; position: relative; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
+      color: var(--gold-light); padding: 5px 16px; border-radius: 999px; font-size: 0.8rem; font-weight: 500;
+    }
+    .badge.blue { background: rgba(59,130,246,0.1); border-color: rgba(59,130,246,0.25); color: #93c5fd; }
+
+    .search-wrap { padding: 24px 32px 0; max-width: 680px; margin: 0 auto; }
+    .search-box {
+      width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 13px 20px 13px 46px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem; color: var(--text); outline: none; transition: border-color 0.2s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: 15px center;
+    }
+    .search-box::placeholder { color: var(--muted); }
+    .search-box:focus { border-color: var(--gold); }
+
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; padding: 22px 32px 0; max-width: 1400px; margin: 0 auto; }
+    .tab-btn {
+      padding: 7px 18px; border-radius: 999px; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s;
+    }
+    .tab-btn:hover { border-color: var(--gold); color: var(--gold-light); }
+    .tab-btn.active { background: var(--gold); border-color: var(--gold); color: #0a0e17; font-weight: 700; }
+
+    main { max-width: 1400px; margin: 0 auto; padding: 28px 32px 64px; }
+
+    .region { margin-bottom: 48px; }
+    .region-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border);
+    }
+    .region-icon { font-size: 1.5rem; }
+    .region-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: #fff; }
+    .region-count { margin-left: auto; font-size: 0.78rem; color: var(--muted); background: var(--surface2); padding: 3px 12px; border-radius: 999px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 13px; }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 17px 18px; display: flex; flex-direction: column; gap: 9px;
+      transition: all 0.2s; position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card:hover { border-color: rgba(201,168,76,0.35); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.35); }
+    .card:hover::before { opacity: 1; }
+
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .card-name { font-weight: 500; font-size: 0.92rem; color: var(--text); line-height: 1.4; }
+    .card-abbr {
+      background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.25);
+      padding: 2px 9px; border-radius: 6px; font-size: 0.72rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+    }
+    .card-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .card-country { font-size: 0.78rem; color: var(--muted); }
+    .card-index { font-size: 0.75rem; color: #475569; font-style: italic; }
+
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+    .btn-chart {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 7px 13px;
+      background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.25);
+      border-radius: 8px; color: #34d399; text-decoration: none;
+      font-size: 0.8rem; font-weight: 600; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-chart:hover { background: rgba(16,185,129,0.18); border-color: rgba(16,185,129,0.5); color: #6ee7b7; }
+
+    .btn-search {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 7px 13px;
+      background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 8px; color: #60a5fa; text-decoration: none;
+      font-size: 0.8rem; font-weight: 500; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-search:hover { background: rgba(59,130,246,0.16); border-color: rgba(59,130,246,0.45); color: #93c5fd; }
+
+    .no-chart { font-size: 0.72rem; color: #374151; font-style: italic; padding: 4px 0; align-self: center; }
+    .no-results { text-align: center; color: var(--muted); padding: 48px 0; font-size: 1rem; }
+
+    footer { text-align: center; padding: 28px 32px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.78rem; line-height: 1.8; }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      header, main, .tabs, .search-wrap { padding-left: 16px; padding-right: 16px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Bolsas de Valores <span>do Mundo</span></h1>
+  <p>Clique para ver o gráfico do dia em tempo real no Google Finance</p>
+  <div class="badges">
+    <div class="badge">🌐 +70 bolsas em 5 continentes</div>
+    <div class="badge blue">📈 Gráficos via Google Finance</div>
+  </div>
+</header>
+
+<div class="search-wrap">
+  <input class="search-box" type="text" id="search" placeholder="Buscar por nome, sigla, índice ou país..." oninput="render()"/>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="setTab('Todas',this)">Todas</button>
+  <button class="tab-btn" onclick="setTab('Américas',this)">🌎 Américas</button>
+  <button class="tab-btn" onclick="setTab('Europa',this)">🌍 Europa</button>
+  <button class="tab-btn" onclick="setTab('Ásia e Oceania',this)">🌏 Ásia &amp; Oceania</button>
+  <button class="tab-btn" onclick="setTab('África e Oriente Médio',this)">🌍 África &amp; Oriente Médio</button>
+</div>
+
+<main id="main"></main>
+
+<footer>
+  Links de gráfico abrem o <strong>Google Finance</strong> com o índice principal de cada bolsa.<br>
+  Dados com atraso de até 20 min · <a href="https://www.google.com/finance/markets/indexes" target="_blank">google.com/finance</a> · Uso informativo apenas, não constitui aconselhamento financeiro.
+</footer>
+
+<script>
+const data = [
+  {
+    region: "Américas", icon: "🌎",
+    exchanges: [
+      { abbr:"NYSE",    name:"New York Stock Exchange",         country:"EUA 🇺🇸",            index:"S&P 500",          gf:"https://www.google.com/finance/quote/.INX:INDEXSP",        gs:"NYSE S&P 500 gráfico hoje" },
+      { abbr:"NASDAQ",  name:"NASDAQ Stock Market",             country:"EUA 🇺🇸",            index:"NASDAQ Composite", gf:"https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ",   gs:"NASDAQ Composite gráfico hoje" },
+      { abbr:"NYSE Dow",name:"Dow Jones Industrial Average",    country:"EUA 🇺🇸",            index:"DJIA",             gf:"https://www.google.com/finance/quote/.DJI:INDEXDJX",       gs:"Dow Jones gráfico hoje" },
+      { abbr:"B3",      name:"Brasil Bolsa Balcão",             country:"Brasil 🇧🇷",          index:"Ibovespa",         gf:"https://www.google.com/finance/quote/IBOV:BVMF",           gs:"Ibovespa B3 gráfico hoje" },
+      { abbr:"TSX",     name:"Toronto Stock Exchange",          country:"Canadá 🇨🇦",          index:"S&P/TSX Composite",gf:"https://www.google.com/finance/quote/.GSPTSE:INDEXCA",    gs:"TSX Composite gráfico hoje" },
+      { abbr:"BMV",     name:"Bolsa Mexicana de Valores",       country:"México 🇲🇽",          index:"IPC",              gf:"https://www.google.com/finance/quote/IPC:INDEXBMV",        gs:"IPC BMV México gráfico hoje" },
+      { abbr:"BVC",     name:"Bolsa de Valores de Colombia",    country:"Colômbia 🇨🇴",        index:"COLCAP",           gf:"https://www.google.com/finance/quote/COLCAP:INDEXBVC",     gs:"COLCAP Colombia gráfico" },
+      { abbr:"BVL",     name:"Bolsa de Valores de Lima",        country:"Peru 🇵🇪",            index:"S&P/BVL Peru",     gf:"https://www.google.com/finance/quote/SPBLPGPT:INDEXBVL",  gs:"BVL Lima Peru gráfico" },
+      { abbr:"BYMA",    name:"Bolsas y Mercados Argentinos",    country:"Argentina 🇦🇷",        index:"MERVAL",           gf:"https://www.google.com/finance/quote/MERV:BCBA",           gs:"MERVAL Argentina gráfico" },
+      { abbr:"BSE",     name:"Bolsa de Santiago",               country:"Chile 🇨🇱",           index:"IPSA",             gf:"https://www.google.com/finance/quote/IPSA:INDEXSANTIAGO",  gs:"IPSA Bolsa Santiago Chile" },
+      { abbr:"BVQ",     name:"Bolsa de Valores de Quito",       country:"Equador 🇪🇨",         index:"—",                gf:null,                                                        gs:"Bolsa de Valores de Quito índice" },
+      { abbr:"BVB",     name:"Bolsa de Valores de Bolivia",     country:"Bolívia 🇧🇴",         index:"—",                gf:null,                                                        gs:"Bolsa Valores Bolivia índice" },
+      { abbr:"BVC-VE",  name:"Bolsa de Valores de Caracas",     country:"Venezuela 🇻🇪",        index:"IBC",              gf:null,                                                        gs:"Bolsa de Valores Caracas IBC" },
+      { abbr:"BVRD",    name:"Bolsa de Valores Rep. Dominicana",country:"Rep. Dominicana 🇩🇴",  index:"—",                gf:null,                                                        gs:"Bolsa Valores Republica Dominicana" },
+      { abbr:"BCR",     name:"Bolsa de Valores de Costa Rica",  country:"Costa Rica 🇨🇷",      index:"—",                gf:null,                                                        gs:"Bolsa Valores Costa Rica" },
+    ]
+  },
+  {
+    region: "Europa", icon: "🌍",
+    exchanges: [
+      { abbr:"LSE",          name:"London Stock Exchange",         country:"Reino Unido 🇬🇧",      index:"FTSE 100",          gf:"https://www.google.com/finance/quote/UKX:INDEXFTSE",        gs:"FTSE 100 gráfico hoje" },
+      { abbr:"Euronext-FR",  name:"Euronext Paris",                country:"França 🇫🇷",           index:"CAC 40",            gf:"https://www.google.com/finance/quote/PX1:INDEXEURO",        gs:"CAC 40 Paris gráfico hoje" },
+      { abbr:"AEX",          name:"Euronext Amsterdam",            country:"Holanda 🇳🇱",          index:"AEX",               gf:"https://www.google.com/finance/quote/AEX:INDEXEURONEXT",    gs:"AEX Amsterdam gráfico hoje" },
+      { abbr:"XETRA",        name:"Deutsche Börse / XETRA",        country:"Alemanha 🇩🇪",         index:"DAX 40",            gf:"https://www.google.com/finance/quote/DAX:INDEXDB",          gs:"DAX Frankfurt gráfico hoje" },
+      { abbr:"SIX",          name:"SIX Swiss Exchange",            country:"Suíça 🇨🇭",           index:"SMI",               gf:"https://www.google.com/finance/quote/SMI:INDEXSWX",         gs:"SMI Swiss Exchange gráfico" },
+      { abbr:"BME",          name:"Bolsa de Madrid",               country:"Espanha 🇪🇸",          index:"IBEX 35",           gf:"https://www.google.com/finance/quote/IBEX:INDEXBME",        gs:"IBEX 35 Madrid gráfico hoje" },
+      { abbr:"BIT",          name:"Borsa Italiana",                country:"Itália 🇮🇹",           index:"FTSE MIB",          gf:"https://www.google.com/finance/quote/FTSEMIB:INDEXBIT",     gs:"FTSE MIB Borsa Italiana gráfico" },
+      { abbr:"MOEX",         name:"Moscow Exchange",               country:"Rússia 🇷🇺",           index:"MOEX Russia",       gf:null,                                                         gs:"MOEX Moscow Exchange índice" },
+      { abbr:"OMX-SE",       name:"Nasdaq Nordic — Stockholm",     country:"Suécia 🇸🇪",           index:"OMX Stockholm 30",  gf:"https://www.google.com/finance/quote/OMXS30:INDEXNASDAQ",  gs:"OMX Stockholm 30 gráfico" },
+      { abbr:"OMX-HEL",      name:"Nasdaq Nordic — Helsinki",      country:"Finlândia 🇫🇮",        index:"OMX Helsinki 25",   gf:"https://www.google.com/finance/quote/OMXH25:INDEXNASDAQ",  gs:"OMX Helsinki 25 gráfico" },
+      { abbr:"OMX-CPH",      name:"Nasdaq Nordic — Copenhagen",    country:"Dinamarca 🇩🇰",        index:"OMX Copenhagen 25", gf:"https://www.google.com/finance/quote/OMXC25:INDEXNASDAQ",  gs:"OMX Copenhagen 25 gráfico" },
+      { abbr:"WSE",          name:"Warsaw Stock Exchange",         country:"Polônia 🇵🇱",          index:"WIG20",             gf:"https://www.google.com/finance/quote/WIG20:INDEXGPW",      gs:"WIG20 Warsaw gráfico hoje" },
+      { abbr:"OSE",          name:"Oslo Børs",                     country:"Noruega 🇳🇴",          index:"OBX",               gf:"https://www.google.com/finance/quote/OBX:INDEXOSE",        gs:"OBX Oslo Bors gráfico hoje" },
+      { abbr:"ELP",          name:"Euronext Lisbon",               country:"Portugal 🇵🇹",         index:"PSI-20",            gf:"https://www.google.com/finance/quote/PSI20:INDEXEURONEXT", gs:"PSI20 Euronext Lisbon gráfico" },
+      { abbr:"ATHEX",        name:"Athens Exchange",               country:"Grécia 🇬🇷",           index:"ASE General",       gf:"https://www.google.com/finance/quote/GD:INDEXATSE",        gs:"Athens Exchange ASE gráfico" },
+      { abbr:"PSE-CZ",       name:"Prague Stock Exchange",         country:"Rep. Tcheca 🇨🇿",      index:"PX",                gf:"https://www.google.com/finance/quote/PX:INDEXPSE",         gs:"Prague PX gráfico hoje" },
+      { abbr:"BSE-HU",       name:"Budapest Stock Exchange",       country:"Hungria 🇭🇺",          index:"BUX",               gf:"https://www.google.com/finance/quote/BUX:INDEXBSE",        gs:"Budapest BUX gráfico hoje" },
+      { abbr:"VSE",          name:"Vienna Stock Exchange",         country:"Áustria 🇦🇹",          index:"ATX",               gf:"https://www.google.com/finance/quote/ATX:INDEXVIE",        gs:"ATX Vienna gráfico hoje" },
+      { abbr:"Euronext-IE",  name:"Euronext Dublin",               country:"Irlanda 🇮🇪",          index:"ISEQ Overall",      gf:"https://www.google.com/finance/quote/ISEQ:INDEXEURONEXT",  gs:"ISEQ Dublin gráfico hoje" },
+      { abbr:"BVB-RO",       name:"Bucharest Stock Exchange",      country:"Romênia 🇷🇴",          index:"BET",               gf:"https://www.google.com/finance/quote/BET:INDEXBVB",        gs:"BET Bucharest gráfico hoje" },
+      { abbr:"BIST",         name:"Borsa Istanbul",                country:"Turquia 🇹🇷",          index:"BIST 100",          gf:"https://www.google.com/finance/quote/XU100:INDEXBIST",     gs:"BIST 100 Istanbul gráfico hoje" },
+      { abbr:"TASE",         name:"Tel Aviv Stock Exchange",       country:"Israel 🇮🇱",           index:"TA-35",             gf:"https://www.google.com/finance/quote/TA35:INDEXTASE",      gs:"TA-35 Tel Aviv gráfico hoje" },
+    ]
+  },
+  {
+    region: "Ásia e Oceania", icon: "🌏",
+    exchanges: [
+      { abbr:"JPX",      name:"Tokyo Stock Exchange / JPX",      country:"Japão 🇯🇵",           index:"Nikkei 225",     gf:"https://www.google.com/finance/quote/.N225:INDEXNIKKEI",     gs:"Nikkei 225 gráfico hoje" },
+      { abbr:"SSE",      name:"Shanghai Stock Exchange",         country:"China 🇨🇳",           index:"SSE Composite",  gf:"https://www.google.com/finance/quote/000001:SHA",             gs:"SSE Composite Shanghai gráfico" },
+      { abbr:"SZSE",     name:"Shenzhen Stock Exchange",         country:"China 🇨🇳",           index:"SZSE Component", gf:"https://www.google.com/finance/quote/399001:SHE",             gs:"Shenzhen Component gráfico hoje" },
+      { abbr:"HKEX",     name:"Hong Kong Stock Exchange",        country:"Hong Kong 🇭🇰",       index:"Hang Seng",      gf:"https://www.google.com/finance/quote/HSI:INDEXHANGSENG",     gs:"Hang Seng gráfico hoje" },
+      { abbr:"NSE",      name:"National Stock Exchange India",   country:"Índia 🇮🇳",           index:"NIFTY 50",       gf:"https://www.google.com/finance/quote/NIFTY_50:INDEXNSE",     gs:"NIFTY 50 NSE gráfico hoje" },
+      { abbr:"BSE-IN",   name:"Bombay Stock Exchange",           country:"Índia 🇮🇳",           index:"SENSEX",         gf:"https://www.google.com/finance/quote/SENSEX:INDEXBOM",       gs:"SENSEX BSE gráfico hoje" },
+      { abbr:"KRX",      name:"Korea Exchange",                  country:"Coreia do Sul 🇰🇷",   index:"KOSPI",          gf:"https://www.google.com/finance/quote/KOSPI:INDEXKRX",        gs:"KOSPI Korea gráfico hoje" },
+      { abbr:"ASX",      name:"Australian Securities Exchange",  country:"Austrália 🇦🇺",       index:"ASX 200",        gf:"https://www.google.com/finance/quote/.AXJO:INDEXASX",        gs:"ASX 200 gráfico hoje" },
+      { abbr:"SGX",      name:"Singapore Exchange",              country:"Singapura 🇸🇬",       index:"Straits Times",  gf:"https://www.google.com/finance/quote/STI:INDEXSGX",          gs:"STI Singapore gráfico hoje" },
+      { abbr:"TWSE",     name:"Taiwan Stock Exchange",           country:"Taiwan 🇹🇼",          index:"TAIEX",          gf:"https://www.google.com/finance/quote/TAIEX:INDEXTAIEX",      gs:"TAIEX Taiwan gráfico hoje" },
+      { abbr:"Bursa",    name:"Bursa Malaysia",                  country:"Malásia 🇲🇾",         index:"KLCI",           gf:"https://www.google.com/finance/quote/FBMKLCI:INDEXKLSE",     gs:"KLCI Bursa Malaysia gráfico" },
+      { abbr:"PSE-PH",   name:"Philippine Stock Exchange",       country:"Filipinas 🇵🇭",       index:"PSEi",           gf:"https://www.google.com/finance/quote/PSEi:INDEXPSE",         gs:"PSEi Philippines gráfico hoje" },
+      { abbr:"IDX",      name:"Indonesia Stock Exchange",        country:"Indonésia 🇮🇩",       index:"IDX Composite",  gf:"https://www.google.com/finance/quote/JKSE:INDEXIDX",         gs:"IDX Composite Indonesia gráfico" },
+      { abbr:"SET",      name:"Stock Exchange of Thailand",      country:"Tailândia 🇹🇭",       index:"SET Index",      gf:"https://www.google.com/finance/quote/SET:INDEXSET",          gs:"SET Index Thailand gráfico hoje" },
+      { abbr:"NZX",      name:"New Zealand Exchange",            country:"Nova Zelândia 🇳🇿",   index:"NZX 50",         gf:"https://www.google.com/finance/quote/NZ50:INDEXNZX",         gs:"NZX 50 New Zealand gráfico" },
+      { abbr:"PSX",      name:"Pakistan Stock Exchange",         country:"Paquistão 🇵🇰",       index:"KSE-100",        gf:"https://www.google.com/finance/quote/KSE100:INDEXPSX",       gs:"KSE-100 Pakistan gráfico hoje" },
+      { abbr:"DSE",      name:"Dhaka Stock Exchange",            country:"Bangladesh 🇧🇩",      index:"DSEX",           gf:null,                                                           gs:"DSEX Dhaka Stock Exchange gráfico" },
+      { abbr:"CSE-LK",   name:"Colombo Stock Exchange",          country:"Sri Lanka 🇱🇰",       index:"ASPI",           gf:null,                                                           gs:"ASPI Colombo Stock Exchange gráfico" },
+      { abbr:"HOSE",     name:"Ho Chi Minh Stock Exchange",      country:"Vietnã 🇻🇳",          index:"VN-Index",       gf:"https://www.google.com/finance/quote/VNINDEX:INDEXVN",       gs:"VN-Index Vietnam gráfico hoje" },
+      { abbr:"NEPSE",    name:"Nepal Stock Exchange",            country:"Nepal 🇳🇵",           index:"NEPSE Index",    gf:null,                                                           gs:"NEPSE Nepal gráfico hoje" },
+    ]
+  },
+  {
+    region: "África e Oriente Médio", icon: "🌍",
+    exchanges: [
+      { abbr:"JSE",      name:"Johannesburg Stock Exchange",   country:"África do Sul 🇿🇦",    index:"JSE Top 40",       gf:"https://www.google.com/finance/quote/J200:INDEXJSE",         gs:"JSE Top 40 gráfico hoje" },
+      { abbr:"Tadawul",  name:"Saudi Exchange (Tadawul)",      country:"Arábia Saudita 🇸🇦",   index:"TASI",             gf:"https://www.google.com/finance/quote/TASI:INDEXTADAWUL",     gs:"TASI Saudi Exchange gráfico hoje" },
+      { abbr:"ADX",      name:"Abu Dhabi Securities Exchange", country:"Emirados Árabes 🇦🇪",  index:"ADX General",      gf:"https://www.google.com/finance/quote/FADGI:INDEXADX",        gs:"ADX Abu Dhabi gráfico hoje" },
+      { abbr:"DFM",      name:"Dubai Financial Market",        country:"Dubai 🇦🇪",            index:"DFM General",      gf:"https://www.google.com/finance/quote/DFMGI:INDEXDFM",        gs:"DFM Dubai gráfico hoje" },
+      { abbr:"EGX",      name:"Egyptian Exchange",             country:"Egito 🇪🇬",            index:"EGX 30",           gf:"https://www.google.com/finance/quote/EGX30:INDEXEGX",        gs:"EGX 30 Egypt gráfico hoje" },
+      { abbr:"NGX",      name:"Nigerian Exchange Group",       country:"Nigéria 🇳🇬",          index:"NGX All Share",    gf:null,                                                          gs:"NGX All Share Nigeria gráfico" },
+      { abbr:"NSE-KE",   name:"Nairobi Securities Exchange",   country:"Quênia 🇰🇪",           index:"NSE 20",           gf:null,                                                          gs:"NSE 20 Nairobi Kenya gráfico" },
+      { abbr:"CSE-MA",   name:"Casablanca Stock Exchange",     country:"Marrocos 🇲🇦",         index:"MASI",             gf:"https://www.google.com/finance/quote/MASI:INDEXCASABLANCA",  gs:"MASI Casablanca gráfico hoje" },
+      { abbr:"QSE",      name:"Qatar Stock Exchange",          country:"Catar 🇶🇦",            index:"QE General",       gf:"https://www.google.com/finance/quote/QSI:INDEXQE",           gs:"Qatar Exchange gráfico hoje" },
+      { abbr:"Boursa",   name:"Boursa Kuwait",                 country:"Kuwait 🇰🇼",           index:"Kuwait All Share", gf:null,                                                          gs:"Boursa Kuwait índice gráfico" },
+      { abbr:"BHB",      name:"Bahrain Bourse",                country:"Bahrein 🇧🇭",          index:"BAX",              gf:null,                                                          gs:"Bahrain Bourse BAX gráfico" },
+      { abbr:"MSX",      name:"Muscat Stock Exchange",         country:"Omã 🇴🇲",              index:"MSM30",            gf:null,                                                          gs:"MSM30 Muscat Oman gráfico" },
+      { abbr:"ZSE",      name:"Zimbabwe Stock Exchange",       country:"Zimbábue 🇿🇼",         index:"ZSE Industrial",   gf:null,                                                          gs:"Zimbabwe Stock Exchange índice" },
+      { abbr:"GSE",      name:"Ghana Stock Exchange",          country:"Gana 🇬🇭",             index:"GSE Composite",    gf:null,                                                          gs:"GSE Ghana gráfico hoje" },
+      { abbr:"USE",      name:"Uganda Securities Exchange",    country:"Uganda 🇺🇬",           index:"—",                gf:null,                                                          gs:"Uganda Securities Exchange índice" },
+      { abbr:"DSE-TZ",   name:"Dar es Salaam Stock Exchange",  country:"Tanzânia 🇹🇿",         index:"DSE All Share",    gf:null,                                                          gs:"Dar es Salaam Stock Exchange índice" },
+    ]
+  }
+];
+
+let activeTab = "Todas";
+
+const chartSVG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`;
+const searchSVG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
+
+function render() {
+  const q = (document.getElementById('search').value || '').toLowerCase().trim();
+  const main = document.getElementById('main');
+  let html = '';
+  let totalShown = 0;
+
+  const regions = activeTab === "Todas" ? data : data.filter(r => r.region === activeTab);
+
+  regions.forEach(r => {
+    const filtered = r.exchanges.filter(e =>
+      !q ||
+      e.name.toLowerCase().includes(q) ||
+      e.abbr.toLowerCase().includes(q) ||
+      e.country.toLowerCase().includes(q) ||
+      (e.index && e.index.toLowerCase().includes(q))
+    );
+    if (!filtered.length) return;
+    totalShown += filtered.length;
+
+    html += `<div class="region">
+      <div class="region-header">
+        <span class="region-icon">${r.icon}</span>
+        <span class="region-title">${r.region}</span>
+        <span class="region-count">${filtered.length} bolsas</span>
+      </div>
+      <div class="grid">
+        ${filtered.map(e => {
+          const gsUrl = `https://www.google.com/search?q=${encodeURIComponent(e.gs)}`;
+          const chartBtn = e.gf
+            ? `<a class="btn-chart" href="${e.gf}" target="_blank" rel="noopener">${chartSVG} Gráfico do dia</a>`
+            : `<span class="no-chart">Gráfico indisponível no Google Finance</span>`;
+          return `<div class="card">
+            <div class="card-top">
+              <div class="card-name">${e.name}</div>
+              <div class="card-abbr">${e.abbr}</div>
+            </div>
+            <div class="card-meta">
+              <span class="card-country">${e.country}</span>
+              ${e.index && e.index !== '—' ? `<span class="card-index">· ${e.index}</span>` : ''}
+            </div>
+            <div class="btn-row">
+              ${chartBtn}
+              <a class="btn-search" href="${gsUrl}" target="_blank" rel="noopener">${searchSVG} Buscar</a>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  });
+
+  if (!totalShown) {
+    html = `<div class="no-results">🔍 Nenhuma bolsa encontrada${q ? ` para "<strong>${q}</strong>"` : ''}.</div>`;
+  }
+
+  main.innerHTML = html;
+}
+
+function setTab(tab, el) {
+  activeTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

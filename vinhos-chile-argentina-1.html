@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinhos do Chile & Argentina</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --burgundy: #5c1a2e;
+    --gold: #c9a84c;
+    --cream: #f5f0e8;
+    --dark: #1a0e13;
+    --muted: #8a7060;
+    --chile: #a02030;
+    --argentina: #2a4a80;
+    --card-bg: rgba(255,255,255,0.04);
+    --border: rgba(201,168,76,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--dark);
+    color: var(--cream);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 10% 20%, rgba(92,26,46,0.35) 0%, transparent 60%),
+      radial-gradient(ellipse at 90% 80%, rgba(42,74,128,0.25) 0%, transparent 60%);
+  }
+
+  header {
+    text-align: center;
+    padding: 70px 20px 50px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  header::before {
+    content: '— ◆ —';
+    display: block;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.5em;
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+  }
+
+  h1 span {
+    color: var(--gold);
+  }
+
+  .subtitle {
+    margin-top: 14px;
+    font-size: 0.78rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .country-section {
+    margin-top: 70px;
+  }
+
+  .country-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .country-flag {
+    font-size: 2.2rem;
+  }
+
+  .country-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  .country-title.chile { color: #e06070; }
+  .country-title.argentina { color: #7090d0; }
+
+  .country-badge {
+    margin-left: auto;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 2px;
+  }
+
+  .wineries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+  }
+
+  .winery-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 28px;
+    transition: border-color 0.3s, background 0.3s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .winery-card:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .winery-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.45rem;
+    font-weight: 400;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .winery-region {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .wines-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .wines-list li a {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--cream);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    padding: 8px 10px;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .wines-list li a:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(201,168,76,0.2);
+    color: #fff;
+  }
+
+  .wine-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+    margin-top: 5px;
+    opacity: 0.7;
+  }
+
+  .wine-info {
+    flex: 1;
+  }
+
+  .wine-name {
+    font-weight: 500;
+    font-size: 0.88rem;
+  }
+
+  .wine-desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  .search-icon {
+    font-size: 0.7rem;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 3px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .wines-list li a:hover .search-icon {
+    opacity: 1;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid var(--border);
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+
+  footer span {
+    color: var(--gold);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Vinhos do <span>Chile</span> &amp; Argentina</h1>
+  <p class="subtitle">Vinícolas · Marcas · Rótulos · Referências</p>
+</header>
+
+<div class="container">
+
+  <!-- ========== CHILE ========== -->
+  <section class="country-section">
+    <div class="country-header">
+      <span class="country-flag">🇨🇱</span>
+      <h2 class="country-title chile">Chile</h2>
+      <span class="country-badge">América do Sul</span>
+    </div>
+
+    <div class="wineries-grid">
+
+      <!-- Concha y Toro -->
+      <div class="winery-card">
+        <div class="winery-name">Concha y Toro</div>
+        <div class="winery-region">Vale do Maipo</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Don+Melchor+Concha+y+Toro+vinho" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Don Melchor</span><span class="wine-desc">Cabernet Sauvignon — ícone da vinícola</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Marques+de+Casa+Concha+Concha+y+Toro+vinho" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Marqués de Casa Concha</span><span class="wine-desc">Linha premium, várias uvas</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Casillero+del+Diablo+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Casillero del Diablo</span><span class="wine-desc">Linha clássica, ótimo custo-benefício</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Terrunyo+Concha+y+Toro+vinho" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Terrunyo</span><span class="wine-desc">Vinhos de terroir específico</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Trio+Concha+y+Toro+vinho" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Trio</span><span class="wine-desc">Blends acessíveis e aromáticos</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Almaviva -->
+      <div class="winery-card">
+        <div class="winery-name">Almaviva</div>
+        <div class="winery-region">Vale do Maipo</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Almaviva+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Almaviva</span><span class="wine-desc">Blend bordalês — um dos maiores vinhos do Chile</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=EPU+Almaviva+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">EPU</span><span class="wine-desc">Segundo vinho da Almaviva, elegante</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Casa Lapostolle -->
+      <div class="winery-card">
+        <div class="winery-name">Casa Lapostolle</div>
+        <div class="winery-region">Vale do Colchagua</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Clos+Apalta+Casa+Lapostolle+vinho" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Clos Apalta</span><span class="wine-desc">Blend tinto — ícone sul-americano</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Cuvee+Alexandre+Casa+Lapostolle+vinho" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Cuvée Alexandre</span><span class="wine-desc">Linha premium, Merlot e Carménère</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Casa+Lapostolle+Grand+Selection+vinho" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Grand Selection</span><span class="wine-desc">Entrada premium, excelente custo-benefício</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Viña Montes -->
+      <div class="winery-card">
+        <div class="winery-name">Viña Montes</div>
+        <div class="winery-region">Vale do Colchagua</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Montes+Alpha+M+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Alpha M</span><span class="wine-desc">Blend bordalês topo de linha</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Purple+Angel+Montes+vinho+Carmere" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Purple Angel</span><span class="wine-desc">Carménère puro — referência mundial</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Montes+Alpha+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Montes Alpha</span><span class="wine-desc">Linha clássica, várias variedades</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Montes+Folly+Syrah+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Montes Folly</span><span class="wine-desc">Syrah de altitude — único</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Montes+Classic+Series+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Classic Series</span><span class="wine-desc">Linha acessível, ótimo custo-benefício</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Viña Errázuriz -->
+      <div class="winery-card">
+        <div class="winery-name">Viña Errázuriz</div>
+        <div class="winery-region">Vale do Aconcágua</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Don+Maximiano+Errazuriz+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Don Maximiano Founder's Reserve</span><span class="wine-desc">Tinto topo de linha — histórico</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=La+Cumbre+Errazuriz+Syrah+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">La Cumbre</span><span class="wine-desc">Syrah premium de Aconcágua</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Max+Reserva+Errazuriz+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Max Reserva</span><span class="wine-desc">Linha premium acessível</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Errazuriz+Estate+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Estate Series</span><span class="wine-desc">Entrada de linha, fácil de beber</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Santa Rita -->
+      <div class="winery-card">
+        <div class="winery-name">Santa Rita</div>
+        <div class="winery-region">Vale do Maipo</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Casa+Real+Santa+Rita+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Casa Real</span><span class="wine-desc">Cabernet Sauvignon ícone da vinícola</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Triple+C+Santa+Rita+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Triple C</span><span class="wine-desc">Blend tinto de alta gama</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Medalla+Real+Santa+Rita+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Medalla Real</span><span class="wine-desc">Linha premium clássica</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=120+Santa+Rita+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">120</span><span class="wine-desc">Linha acessível e versátil</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Emiliana -->
+      <div class="winery-card">
+        <div class="winery-name">Emiliana</div>
+        <div class="winery-region">Casablanca / Colchagua</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Coyam+Emiliana+vinho+Chile+biodinamico" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Coyam</span><span class="wine-desc">Blend biodinâmico — referência orgânica</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=G+Emiliana+vinho+Chile+topo" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">G</span><span class="wine-desc">Topo de linha biodinâmico</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Adobe+Emiliana+vinho+organico+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Adobe</span><span class="wine-desc">Linha orgânica acessível</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Viña Carmen -->
+      <div class="winery-card">
+        <div class="winery-name">Viña Carmen</div>
+        <div class="winery-region">Vale do Maipo / Casablanca</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Carmen+Gold+Reserve+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Gold Reserve</span><span class="wine-desc">Cabernet Sauvignon topo de linha</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Carmen+Premier+1850+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Premier 1850</span><span class="wine-desc">Blend premium histórico</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Carmen+Gran+Reserva+vinho+Chile" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Gran Reserva</span><span class="wine-desc">Linha versátil e bem avaliada</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== ARGENTINA ========== -->
+  <section class="country-section">
+    <div class="country-header">
+      <span class="country-flag">🇦🇷</span>
+      <h2 class="country-title argentina">Argentina</h2>
+      <span class="country-badge">América do Sul</span>
+    </div>
+
+    <div class="wineries-grid">
+
+      <!-- Catena Zapata -->
+      <div class="winery-card">
+        <div class="winery-name">Catena Zapata</div>
+        <div class="winery-region">Luján de Cuyo, Mendoza</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Catena+Zapata+Adrianna+Vineyard+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Adrianna Vineyard</span><span class="wine-desc">Série de single-vineyard de prestígio mundial</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Catena+Zapata+Nicolas+Catena+Zapata+vinho" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Nicolás Catena Zapata</span><span class="wine-desc">Blend ícone da vinícola</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Catena+Zapata+Malbec+Argentino+vinho" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Malbec Argentino</span><span class="wine-desc">Linha clássica premium</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Catena+Alta+vinho+Malbec+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Catena Alta</span><span class="wine-desc">Malbec e Cabernet de altitude</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Alamos+Catena+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Alamos</span><span class="wine-desc">Linha acessível e popular</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Zuccardi -->
+      <div class="winery-card">
+        <div class="winery-name">Zuccardi Valle de Uco</div>
+        <div class="winery-region">Valle de Uco, Mendoza</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Zuccardi+Aluvional+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Aluvional</span><span class="wine-desc">Série de terroir — referência mundial</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Zuccardi+Concreto+Malbec+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Concreto</span><span class="wine-desc">Malbec fermentado em concreto — único</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Zuccardi+Jose+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">José</span><span class="wine-desc">Topo de linha — eleito melhor do mundo</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Zuccardi+Fosil+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Fósil</span><span class="wine-desc">Chardonnay de altitude mineral</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Serie+A+Zuccardi+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Serie A</span><span class="wine-desc">Linha acessível, excelente qualidade</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Achaval Ferrer -->
+      <div class="winery-card">
+        <div class="winery-name">Achaval Ferrer</div>
+        <div class="winery-region">Luján de Cuyo, Mendoza</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Achaval+Ferrer+Finca+Bella+Vista+Malbec+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Finca Bella Vista</span><span class="wine-desc">Malbec single-vineyard premium</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Achaval+Ferrer+Finca+Altamira+Malbec+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Finca Altamira</span><span class="wine-desc">Malbec elegante de Valle de Uco</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Achaval+Ferrer+Quimera+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Quimera</span><span class="wine-desc">Blend tinto de alta complexidade</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Achaval+Ferrer+Malbec+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Malbec (entrada)</span><span class="wine-desc">Clássico, frutado e acessível</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Clos de los Siete -->
+      <div class="winery-card">
+        <div class="winery-name">Clos de los Siete</div>
+        <div class="winery-region">Valle de Uco, Mendoza</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Clos+de+los+Siete+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Clos de los Siete</span><span class="wine-desc">Blend Michel Rolland — ótimo custo-benefício</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Cuvelier+los+Andes+Grand+Vin+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Cuvelier los Andes Grand Vin</span><span class="wine-desc">Topo de linha do projeto</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Monteviejo+Lindaflor+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Monteviejo Lindaflor</span><span class="wine-desc">Malbec elegante das vinícolas do projeto</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- El Enemigo -->
+      <div class="winery-card">
+        <div class="winery-name">El Enemigo</div>
+        <div class="winery-region">Mendoza</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=El+Enemigo+Gran+Enemigo+Single+Vineyard+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Gran Enemigo Single Vineyard</span><span class="wine-desc">Cabernet Franc de terroir — ícone</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Gran+Enemigo+El+Cepillo+Argentina+vinho" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Gran Enemigo El Cepillo</span><span class="wine-desc">Cabernet Franc muito premiado</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=El+Enemigo+Malbec+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">El Enemigo Malbec</span><span class="wine-desc">Malbec de autor elegante</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=El+Enemigo+Chardonnay+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">El Enemigo Chardonnay</span><span class="wine-desc">Branco de alta elegância</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Colome -->
+      <div class="winery-card">
+        <div class="winery-name">Colomé</div>
+        <div class="winery-region">Salta / Cafayate</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Colome+Altura+Maxima+Malbec+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Altura Máxima</span><span class="wine-desc">Malbec a 3.111m — vinhedos mais altos do mundo</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Colome+Estate+Malbec+Salta+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Estate Malbec</span><span class="wine-desc">Malbec de altitude com caráter único</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Colome+Torrontes+Salta+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Torrontés</span><span class="wine-desc">Branco aromático referência de Salta</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Trapiche -->
+      <div class="winery-card">
+        <div class="winery-name">Trapiche</div>
+        <div class="winery-region">Mendoza</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Trapiche+ISCAY+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">ISCAY</span><span class="wine-desc">Blend premium de alta gama</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Trapiche+Medalla+vinho+Malbec+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Medalla</span><span class="wine-desc">Linha reserva clássica</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Trapiche+Broquel+Malbec+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Broquel</span><span class="wine-desc">Linha intermediária, muito popular</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Trapiche+Roble+Malbec+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Roble</span><span class="wine-desc">Linha de entrada, acessível e frutado</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Luigi Bosca -->
+      <div class="winery-card">
+        <div class="winery-name">Luigi Bosca</div>
+        <div class="winery-region">Luján de Cuyo, Mendoza</div>
+        <ul class="wines-list">
+          <li><a href="https://www.google.com/search?q=Luigi+Bosca+Gala+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Gala</span><span class="wine-desc">Blend branco e tinto de alto nível</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Luigi+Bosca+Finca+La+Linda+vinho+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Finca La Linda</span><span class="wine-desc">Linha premium acessível e versátil</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+          <li><a href="https://www.google.com/search?q=Luigi+Bosca+Malbec+DOC+Argentina" target="_blank">
+            <span class="wine-dot"></span>
+            <span class="wine-info"><span class="wine-name">Malbec DOC</span><span class="wine-desc">Malbec clássico de Luján de Cuyo</span></span>
+            <span class="search-icon">↗</span>
+          </a></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>Guia elaborado com <span>♥</span> — Clique em qualquer rótulo para pesquisar no Google</p>
+</footer>
+
+</body>
+</html>

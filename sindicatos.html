@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>160 Sindicatos — Diretório Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #222222;
+      --accent: #c8f050;
+      --accent2: #ff6b35;
+      --text: #e8e8e0;
+      --muted: #666;
+      --card: #161616;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NOISE TEXTURE */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* HEADER */
+    header {
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      padding: 60px 48px 48px;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,240,80,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .header-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    h1 span {
+      color: var(--accent);
+      display: block;
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    /* SEARCH & FILTER */
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 48px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search-wrapper svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+
+    #searchInput {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      padding: 10px 14px 10px 40px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #searchInput:focus {
+      border-color: var(--accent);
+    }
+
+    #searchInput::placeholder { color: var(--muted); }
+
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(200,240,80,0.06);
+    }
+
+    .count-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    #visibleCount { color: var(--accent); font-weight: 500; }
+
+    /* MAIN CONTENT */
+    main {
+      padding: 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SECTION */
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .section-flag {
+      font-size: 20px;
+    }
+
+    .section-count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: background 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.2s;
+    }
+
+    .card:hover { background: #1a1a1a; }
+    .card:hover::before { transform: scaleY(1); }
+
+    .card-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    .card-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+      transition: color 0.15s;
+    }
+
+    .card-link:hover { color: #fff; }
+
+    .card-link svg {
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+
+    /* NO RESULTS */
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 80px 0;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-warning {
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      header, main, .controls { padding-left: 20px; padding-right: 20px; }
+      footer { padding: 24px 20px; flex-direction: column; gap: 16px; }
+      .header-meta { gap: 24px; }
+    }
+
+    /* ANIMATIONS */
+    .section {
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card { animation: fadeIn 0.3s ease both; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="header-tag">// Diretório Global — 2025</span>
+  <h1>160<span>Sindicatos</span></h1>
+  <div class="header-meta">
+    <div class="meta-item">
+      <span class="meta-label">Total</span>
+      <span class="meta-value">160</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Países</span>
+      <span class="meta-value">20+</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Setores</span>
+      <span class="meta-value">30+</span>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-wrapper">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="Buscar sindicato ou link..." autocomplete="off"/>
+  </div>
+  <div class="filter-group" id="filterGroup">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="brasil">🇧🇷 Brasil</button>
+    <button class="filter-btn" data-filter="eua">🇺🇸 EUA</button>
+    <button class="filter-btn" data-filter="canada">🇨🇦 Canadá</button>
+    <button class="filter-btn" data-filter="europa">🌍 Europa</button>
+    <button class="filter-btn" data-filter="outros">🌐 Outros</button>
+  </div>
+  <span class="count-badge">Exibindo <span id="visibleCount">160</span> de 160</span>
+</div>
+
+<main id="mainContent">
+
+  <!-- ===================== CENTRAIS BRASILEIRAS ===================== -->
+  <div class="section" data-region="brasil">
+    <div class="section-header">
+      <span class="section-flag">🇧🇷</span>
+      <span class="section-title">Centrais Sindicais Brasileiras</span>
+      <span class="section-count">8 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="brasil">
+        <span class="card-num">#001</span>
+        <span class="card-name">CUT – Central Única dos Trabalhadores</span>
+        <a class="card-link" href="https://www.cut.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cut.org.br</a>
+      </div>
+      <div class="card" data-region="brasil">
+        <span class="card-num">#002</span>
+        <span class="card-name">CGT – Central Geral dos Trabalhadores</span>
+        <a class="card-link" href="https://www.cgt.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cgt.org.br</a>
+      </div>
+      <div class="card" data-region="brasil">
+        <span class="card-num">#003</span>
+        <span class="card-name">CTB – Central dos Trabalhadores e Trabalhadoras do Brasil</span>
+        <a class="card-link" href="https://www.ctb.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ctb.org.br</a>
+      </div>
+      <div class="card" data-region="brasil">
+        <span class="card-num">#004</span>
+        <span class="card-name">Força Sindical</span>
+        <a class="card-link" href="https://fsindical.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>fsindical.org.br</a>
+      </div>
+      <div class="card" data-region="brasil">
+        <span class="card-num">#005</span>
+        <span class="card-name">UGT – União Geral dos Trabalhadores</span>
+        <a class="card-link" href="https://www.ugt.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ugt.org.br</a>
+      </div>
+      <div class="card" data-region="brasil">
+        <span class="card-num">#006</span>
+        <span class="card-name">CGTB – Central Geral dos Trabalhadores do Brasil</span>
+        <a class="card-link" href="https://www.cgtb.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cgtb.org.br</a>
+      </div>
+      <div class="card" data-region="brasil">
+        <span class="card-num">#007</span>
+        <span class="card-name">CSB – Central dos Sindicatos Brasileiros</span>
+        <a class="card-link" href="https://csb.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>csb.org.br</a>
+      </div>
+      <div class="card" data-region="brasil">
+        <span class="card-num">#008</span>
+        <span class="card-name">NCST – Nova Central Sindical de Trabalhadores</span>
+        <a class="card-link" href="https://www.ncst.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ncst.org.br</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== SÃO PAULO ===================== -->
+  <div class="section" data-region="brasil">
+    <div class="section-header">
+      <span class="section-flag">🇧🇷</span>
+      <span class="section-title">Sindicatos de São Paulo</span>
+      <span class="section-count">27 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="brasil"><span class="card-num">#009</span><span class="card-name">Sindicato dos Metalúrgicos do ABC</span><a class="card-link" href="https://smabc.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>smabc.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#010</span><span class="card-name">Sindicato dos Bancários de São Paulo</span><a class="card-link" href="https://spbancarios.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>spbancarios.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#011</span><span class="card-name">APEOESP – Sindicato dos Professores do Estado de SP</span><a class="card-link" href="https://www.apeoesp.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.apeoesp.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#012</span><span class="card-name">Sindicato dos Médicos de SP (SIMESP)</span><a class="card-link" href="https://www.simesp.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.simesp.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#013</span><span class="card-name">Sindicato dos Engenheiros do Estado de SP (SEESP)</span><a class="card-link" href="https://www.seesp.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.seesp.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#014</span><span class="card-name">Sindicato dos Jornalistas Profissionais do Estado de SP</span><a class="card-link" href="https://www.sjsp.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sjsp.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#015</span><span class="card-name">Sindicato dos Comerciários de SP</span><a class="card-link" href="https://www.comerciariossp.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.comerciariossp.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#016</span><span class="card-name">Sindicato dos Trabalhadores nas Indústrias de Alimentação de SP</span><a class="card-link" href="https://www.stiasp.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.stiasp.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#017</span><span class="card-name">Sindicato dos Vigilantes do Estado de SP</span><a class="card-link" href="https://www.sindevigilantesp.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindevigilantesp.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#018</span><span class="card-name">Sindicato dos Motoristas e Trabalhadores em Transporte Rodoviário de SP</span><a class="card-link" href="https://www.sindimotoristassp.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindimotoristassp.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#019</span><span class="card-name">Sindicato dos Enfermeiros do Estado de SP</span><a class="card-link" href="https://www.seeenf.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.seeenf.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#020</span><span class="card-name">Sindicato dos Químicos e Plásticos de SP</span><a class="card-link" href="https://www.sinquimica.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinquimica.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#021</span><span class="card-name">Sindicato dos Eletricitários de SP</span><a class="card-link" href="https://www.eletricitarios.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.eletricitarios.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#022</span><span class="card-name">Sindicato dos Trabalhadores em Telecomunicações (SINTTEL-SP)</span><a class="card-link" href="https://www.sinttelsp.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinttelsp.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#023</span><span class="card-name">Sindicato dos Trabalhadores no Comércio Varejista de SP</span><a class="card-link" href="https://www.sincovaga.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sincovaga.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#024</span><span class="card-name">Sindicato dos Advogados do Estado de SP</span><a class="card-link" href="https://www.sasp.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sasp.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#025</span><span class="card-name">Sindicato dos Contabilistas do Estado de SP</span><a class="card-link" href="https://www.sindicont.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindicont.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#026</span><span class="card-name">Sindicato dos Garçons e Trabalhadores em Hotéis de SP</span><a class="card-link" href="https://www.sindihospsaopaulo.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindihospsaopaulo.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#027</span><span class="card-name">Sindicato dos Gráficos de SP</span><a class="card-link" href="https://www.sindigraf.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindigraf.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#028</span><span class="card-name">Sindicato dos Têxteis de SP</span><a class="card-link" href="https://www.sinditextilsp.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinditextilsp.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#029</span><span class="card-name">Sindicato dos Padeiros e Trabalhadores em Panificação de SP</span><a class="card-link" href="https://www.sindipan.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindipan.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#030</span><span class="card-name">Sindicato dos Trabalhadores em Transportes Aquaviários de Santos</span><a class="card-link" href="https://www.sindicalaquaviarios.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindicalaquaviarios.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#031</span><span class="card-name">Sindicato dos Portuários de Santos</span><a class="card-link" href="https://www.sindestiva.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindestiva.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#032</span><span class="card-name">Sindicato dos Petroquímicos do ABC</span><a class="card-link" href="https://www.sindpetro.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindpetro.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#033</span><span class="card-name">Sindicato dos Trabalhadores em Papel e Papelão de SP</span><a class="card-link" href="https://www.sindigraph.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindigraph.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#034</span><span class="card-name">Sindicato dos Sapateiros e Trabalhadores em Calçados de SP</span><a class="card-link" href="https://www.sincasp.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sincasp.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#035</span><span class="card-name">Sindicato dos Metalúrgicos de SP e Mogi das Cruzes</span><a class="card-link" href="https://metalurgicos.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>metalurgicos.org.br</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== PARANÁ ===================== -->
+  <div class="section" data-region="brasil">
+    <div class="section-header">
+      <span class="section-flag">🇧🇷</span>
+      <span class="section-title">Sindicatos do Paraná</span>
+      <span class="section-count">5 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="brasil"><span class="card-num">#036</span><span class="card-name">APP-Sindicato – Educação Pública do Paraná</span><a class="card-link" href="https://appsindicato.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>appsindicato.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#037</span><span class="card-name">SINDSEF-PR – Servidores Públicos Federais do Paraná</span><a class="card-link" href="https://www.sindsef-pr.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindsef-pr.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#038</span><span class="card-name">Sindicato dos Médicos do Paraná (SIMEPAR)</span><a class="card-link" href="https://www.simepar.med.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.simepar.med.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#039</span><span class="card-name">Sindicato dos Trabalhadores Rurais de Ribeirão Preto</span><a class="card-link" href="https://www.strribrp.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.strribrp.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#040</span><span class="card-name">Sindicato dos Trabalhadores nas Usinas de Açúcar e Álcool de SP</span><a class="card-link" href="https://www.feraesp.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.feraesp.org.br</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== MINAS GERAIS ===================== -->
+  <div class="section" data-region="brasil">
+    <div class="section-header">
+      <span class="section-flag">🇧🇷</span>
+      <span class="section-title">Sindicatos de Minas Gerais</span>
+      <span class="section-count">14 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="brasil"><span class="card-num">#041</span><span class="card-name">SIND-SAÚDE – Trabalhadores em Saúde de MG</span><a class="card-link" href="https://www.sindsaude.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindsaude.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#042</span><span class="card-name">SINPRO-MG – Professores de MG</span><a class="card-link" href="https://www.sinpro-mg.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinpro-mg.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#043</span><span class="card-name">Sindicato dos Metalúrgicos de Contagem (MG)</span><a class="card-link" href="https://www.sindmetalbh.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindmetalbh.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#044</span><span class="card-name">Sindicato dos Bancários de MG</span><a class="card-link" href="https://www.bancariosmg.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.bancariosmg.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#045</span><span class="card-name">Sindicato dos Trabalhadores em Transportes Rodoviários de BH</span><a class="card-link" href="https://www.sindimetro-mg.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindimetro-mg.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#046</span><span class="card-name">Sindicato dos Trabalhadores em Telecomunicações de MG</span><a class="card-link" href="https://www.sinttel-mg.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinttel-mg.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#047</span><span class="card-name">SENGE-MG – Sindicato dos Engenheiros de MG</span><a class="card-link" href="https://www.senge-mg.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.senge-mg.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#048</span><span class="card-name">Sindicato dos Trabalhadores na Construção Civil de BH</span><a class="card-link" href="https://www.sindconstbh.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindconstbh.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#049</span><span class="card-name">Sindicato dos Jornalistas de MG</span><a class="card-link" href="https://www.sjmg.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sjmg.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#050</span><span class="card-name">SINCOMERCIÁRIOS-BH – Trabalhadores no Comércio de BH</span><a class="card-link" href="https://www.sindcom-mg.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindcom-mg.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#051</span><span class="card-name">SINDIBEL – Servidores Municipais de BH</span><a class="card-link" href="https://www.sindibel.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindibel.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#052</span><span class="card-name">Sindicato dos Trabalhadores Rurais de Uberlândia</span><a class="card-link" href="https://www.stru.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.stru.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#053</span><span class="card-name">Sindicato dos Servidores da Justiça Federal de MG</span><a class="card-link" href="https://www.sinjus-mg.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinjus-mg.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#054</span><span class="card-name">SINDIRECEITA – Auditores Fiscais da Receita Federal</span><a class="card-link" href="https://www.sindireceita.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindireceita.org.br</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== RIO DE JANEIRO ===================== -->
+  <div class="section" data-region="brasil">
+    <div class="section-header">
+      <span class="section-flag">🇧🇷</span>
+      <span class="section-title">Sindicatos do Rio de Janeiro</span>
+      <span class="section-count">12 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="brasil"><span class="card-num">#055</span><span class="card-name">SINPRO-RIO – Professores do Rio de Janeiro</span><a class="card-link" href="https://www.sinpro-rio.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinpro-rio.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#056</span><span class="card-name">Sindicato dos Bancários do Rio de Janeiro</span><a class="card-link" href="https://www.seeb-rio.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.seeb-rio.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#057</span><span class="card-name">SINMED-RJ – Médicos do Rio de Janeiro</span><a class="card-link" href="https://www.sinmed-rj.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinmed-rj.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#058</span><span class="card-name">Sindicato dos Metalúrgicos do Rio de Janeiro</span><a class="card-link" href="https://www.sindimetal-rj.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindimetal-rj.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#059</span><span class="card-name">SEPE-RJ – Trabalhadores em Educação do RJ</span><a class="card-link" href="https://www.seperj.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.seperj.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#060</span><span class="card-name">SINTTEL-RIO – Trabalhadores em Telecomunicações do RJ</span><a class="card-link" href="https://www.sinttel.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinttel.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#061</span><span class="card-name">Sindicato dos Trabalhadores Portuários do RJ</span><a class="card-link" href="https://www.sindportuariosrj.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindportuariosrj.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#062</span><span class="card-name">SENGE-RIO – Sindicato dos Engenheiros do RJ</span><a class="card-link" href="https://www.senge-rio.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.senge-rio.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#063</span><span class="card-name">Sindicato dos Jornalistas do Rio de Janeiro</span><a class="card-link" href="https://www.sjrj.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sjrj.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#064</span><span class="card-name">Sindicato dos Comerciários do Rio de Janeiro</span><a class="card-link" href="https://www.sercorj.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sercorj.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#065</span><span class="card-name">SINDRIO – Servidores Públicos Municipais do RJ</span><a class="card-link" href="https://www.sindrio.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindrio.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#066</span><span class="card-name">Sindicato dos Trabalhadores em Transportes Rodoviários do RJ</span><a class="card-link" href="https://www.sintramon.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sintramon.com.br</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== RIO GRANDE DO SUL ===================== -->
+  <div class="section" data-region="brasil">
+    <div class="section-header">
+      <span class="section-flag">🇧🇷</span>
+      <span class="section-title">Sindicatos do Rio Grande do Sul</span>
+      <span class="section-count">11 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="brasil"><span class="card-num">#067</span><span class="card-name">SINPRO-RS – Professores do RS</span><a class="card-link" href="https://www.sinprors.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinprors.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#068</span><span class="card-name">Sindicato dos Bancários do RS</span><a class="card-link" href="https://www.bancariosdors.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.bancariosdors.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#069</span><span class="card-name">Sindicato dos Metalúrgicos de Porto Alegre</span><a class="card-link" href="https://www.metalurgicospoa.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.metalurgicospoa.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#070</span><span class="card-name">CPERS – Servidores Públicos Estaduais do RS</span><a class="card-link" href="https://www.cpers.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cpers.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#071</span><span class="card-name">CPERS-Sindicato – Educação Pública do RS</span><a class="card-link" href="https://www.cpers.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cpers.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#072</span><span class="card-name">Sindicato dos Jornalistas do RS</span><a class="card-link" href="https://www.sjors.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sjors.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#073</span><span class="card-name">Sindicato dos Trabalhadores Rurais do RS (FETAG)</span><a class="card-link" href="https://www.fetag.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.fetag.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#074</span><span class="card-name">Sindicato dos Trabalhadores no Comércio de Porto Alegre</span><a class="card-link" href="https://www.simpa.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.simpa.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#075</span><span class="card-name">SIMERS – Sindicato dos Médicos do RS</span><a class="card-link" href="https://www.simers.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.simers.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#076</span><span class="card-name">SENGE-RS – Sindicato dos Engenheiros do RS</span><a class="card-link" href="https://www.sengers.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sengers.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#077</span><span class="card-name">Sindicato dos Trabalhadores na Construção Civil de POA</span><a class="card-link" href="https://www.sticc.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sticc.com.br</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== BAHIA ===================== -->
+  <div class="section" data-region="brasil">
+    <div class="section-header">
+      <span class="section-flag">🇧🇷</span>
+      <span class="section-title">Sindicatos da Bahia</span>
+      <span class="section-count">7 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="brasil"><span class="card-num">#078</span><span class="card-name">APLB-Sindicato – Professores da Bahia</span><a class="card-link" href="https://www.aplbeducadores.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.aplbeducadores.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#079</span><span class="card-name">Sindicato dos Bancários da Bahia</span><a class="card-link" href="https://www.seeb-ba.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.seeb-ba.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#080</span><span class="card-name">SINDSAÚDE-BA – Trabalhadores em Saúde da Bahia</span><a class="card-link" href="https://www.sindsaude-ba.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindsaude-ba.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#081</span><span class="card-name">SINDIMETAL-BA – Metalúrgicos da Bahia</span><a class="card-link" href="https://www.sindimetalba.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindimetalba.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#082</span><span class="card-name">SINTTEL-BA – Trabalhadores em Telecomunicações da Bahia</span><a class="card-link" href="https://www.sinttel-ba.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinttel-ba.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#083</span><span class="card-name">Sindicato dos Jornalistas da Bahia</span><a class="card-link" href="https://www.sjba.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sjba.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#084</span><span class="card-name">Sindicato dos Trabalhadores Rurais da Bahia (FETAG-BA)</span><a class="card-link" href="https://www.fetagba.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.fetagba.com.br</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== PERNAMBUCO & CEARÁ ===================== -->
+  <div class="section" data-region="brasil">
+    <div class="section-header">
+      <span class="section-flag">🇧🇷</span>
+      <span class="section-title">Sindicatos de Pernambuco e Ceará</span>
+      <span class="section-count">11 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="brasil"><span class="card-num">#085</span><span class="card-name">SINPRO-PE – Professores de Pernambuco</span><a class="card-link" href="https://www.sinpro-pe.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinpro-pe.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#086</span><span class="card-name">Sindicato dos Bancários de Pernambuco</span><a class="card-link" href="https://www.bancariospe.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.bancariospe.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#087</span><span class="card-name">Sindicato dos Trabalhadores em Saúde de PE</span><a class="card-link" href="https://www.sindsaude-pe.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindsaude-pe.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#088</span><span class="card-name">SINTEPE – Trabalhadores em Educação de PE</span><a class="card-link" href="https://www.sintepe.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sintepe.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#089</span><span class="card-name">SINDSEF-PE – Servidores Públicos Federais de PE</span><a class="card-link" href="https://www.sindsef-pe.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindsef-pe.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#090</span><span class="card-name">SIMEPE – Sindicato dos Médicos de PE</span><a class="card-link" href="https://www.simepe.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.simepe.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#091</span><span class="card-name">Sindicato dos Trabalhadores Rurais de PE (FETAPE)</span><a class="card-link" href="https://www.fetape.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.fetape.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#092</span><span class="card-name">APEOC – Professores do Ceará</span><a class="card-link" href="https://www.apeoc.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.apeoc.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#093</span><span class="card-name">Sindicato dos Bancários do Ceará</span><a class="card-link" href="https://www.bancariosce.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.bancariosce.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#094</span><span class="card-name">SINDSAÚDE-CE – Trabalhadores em Saúde do Ceará</span><a class="card-link" href="https://www.sindsaude-ce.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindsaude-ce.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#095</span><span class="card-name">Sindicato dos Trabalhadores no Comércio de Fortaleza</span><a class="card-link" href="https://www.sindicomerciofortaleza.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindicomerciofortaleza.org.br</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== GOIÁS ===================== -->
+  <div class="section" data-region="brasil">
+    <div class="section-header">
+      <span class="section-flag">🇧🇷</span>
+      <span class="section-title">Sindicatos de Goiás</span>
+      <span class="section-count">5 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="brasil"><span class="card-num">#096</span><span class="card-name">SINPRO-GO – Professores de Goiás</span><a class="card-link" href="https://www.sinpro-go.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sinpro-go.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#097</span><span class="card-name">Sindicato dos Bancários de Goiás</span><a class="card-link" href="https://www.bancariosgoia.com.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.bancariosgoia.com.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#098</span><span class="card-name">SINTEGO – Trabalhadores em Educação de Goiás</span><a class="card-link" href="https://www.sintego.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sintego.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#099</span><span class="card-name">SINDSEF-GO – Servidores Públicos Federais de GO</span><a class="card-link" href="https://www.sindsef-go.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.sindsef-go.org.br</a></div>
+      <div class="card" data-region="brasil"><span class="card-num">#100</span><span class="card-name">Sindicato dos Trabalhadores Rurais de Goiás (FETAEG)</span><a class="card-link" href="https://www.fetaeg.org.br" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.fetaeg.org.br</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== EUA ===================== -->
+  <div class="section" data-region="eua">
+    <div class="section-header">
+      <span class="section-flag">🇺🇸</span>
+      <span class="section-title">Estados Unidos</span>
+      <span class="section-count">15 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="eua"><span class="card-num">#101</span><span class="card-name">AFL-CIO – American Federation of Labor and Congress of Industrial Organizations</span><a class="card-link" href="https://aflcio.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>aflcio.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#102</span><span class="card-name">UAW – United Auto Workers</span><a class="card-link" href="https://uaw.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>uaw.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#103</span><span class="card-name">Teamsters – International Brotherhood of Teamsters</span><a class="card-link" href="https://teamster.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>teamster.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#104</span><span class="card-name">SEIU – Service Employees International Union</span><a class="card-link" href="https://www.seiu.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.seiu.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#105</span><span class="card-name">AFT – American Federation of Teachers</span><a class="card-link" href="https://www.aft.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.aft.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#106</span><span class="card-name">NEA – National Education Association</span><a class="card-link" href="https://www.nea.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.nea.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#107</span><span class="card-name">UFCW – United Food and Commercial Workers</span><a class="card-link" href="https://www.ufcw.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ufcw.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#108</span><span class="card-name">CWA – Communications Workers of America</span><a class="card-link" href="https://cwa-union.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>cwa-union.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#109</span><span class="card-name">IBEW – International Brotherhood of Electrical Workers</span><a class="card-link" href="https://www.ibew.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ibew.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#110</span><span class="card-name">USW – United Steelworkers</span><a class="card-link" href="https://www.usw.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.usw.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#111</span><span class="card-name">AFSCME – American Federation of State, County and Municipal Employees</span><a class="card-link" href="https://www.afscme.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.afscme.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#112</span><span class="card-name">AFGE – American Federation of Government Employees</span><a class="card-link" href="https://www.afge.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.afge.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#113</span><span class="card-name">UNITE HERE</span><a class="card-link" href="https://unitehere.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>unitehere.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#114</span><span class="card-name">ATU – Amalgamated Transit Union</span><a class="card-link" href="https://www.atu.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.atu.org</a></div>
+      <div class="card" data-region="eua"><span class="card-num">#115</span><span class="card-name">IAM – International Association of Machinists and Aerospace Workers</span><a class="card-link" href="https://www.iamaw.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.iamaw.org</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== CANADÁ ===================== -->
+  <div class="section" data-region="canada">
+    <div class="section-header">
+      <span class="section-flag">🇨🇦</span>
+      <span class="section-title">Canadá</span>
+      <span class="section-count">5 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="canada"><span class="card-num">#116</span><span class="card-name">CLC – Canadian Labour Congress</span><a class="card-link" href="https://canadianlabour.ca" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>canadianlabour.ca</a></div>
+      <div class="card" data-region="canada"><span class="card-num">#117</span><span class="card-name">Unifor</span><a class="card-link" href="https://www.unifor.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.unifor.org</a></div>
+      <div class="card" data-region="canada"><span class="card-num">#118</span><span class="card-name">CUPE – Canadian Union of Public Employees</span><a class="card-link" href="https://cupe.ca" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>cupe.ca</a></div>
+      <div class="card" data-region="canada"><span class="card-num">#119</span><span class="card-name">NUPGE – National Union of Public and General Employees</span><a class="card-link" href="https://www.nupge.ca" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.nupge.ca</a></div>
+      <div class="card" data-region="canada"><span class="card-num">#120</span><span class="card-name">PSAC – Public Service Alliance of Canada</span><a class="card-link" href="https://psacunion.ca" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>psacunion.ca</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== REINO UNIDO ===================== -->
+  <div class="section" data-region="europa">
+    <div class="section-header">
+      <span class="section-flag">🇬🇧</span>
+      <span class="section-title">Reino Unido</span>
+      <span class="section-count">7 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="europa"><span class="card-num">#121</span><span class="card-name">TUC – Trades Union Congress</span><a class="card-link" href="https://www.tuc.org.uk" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.tuc.org.uk</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#122</span><span class="card-name">Unite the Union</span><a class="card-link" href="https://www.unitetheunion.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.unitetheunion.org</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#123</span><span class="card-name">GMB Union</span><a class="card-link" href="https://www.gmb.org.uk" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.gmb.org.uk</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#124</span><span class="card-name">UNISON</span><a class="card-link" href="https://www.unison.org.uk" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.unison.org.uk</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#125</span><span class="card-name">RMT – Rail, Maritime and Transport Workers</span><a class="card-link" href="https://www.rmt.org.uk" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.rmt.org.uk</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#126</span><span class="card-name">NEU – National Education Union</span><a class="card-link" href="https://neu.org.uk" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>neu.org.uk</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#127</span><span class="card-name">PCS – Public and Commercial Services Union</span><a class="card-link" href="https://www.pcs.org.uk" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.pcs.org.uk</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== ALEMANHA ===================== -->
+  <div class="section" data-region="europa">
+    <div class="section-header">
+      <span class="section-flag">🇩🇪</span>
+      <span class="section-title">Alemanha</span>
+      <span class="section-count">4 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="europa"><span class="card-num">#128</span><span class="card-name">DGB – Deutscher Gewerkschaftsbund</span><a class="card-link" href="https://www.dgb.de" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.dgb.de</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#129</span><span class="card-name">IG Metall</span><a class="card-link" href="https://www.igmetall.de" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.igmetall.de</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#130</span><span class="card-name">ver.di – Vereinte Dienstleistungsgewerkschaft</span><a class="card-link" href="https://www.verdi.de" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.verdi.de</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#131</span><span class="card-name">IG BCE – Industriegewerkschaft Bergbau, Chemie, Energie</span><a class="card-link" href="https://www.igbce.de" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.igbce.de</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== FRANÇA ===================== -->
+  <div class="section" data-region="europa">
+    <div class="section-header">
+      <span class="section-flag">🇫🇷</span>
+      <span class="section-title">França</span>
+      <span class="section-count">3 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="europa"><span class="card-num">#132</span><span class="card-name">CGT – Confédération Générale du Travail</span><a class="card-link" href="https://www.cgt.fr" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cgt.fr</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#133</span><span class="card-name">CFDT – Confédération Française Démocratique du Travail</span><a class="card-link" href="https://www.cfdt.fr" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cfdt.fr</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#134</span><span class="card-name">FO – Force Ouvrière</span><a class="card-link" href="https://www.force-ouvriere.fr" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.force-ouvriere.fr</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== ESPANHA, ITÁLIA E OUTROS EUROPA ===================== -->
+  <div class="section" data-region="europa">
+    <div class="section-header">
+      <span class="section-flag">🌍</span>
+      <span class="section-title">Espanha, Itália, Suécia, Holanda e Bélgica</span>
+      <span class="section-count">11 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="europa"><span class="card-num">#135</span><span class="card-name">CCOO – Comisiones Obreras (Espanha)</span><a class="card-link" href="https://www.ccoo.es" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ccoo.es</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#136</span><span class="card-name">UGT – Unión General de Trabajadores (Espanha)</span><a class="card-link" href="https://www.ugt.es" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ugt.es</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#137</span><span class="card-name">CGIL – Confederazione Generale Italiana del Lavoro (Itália)</span><a class="card-link" href="https://www.cgil.it" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cgil.it</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#138</span><span class="card-name">CISL – Confederazione Italiana Sindacati dei Lavoratori (Itália)</span><a class="card-link" href="https://www.cisl.it" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cisl.it</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#139</span><span class="card-name">UIL – Unione Italiana del Lavoro (Itália)</span><a class="card-link" href="https://www.uil.it" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.uil.it</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#140</span><span class="card-name">LO – Landsorganisationen i Sverige (Suécia)</span><a class="card-link" href="https://www.lo.se" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.lo.se</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#141</span><span class="card-name">TCO – Tjänstemännens Centralorganisation (Suécia)</span><a class="card-link" href="https://www.tco.se" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.tco.se</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#142</span><span class="card-name">FNV – Federatie Nederlandse Vakbeweging (Holanda)</span><a class="card-link" href="https://www.fnv.nl" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.fnv.nl</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#143</span><span class="card-name">CSC – Confédération des Syndicats Chrétiens (Bélgica)</span><a class="card-link" href="https://www.lacsc.be" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.lacsc.be</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#144</span><span class="card-name">FGTB – Fédération Générale du Travail de Belgique</span><a class="card-link" href="https://www.fgtb.be" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.fgtb.be</a></div>
+      <div class="card" data-region="europa"><span class="card-num">#145</span><span class="card-name">FNPR – Federação dos Sindicatos Independentes da Rússia</span><a class="card-link" href="https://www.fnpr.ru" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.fnpr.ru</a></div>
+    </div>
+  </div>
+
+  <!-- ===================== OUTROS PAÍSES ===================== -->
+  <div class="section" data-region="outros">
+    <div class="section-header">
+      <span class="section-flag">🌐</span>
+      <span class="section-title">África, Ásia, Oceania e América Latina</span>
+      <span class="section-count">15 entidades</span>
+    </div>
+    <div class="grid">
+      <div class="card" data-region="outros"><span class="card-num">#146</span><span class="card-name">ZCTU – Zimbabwe Congress of Trade Unions</span><a class="card-link" href="https://www.zctu.co.zw" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.zctu.co.zw</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#147</span><span class="card-name">COSATU – Congress of South African Trade Unions</span><a class="card-link" href="https://www.cosatu.org.za" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cosatu.org.za</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#148</span><span class="card-name">NACTU – National Council of Trade Unions (África do Sul)</span><a class="card-link" href="https://www.nactu.org.za" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.nactu.org.za</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#149</span><span class="card-name">COTU – Central Organisation of Trade Unions (Quênia)</span><a class="card-link" href="https://www.cotu-kenya.org" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cotu-kenya.org</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#150</span><span class="card-name">NTUC – National Trades Union Congress (Singapura)</span><a class="card-link" href="https://www.ntuc.org.sg" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ntuc.org.sg</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#151</span><span class="card-name">ACTU – Australian Council of Trade Unions</span><a class="card-link" href="https://www.actu.org.au" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.actu.org.au</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#152</span><span class="card-name">CTM – Confederação dos Trabalhadores do México</span><a class="card-link" href="https://www.ctm.org.mx" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ctm.org.mx</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#153</span><span class="card-name">CROM – Confederação Regional Operária Mexicana</span><a class="card-link" href="https://www.crom.com.mx" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.crom.com.mx</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#154</span><span class="card-name">CTC – Central de Trabajadores de Cuba</span><a class="card-link" href="https://www.ctc.cu" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ctc.cu</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#155</span><span class="card-name">CTA – Central de Trabajadores de la Argentina</span><a class="card-link" href="https://www.cta.org.ar" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cta.org.ar</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#156</span><span class="card-name">CGT Argentina</span><a class="card-link" href="https://www.cgt.org.ar" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cgt.org.ar</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#157</span><span class="card-name">CUT Chile – Central Unitaria de Trabajadores</span><a class="card-link" href="https://www.cutchile.cl" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cutchile.cl</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#158</span><span class="card-name">CUT Colômbia – Central Unitaria de Trabajadores</span><a class="card-link" href="https://www.cut.org.co" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cut.org.co</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#159</span><span class="card-name">CGTP – Confederação Geral dos Trabalhadores Portugueses</span><a class="card-link" href="https://www.cgtp.pt" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.cgtp.pt</a></div>
+      <div class="card" data-region="outros"><span class="card-num">#160</span><span class="card-name">UGT Portugal – União Geral de Trabalhadores</span><a class="card-link" href="https://www.ugt.pt" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>www.ugt.pt</a></div>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResults">
+    <p style="font-size:32px;margin-bottom:12px;">∅</p>
+    <p>Nenhum sindicato encontrado para "<span id="searchTerm"></span>"</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-warning">
+    ⚠️ Aviso: Os links foram compilados com base em dados disponíveis. Alguns endereços de sindicatos menores podem ter mudado. Sempre verifique a URL ao acessar.
+  </div>
+  <div style="text-align:right;line-height:1.8;">
+    <div>160 sindicatos · 20+ países</div>
+    <div style="color:#444">Gerado por Claude · 2025</div>
+  </div>
+</footer>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card');
+  const sections = document.querySelectorAll('.section');
+  const visibleCount = document.getElementById('visibleCount');
+  const noResults = document.getElementById('noResults');
+  const searchTerm = document.getElementById('searchTerm');
+
+  let activeFilter = 'all';
+
+  function update() {
+    const q = searchInput.value.toLowerCase().trim();
+    let count = 0;
+
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      const region = card.dataset.region;
+      const matchFilter = activeFilter === 'all' || region === activeFilter;
+      const matchSearch = !q || text.includes(q);
+      const show = matchFilter && matchSearch;
+      card.style.display = show ? '' : 'none';
+      if (show) count++;
+    });
+
+    // Show/hide sections based on whether they have visible cards
+    sections.forEach(section => {
+      const sectionRegion = section.dataset.region;
+      const matchFilter = activeFilter === 'all' || sectionRegion === activeFilter;
+      const visCards = Array.from(section.querySelectorAll('.card')).filter(c => c.style.display !== 'none');
+      section.style.display = (matchFilter && visCards.length > 0) ? '' : 'none';
+    });
+
+    visibleCount.textContent = count;
+    noResults.style.display = count === 0 ? 'block' : 'none';
+    searchTerm.textContent = q;
+  }
+
+  searchInput.addEventListener('input', update);
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      update();
+    });
+  });
+</script>
+</body>
+</html>

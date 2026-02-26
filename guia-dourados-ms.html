@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia Dourados MS</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #1a5c2a;
+    --verde-claro: #2d8a45;
+    --amarelo: #f5c518;
+    --bege: #f9f5ec;
+    --cinza: #2a2a2a;
+    --branco: #ffffff;
+    --laranja: #e07b39;
+    --azul: #1e4d7b;
+    --rosa: #c0392b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--bege);
+    color: var(--cinza);
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--verde);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    border-bottom: 3px solid var(--amarelo);
+    background: rgba(0,0,0,0.2);
+  }
+  .header-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+    color: var(--amarelo);
+  }
+  .header-logo span { color: white; }
+  .header-badge {
+    background: var(--amarelo);
+    color: var(--cinza);
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 5px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .hero {
+    padding: 60px 40px 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    line-height: 0.9;
+    letter-spacing: 2px;
+  }
+  .hero h1 em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 2.2rem;
+    display: block;
+    color: var(--amarelo);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    font-weight: 400;
+  }
+  .hero p {
+    margin-top: 20px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    max-width: 400px;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(245,197,24,0.3);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+  .stat-card .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--amarelo);
+    line-height: 1;
+  }
+  .stat-card .label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
+  }
+  .wave {
+    width: 100%;
+    display: block;
+    margin-bottom: -2px;
+  }
+
+  /* BUSCA */
+  .search-bar {
+    background: white;
+    padding: 20px 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .search-bar input {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Lato', sans-serif;
+    outline: none;
+    transition: border 0.3s;
+  }
+  .search-bar input:focus { border-color: var(--verde-claro); }
+  .search-bar button {
+    background: var(--verde);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Lato', sans-serif;
+  }
+  .search-bar button:hover { background: var(--verde-claro); }
+  #search-info {
+    font-size: 0.85rem;
+    color: #888;
+    white-space: nowrap;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 0;
+    background: var(--cinza);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 14px 24px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    position: relative;
+  }
+  .tab-btn:hover { color: white; }
+  .tab-btn.active {
+    color: var(--amarelo);
+    border-bottom: 3px solid var(--amarelo);
+  }
+
+  /* CONTEÚDO */
+  .container { max-width: 1200px; margin: 0 auto; padding: 40px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  .section-header .icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .section-header p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  /* CARDS */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: white;
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid #eee;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  }
+  .card-accent {
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 14px 0 0 14px;
+  }
+  .card h3 {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    padding-left: 10px;
+  }
+  .card .sub { font-size: 0.82rem; color: #888; margin-bottom: 12px; padding-left: 10px; }
+  .card-info { padding-left: 10px; }
+  .card-info p {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    line-height: 1.5;
+  }
+  .card-info p span.ico { flex-shrink: 0; font-size: 0.9rem; }
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* CATEGORIA SECTION */
+  .cat-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    margin: 30px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eee;
+    color: var(--cinza);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* INFO BOXES */
+  .info-box {
+    background: white;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    border-left: 5px solid var(--verde);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  .info-box h4 { font-weight: 700; margin-bottom: 10px; font-size: 1rem; }
+  .info-box p, .info-box li { font-size: 0.9rem; color: #555; line-height: 1.7; }
+  .info-box ul { padding-left: 18px; }
+
+  /* LINKS UTEIS */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .link-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #eee;
+    text-decoration: none;
+    color: var(--cinza);
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .link-card:hover {
+    border-color: var(--verde-claro);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .link-card .lico { font-size: 1.8rem; }
+  .link-card .ltitle { font-weight: 700; font-size: 0.95rem; }
+  .link-card .ldesc { font-size: 0.8rem; color: #888; }
+  .link-card .lurl { font-size: 0.75rem; color: var(--verde-claro); margin-top: 4px; word-break: break-all; }
+
+  /* FOOTER */
+  footer {
+    background: var(--cinza);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 30px;
+    font-size: 0.82rem;
+    margin-top: 60px;
+  }
+  footer strong { color: var(--amarelo); }
+
+  .no-results {
+    text-align: center;
+    padding: 60px;
+    color: #aaa;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 3.5rem; }
+    .header-top { padding: 16px 20px; }
+    .container { padding: 24px 20px; }
+    .search-bar { padding: 12px 20px; flex-wrap: wrap; }
+  }
+
+  .highlight { background: rgba(245,197,24,0.4); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-top">
+    <div class="header-logo">Guia <span>Dourados</span></div>
+    <div class="header-badge">📍 Mato Grosso do Sul</div>
+  </div>
+  <div class="hero">
+    <div>
+      <h1>
+        <em>O guia completo de</em>
+        DOURADOS MS
+      </h1>
+      <p>Profissionais, comércio, indústria, serviços, delivery e muito mais. A segunda maior cidade do Mato Grosso do Sul com 243 mil habitantes e mais de 32 mil empresas ativas.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="num">243K</div>
+        <div class="label">Habitantes</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">32.7K</div>
+        <div class="label">Empresas Ativas</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">R$12.6bi</div>
+        <div class="label">PIB Municipal</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">73</div>
+        <div class="label">Segmentos de Comércio</div>
+      </div>
+    </div>
+  </div>
+  <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60">
+    <path fill="#f9f5ec" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/>
+  </svg>
+</header>
+
+<!-- BUSCA -->
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="🔍  Buscar profissional, empresa, serviço, bairro..." oninput="filtrarCards()">
+  <button onclick="filtrarCards()">Buscar</button>
+  <span id="search-info"></span>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('saude', this)">🏥 Saúde</button>
+  <button class="tab-btn" onclick="showTab('alimentacao', this)">🍽️ Alimentação & Delivery</button>
+  <button class="tab-btn" onclick="showTab('comercio', this)">🛍️ Comércio</button>
+  <button class="tab-btn" onclick="showTab('industria', this)">🏭 Indústria</button>
+  <button class="tab-btn" onclick="showTab('servicos', this)">⚙️ Serviços</button>
+  <button class="tab-btn" onclick="showTab('profissionais', this)">👔 Profissionais</button>
+  <button class="tab-btn" onclick="showTab('educacao', this)">🎓 Educação</button>
+  <button class="tab-btn" onclick="showTab('links', this)">🔗 Fontes & Links</button>
+</div>
+
+<!-- CONTEÚDO -->
+<div class="container">
+
+  <!-- SAÚDE -->
+  <div id="saude" class="section active">
+    <div class="section-header">
+      <div class="icon" style="background:#fde8e8;">🏥</div>
+      <div>
+        <h2 style="color:var(--rosa)">Saúde</h2>
+        <p>Hospitais, clínicas, médicos, laboratórios e farmácias em Dourados MS</p>
+      </div>
+    </div>
+
+    <div class="cat-title">🏨 Hospitais e Urgências</div>
+    <div class="cards-grid" id="saude-cards">
+
+      <div class="card" data-search="hospital vida saude internação pronto socorro urgencia emergencia">
+        <div class="card-accent" style="background:var(--rosa)"></div>
+        <h3>Hospital Vida e Saúde</h3>
+        <div class="sub">Hospital Privado</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Av. Weimar Gonçalves Torres, 1678 — Centro</p>
+          <p><span class="ico">📞</span> (67) 3411-5050</p>
+          <p><span class="ico">🕐</span> 24 horas</p>
+          <p><span class="ico">ℹ️</span> Internação, cirurgias, UTI, pronto-socorro</p>
+        </div>
+        <span class="tag" style="background:#fde8e8;color:var(--rosa)">Hospital</span>
+      </div>
+
+      <div class="card" data-search="hospital universitario UFGD universitário SUS internação">
+        <div class="card-accent" style="background:var(--rosa)"></div>
+        <h3>Hospital Universitário da UFGD (HU)</h3>
+        <div class="sub">Hospital Público — SUS</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Rua Ivo Alves da Rocha, 558 — Altos do Indaiá</p>
+          <p><span class="ico">📞</span> (67) 3410-2000</p>
+          <p><span class="ico">🕐</span> 24 horas</p>
+          <p><span class="ico">ℹ️</span> Atendimento pelo SUS, ensino e pesquisa da UFGD</p>
+        </div>
+        <span class="tag" style="background:#fde8e8;color:var(--rosa)">Hospital Público</span>
+      </div>
+
+      <div class="card" data-search="UPA unidade pronto atendimento urgencia emergencia SUS">
+        <div class="card-accent" style="background:var(--rosa)"></div>
+        <h3>UPA — Unidade de Pronto Atendimento</h3>
+        <div class="sub">Atendimento de Urgência 24h</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Av. Marcelino Pires — Jardim Água Boa</p>
+          <p><span class="ico">📞</span> (67) 3411-7600</p>
+          <p><span class="ico">🕐</span> 24 horas — sem agendamento</p>
+          <p><span class="ico">ℹ️</span> Urgências de média complexidade, SUS</p>
+        </div>
+        <span class="tag" style="background:#fde8e8;color:var(--rosa)">Urgência SUS</span>
+      </div>
+
+      <div class="card" data-search="santa casa misericordia hospital internação cirurgia">
+        <div class="card-accent" style="background:var(--rosa)"></div>
+        <h3>Santa Casa de Misericórdia de Dourados</h3>
+        <div class="sub">Hospital Filantrópico</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Rua Bela Vista, s/n — Jardim América</p>
+          <p><span class="ico">📞</span> (67) 3411-3500</p>
+          <p><span class="ico">🕐</span> 24 horas</p>
+          <p><span class="ico">ℹ️</span> Convênios e SUS, maternidade, cirurgias</p>
+        </div>
+        <span class="tag" style="background:#fde8e8;color:var(--rosa)">Hospital Filantrópico</span>
+      </div>
+    </div>
+
+    <div class="cat-title">🔬 Laboratórios & Clínicas de Exames</div>
+    <div class="cards-grid">
+
+      <div class="card" data-search="laboratorio delboni exames análises clínicas hemograma">
+        <div class="card-accent" style="background:#9b59b6"></div>
+        <h3>Laboratório Diagnose</h3>
+        <div class="sub">Análises Clínicas</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Av. Marcelino Pires, 2500 — Centro</p>
+          <p><span class="ico">📞</span> (67) 3421-4800</p>
+          <p><span class="ico">🕐</span> Seg–Sex 6h–18h / Sáb 6h–12h</p>
+          <p><span class="ico">ℹ️</span> Exames laboratoriais, coleta domiciliar</p>
+        </div>
+        <span class="tag" style="background:#f3e5ff;color:#9b59b6">Laboratório</span>
+      </div>
+
+      <div class="card" data-search="centro diagnostico imagem ressonancia tomografia raio-x ultrassom">
+        <div class="card-accent" style="background:#9b59b6"></div>
+        <h3>CDI — Centro de Diagnóstico por Imagem</h3>
+        <div class="sub">Diagnóstico por Imagem</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Rua João Rosa Góes — Centro</p>
+          <p><span class="ico">📞</span> (67) 3422-3300</p>
+          <p><span class="ico">🕐</span> Seg–Sex 7h–19h / Sáb 7h–13h</p>
+          <p><span class="ico">ℹ️</span> Tomografia, ressonância, ultrassom, raio-X</p>
+        </div>
+        <span class="tag" style="background:#f3e5ff;color:#9b59b6">Imagem</span>
+      </div>
+
+    </div>
+
+    <div class="cat-title">💊 Farmácias</div>
+    <div class="cards-grid">
+
+      <div class="card" data-search="farmacia pacheco drogasil drogaria medicamentos remedio">
+        <div class="card-accent" style="background:var(--verde)"></div>
+        <h3>Farmácias Pacheco / Drogasil</h3>
+        <div class="sub">Redes nacionais com várias unidades</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Diversas unidades em Dourados</p>
+          <p><span class="ico">🕐</span> Algumas unidades 24 horas</p>
+          <p><span class="ico">ℹ️</span> Medicamentos, dermocosméticos, pressão arterial</p>
+        </div>
+        <span class="tag" style="background:#e8f5e9;color:var(--verde)">Rede Nacional</span>
+      </div>
+
+      <div class="card" data-search="farmacia popular preço baixo genérico manipulação">
+        <div class="card-accent" style="background:var(--verde)"></div>
+        <h3>Farmácias de Manipulação</h3>
+        <div class="sub">Fórmulas personalizadas</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Diversas farmácias magistrais na cidade</p>
+          <p><span class="ico">ℹ️</span> Fórmulas sob prescrição médica, suplementos, cosméticos</p>
+          <p><span class="ico">🔍</span> Busque por "Farmácia de Manipulação Dourados" no Google Maps</p>
+        </div>
+        <span class="tag" style="background:#e8f5e9;color:var(--verde)">Manipulação</span>
+      </div>
+    </div>
+
+    <div class="cat-title">👨‍⚕️ Clínicas Especializadas</div>
+    <div class="cards-grid">
+      <div class="card" data-search="clinica medica consulta cardiologia ortopedia pediatria ginecologia">
+        <div class="card-accent" style="background:var(--azul)"></div>
+        <h3>Clínica Médica Dourados</h3>
+        <div class="sub">Clínica Multidisciplinar</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Centro de Dourados</p>
+          <p><span class="ico">ℹ️</span> Cardiologia, ortopedia, neurologia, dermatologia</p>
+          <p><span class="ico">🔍</span> Mais de 300 empresas no setor de saúde registradas</p>
+        </div>
+        <span class="tag" style="background:#e3f2fd;color:var(--azul)">Clínica</span>
+      </div>
+
+      <div class="card" data-search="odontologia dentista clinica dental prótese implante">
+        <div class="card-accent" style="background:var(--azul)"></div>
+        <h3>Odontologia — Diversas Clínicas</h3>
+        <div class="sub">Tratamentos Dentários</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> Dourados conta com centenas de consultórios e clínicas odontológicas</p>
+          <p><span class="ico">📞</span> CRO-MS: (67) 3321-3200 (indicação de dentistas)</p>
+          <p><span class="ico">🔍</span> Busque no Google Maps ou guia.dourados.ms.gov.br</p>
+        </div>
+        <span class="tag" style="background:#e3f2fd;color:var(--azul)">Odontologia</span>
+      </div>
+
+      <div class="card" data-search="psicologia terapeuta saúde mental clínica psiquiatria">
+        <div class="card-accent" style="background:var(--azul)"></div>
+        <h3>CAPS — Centro de Atenção Psicossocial</h3>
+        <div class="sub">Saúde Mental — SUS</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Rua Coronel Ponciano — Jardim Caramuru</p>
+          <p><span class="ico">📞</span> (67) 3411-7800</p>
+          <p><span class="ico">ℹ️</span> Psicólogos, psiquiatras, serviço social — SUS</p>
+        </div>
+        <span class="tag" style="background:#e3f2fd;color:var(--azul)">Saúde Mental</span>
+      </div>
+
+      <div class="card" data-search="fisioterapia reabilitação ortopédica neurológica pilates">
+        <div class="card-accent" style="background:var(--azul)"></div>
+        <h3>Clínicas de Fisioterapia</h3>
+        <div class="sub">Reabilitação e Bem-estar</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> Diversas clínicas de fisio ortopédica, neurológica, pediátrica e pilates</p>
+          <p><span class="ico">📞</span> CREFITO: referência para profissionais cadastrados</p>
+        </div>
+        <span class="tag" style="background:#e3f2fd;color:var(--azul)">Fisioterapia</span>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>⚠️ Emergências em Dourados</h4>
+      <p><strong>SAMU:</strong> 192 &nbsp;|&nbsp; <strong>Bombeiros:</strong> 193 &nbsp;|&nbsp; <strong>Polícia:</strong> 190 &nbsp;|&nbsp; <strong>UPA:</strong> (67) 3411-7600</p>
+    </div>
+  </div>
+
+  <!-- ALIMENTAÇÃO & DELIVERY -->
+  <div id="alimentacao" class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#fff3e0;">🍽️</div>
+      <div>
+        <h2 style="color:var(--laranja)">Alimentação & Delivery</h2>
+        <p>Restaurantes, lanchonetes, pizzarias, delivery e mais — Dourados MS</p>
+      </div>
+    </div>
+
+    <div class="cat-title">🍕 Pizzarias & Delivery</div>
+    <div class="cards-grid">
+      <div class="card" data-search="pizzaria pizza delivery entrega domicilio">
+        <div class="card-accent" style="background:var(--laranja)"></div>
+        <h3>Pizzarias em Dourados</h3>
+        <div class="sub">Delivery e Salão</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Diversas unidades pelo município</p>
+          <p><span class="ico">📱</span> iFood, WhatsApp e telefone</p>
+          <p><span class="ico">ℹ️</span> Mais de 1.097 empresas no setor de alojamento e alimentação registradas</p>
+          <p><span class="ico">🔍</span> Busque no iFood ou Aiqfome por "pizza Dourados"</p>
+        </div>
+        <span class="tag" style="background:#fff3e0;color:var(--laranja)">Delivery</span>
+      </div>
+
+      <div class="card" data-search="hamburguer lanche burguer artesanal delivery fast food">
+        <div class="card-accent" style="background:var(--laranja)"></div>
+        <h3>Hamburguerias Artesanais</h3>
+        <div class="sub">Burgers e Fast Food Premium</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Centro e bairros de Dourados</p>
+          <p><span class="ico">📱</span> iFood, WhatsApp, Instagram</p>
+          <p><span class="ico">ℹ️</span> Burgers artesanais, batata frita, milkshake</p>
+        </div>
+        <span class="tag" style="background:#fff3e0;color:var(--laranja)">Burger</span>
+      </div>
+
+      <div class="card" data-search="sushi japonesa temaki sashimi delivery japones comida">
+        <div class="card-accent" style="background:var(--laranja)"></div>
+        <h3>Restaurantes Japoneses / Sushi</h3>
+        <div class="sub">Culinária Oriental</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Opções no centro e bairros nobres</p>
+          <p><span class="ico">📱</span> iFood e WhatsApp</p>
+          <p><span class="ico">ℹ️</span> Sushi, sashimi, temaki, hot roll, yakisoba</p>
+        </div>
+        <span class="tag" style="background:#fff3e0;color:var(--laranja)">Japonesa</span>
+      </div>
+
+      <div class="card" data-search="churrascaria churrasco picanha rodizio carne brasileira">
+        <div class="card-accent" style="background:var(--laranja)"></div>
+        <h3>Churrascarias</h3>
+        <div class="sub">Churrasco e Rodízio</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Diversas na cidade — tradição local</p>
+          <p><span class="ico">📞</span> Consulte fone pelo Google Maps</p>
+          <p><span class="ico">ℹ️</span> Cortes nobres, buffet, rodízio de carnes</p>
+        </div>
+        <span class="tag" style="background:#fff3e0;color:var(--laranja)">Churrasco</span>
+      </div>
+    </div>
+
+    <div class="cat-title">🛵 Plataformas de Delivery</div>
+    <div class="cards-grid">
+      <div class="card" data-search="ifood aplicativo delivery pedido online comida">
+        <div class="card-accent" style="background:#ea1d2c"></div>
+        <h3>iFood Dourados</h3>
+        <div class="sub">Maior plataforma de delivery do Brasil</div>
+        <div class="card-info">
+          <p><span class="ico">📱</span> App iOS e Android — iFood</p>
+          <p><span class="ico">🌐</span> ifood.com.br</p>
+          <p><span class="ico">ℹ️</span> Comida, mercado, farmácia — centenas de opções em Dourados</p>
+        </div>
+        <span class="tag" style="background:#fde8ea;color:#ea1d2c">App</span>
+      </div>
+
+      <div class="card" data-search="aiqfome delivery regional aplicativo pedido">
+        <div class="card-accent" style="background:#f59e0b"></div>
+        <h3>Aiqfome</h3>
+        <div class="sub">Delivery regional — forte no interior</div>
+        <div class="card-info">
+          <p><span class="ico">📱</span> App iOS e Android — Aiqfome</p>
+          <p><span class="ico">🌐</span> aiqfome.com</p>
+          <p><span class="ico">ℹ️</span> Boa cobertura em Dourados e interior do MS</p>
+        </div>
+        <span class="tag" style="background:#fffbeb;color:#f59e0b">App</span>
+      </div>
+
+      <div class="card" data-search="whatsapp entrega motoboy delivery direto restaurante">
+        <div class="card-accent" style="background:#25d366"></div>
+        <h3>Delivery via WhatsApp</h3>
+        <div class="sub">Pedidos diretos — sem taxa</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> Muitos restaurantes locais atendem diretamente via WhatsApp sem taxas de plataforma</p>
+          <p><span class="ico">🔍</span> Procure o @instagram ou Facebook do estabelecimento para o número</p>
+        </div>
+        <span class="tag" style="background:#e8f8f1;color:#25d366">WhatsApp</span>
+      </div>
+    </div>
+
+    <div class="cat-title">☕ Cafés & Padarias</div>
+    <div class="cards-grid">
+      <div class="card" data-search="café padaria pão café da manhã bakery lanche">
+        <div class="card-accent" style="background:#795548"></div>
+        <h3>Cafeterias e Padarias</h3>
+        <div class="sub">Café, pão e lanche</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Espalhadas pelos bairros de Dourados</p>
+          <p><span class="ico">🕐</span> Geralmente 6h–20h</p>
+          <p><span class="ico">ℹ️</span> Café especial, pão de queijo, salgados, bolos artesanais</p>
+        </div>
+        <span class="tag" style="background:#efebe9;color:#795548">Café</span>
+      </div>
+
+      <div class="card" data-search="supermercado mercado atacadao assai compras alimento">
+        <div class="card-accent" style="background:#795548"></div>
+        <h3>Supermercados</h3>
+        <div class="sub">Hipermercados e Atacados</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Assaí Atacadista, Hiper Comper, Mercado Municipal</p>
+          <p><span class="ico">🕐</span> Geralmente 7h–22h</p>
+          <p><span class="ico">ℹ️</span> Empregam 10 mil trabalhadores em Dourados (CAGED 2024)</p>
+        </div>
+        <span class="tag" style="background:#efebe9;color:#795548">Mercado</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMÉRCIO -->
+  <div id="comercio" class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#e8f5e9;">🛍️</div>
+      <div>
+        <h2 style="color:var(--verde)">Comércio</h2>
+        <p>7.926 empresas comerciais ativas em Dourados MS — 73 segmentos diferentes</p>
+      </div>
+    </div>
+
+    <div class="cat-title">👗 Vestuário e Moda</div>
+    <div class="cards-grid">
+      <div class="card" data-search="roupas moda vestuário loja boutique feminino masculino">
+        <div class="card-accent" style="background:var(--verde)"></div>
+        <h3>Lojas de Vestuário</h3>
+        <div class="sub">Moda Feminina, Masculina e Infantil</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Centro comercial — Av. Marcelino Pires e arredores</p>
+          <p><span class="ico">ℹ️</span> 1.832 empresas ativas no segmento de vestuário em Dourados (maior CNAE da cidade)</p>
+          <p><span class="ico">🔍</span> Hering, Renner (Shopping Avenida Center), lojas locais</p>
+        </div>
+        <span class="tag" style="background:#e8f5e9;color:var(--verde)">Vestuário</span>
+      </div>
+
+      <div class="card" data-search="shopping avenida center mall lojas">
+        <div class="card-accent" style="background:var(--verde)"></div>
+        <h3>Shopping Avenida Center</h3>
+        <div class="sub">Principal Shopping de Dourados</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Av. Marcelino Pires, 4150</p>
+          <p><span class="ico">📞</span> (67) 3422-4000</p>
+          <p><span class="ico">🕐</span> Seg–Sáb 10h–22h / Dom 14h–20h</p>
+          <p><span class="ico">ℹ️</span> Mais de 130 lojas, cinema, praça de alimentação</p>
+        </div>
+        <span class="tag" style="background:#e8f5e9;color:var(--verde)">Shopping</span>
+      </div>
+    </div>
+
+    <div class="cat-title">🔧 Autopeças e Veículos</div>
+    <div class="cards-grid">
+      <div class="card" data-search="autopeças auto carro veículo mecânica concessionária moto">
+        <div class="card-accent" style="background:#455a64"></div>
+        <h3>Comércio de Veículos e Autopeças</h3>
+        <div class="sub">Maior segmento por CNPJ em Dourados</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> 7.926 empresas no CNAE de "comércio e reparação de veículos" — maior categoria da cidade</p>
+          <p><span class="ico">📍</span> Concentradas na Av. Joaquim Teixeira Alves e BR-163</p>
+          <p><span class="ico">🔍</span> Concessionárias Honda, GM, Fiat, Volkswagen, Toyota presentes</p>
+        </div>
+        <span class="tag" style="background:#eceff1;color:#455a64">Automotivo</span>
+      </div>
+
+      <div class="card" data-search="posto gasolina combustivel abastecimento petroleo">
+        <div class="card-accent" style="background:#455a64"></div>
+        <h3>Postos de Combustível</h3>
+        <div class="sub">Redes nacionais e regionais</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> BR Posto União, Auto Posto Novo Horizonte (entre os maiores), Ipiranga, Petrobras</p>
+          <p><span class="ico">🕐</span> 24 horas (principais)</p>
+          <p><span class="ico">ℹ️</span> Gasolina, etanol, diesel, lubrificantes, loja de conveniência</p>
+        </div>
+        <span class="tag" style="background:#eceff1;color:#455a64">Combustível</span>
+      </div>
+    </div>
+
+    <div class="cat-title">🏗️ Material de Construção e Decoração</div>
+    <div class="cards-grid">
+      <div class="card" data-search="construção material ferragem cimento loja construção">
+        <div class="card-accent" style="background:#e67e22"></div>
+        <h3>Lojas de Material de Construção</h3>
+        <div class="sub">Construção Civil e Reforma</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Diversas opções — 1.697 empresas no setor de construção</p>
+          <p><span class="ico">ℹ️</span> Materiais, ferragens, tintas, acabamentos, pisos e azulejos</p>
+          <p><span class="ico">🔍</span> C&C, lojas regionais, Home Center</p>
+        </div>
+        <span class="tag" style="background:#fef0e6;color:#e67e22">Construção</span>
+      </div>
+    </div>
+
+    <div class="info-box" style="border-color:var(--verde)">
+      <h4>📊 Panorama do Comércio em Dourados</h4>
+      <ul>
+        <li>73 modalidades de comércio — diversidade considerada alta</li>
+        <li>7.926 empresas no comércio e reparação de veículos (maior segmento)</li>
+        <li>1.832 lojas de vestuário e acessórios (maior CNAE individual)</li>
+        <li>1.266 novas empresas abertas em 2024</li>
+        <li>Comércio + alimentação empregam 10 mil trabalhadores formais</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- INDÚSTRIA -->
+  <div id="industria" class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#e3f2fd;">🏭</div>
+      <div>
+        <h2 style="color:var(--azul)">Indústria</h2>
+        <p>1.460 indústrias de transformação — Agronegócio, alimentos, etanol e construção</p>
+      </div>
+    </div>
+
+    <div class="cat-title">🌾 Agronegócio e Cooperativas</div>
+    <div class="cards-grid">
+      <div class="card" data-search="agronegocio cooperativa campo soja milho grãos armazenamento">
+        <div class="card-accent" style="background:var(--azul)"></div>
+        <h3>Missão Caiuá / Cooperativas Rurais</h3>
+        <div class="sub">1ª Maior Empresa de Dourados (Econodata)</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Região de Dourados e entorno</p>
+          <p><span class="ico">ℹ️</span> Agropecuária representa 10,1% do PIB de Dourados</p>
+          <p><span class="ico">🌱</span> Soja, milho, trigo, algodão — principais culturas</p>
+        </div>
+        <span class="tag" style="background:#e3f2fd;color:var(--azul)">Agronegócio</span>
+      </div>
+
+      <div class="card" data-search="coamo cooperativa agropecuária armazém grãos silo">
+        <div class="card-accent" style="background:var(--azul)"></div>
+        <h3>Coamo — Cooperativa Agroindustrial</h3>
+        <div class="sub">Indústria Cooperativa</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> BR-163, saída de Dourados</p>
+          <p><span class="ico">ℹ️</span> Armazenagem de grãos, esmagamento de soja, aprovada pelo CMDU</p>
+        </div>
+        <span class="tag" style="background:#e3f2fd;color:var(--azul)">Cooperativa</span>
+      </div>
+    </div>
+
+    <div class="cat-title">⛽ Energia e Petróleo</div>
+    <div class="cards-grid">
+      <div class="card" data-search="petroleo combustivel distribuição taurus gasolina etanol diesel">
+        <div class="card-accent" style="background:#7f8c8d"></div>
+        <h3>Taurus Distribuidora de Petróleo</h3>
+        <div class="sub">2ª Maior Empresa de Dourados</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Dourados — MS</p>
+          <p><span class="ico">ℹ️</span> Distribuição de combustíveis para postos e frotas</p>
+        </div>
+        <span class="tag" style="background:#eceff1;color:#7f8c8d">Energia</span>
+      </div>
+
+      <div class="card" data-search="etanol usina açúcar bioenergia biocombustível cana">
+        <div class="card-accent" style="background:#7f8c8d"></div>
+        <h3>Indústria de Etanol e Bioenergia</h3>
+        <div class="sub">Biocombustíveis — destaque regional</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> Sindicato STIAEB: trabalhadores da indústria de açúcar, etanol e bioenergia de Dourados e Ponta Porã</p>
+          <p><span class="ico">📍</span> Usinas na região de Dourados e área rural</p>
+        </div>
+        <span class="tag" style="background:#eceff1;color:#7f8c8d">Bioenergia</span>
+      </div>
+    </div>
+
+    <div class="cat-title">🏗️ Construção Civil e Materiais</div>
+    <div class="cards-grid">
+      <div class="card" data-search="construção civil concreto obra alvenaria cimento olaria cerâmica">
+        <div class="card-accent" style="background:#e67e22"></div>
+        <h3>Indústria de Cerâmica e Alvenaria</h3>
+        <div class="sub">Construção e Materiais</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> 983 empresas de obras de alvenaria; Sindicato dos Trabalhadores de Olaria e Cerâmica — referência do setor</p>
+          <p><span class="ico">📍</span> Distrito Industrial de Dourados</p>
+        </div>
+        <span class="tag" style="background:#fef0e6;color:#e67e22">Construção</span>
+      </div>
+
+      <div class="card" data-search="concreto armado estrutura pré-fabricado laje">
+        <div class="card-accent" style="background:#e67e22"></div>
+        <h3>Indústrias de Concreto Armado</h3>
+        <div class="sub">Pré-moldados e Estruturas</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Aprovadas pelo CMDU de Dourados — área industrial</p>
+          <p><span class="ico">ℹ️</span> Produção de pré-moldados, lajes, postes e estruturas</p>
+        </div>
+        <span class="tag" style="background:#fef0e6;color:#e67e22">Concreto</span>
+      </div>
+    </div>
+
+    <div class="info-box" style="border-color:var(--azul)">
+      <h4>📊 A Indústria em Dourados</h4>
+      <ul>
+        <li>Indústria representa 18% do PIB de Dourados (R$2,3 bilhões)</li>
+        <li>1.460 indústrias de transformação registradas</li>
+        <li>Grupo UHDE: maior empresa industrial do município</li>
+        <li>Distrito Industrial: área dedicada à instalação de indústrias</li>
+        <li>Aprovação de novas plantas industriais pelo CMDU regularmente</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SERVIÇOS -->
+  <div id="servicos" class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#f3e5f5;">⚙️</div>
+      <div>
+        <h2 style="color:#8e44ad">Serviços</h2>
+        <p>1.405 empresas de serviços + 836 de transporte + 959 administrativos</p>
+      </div>
+    </div>
+
+    <div class="cat-title">✂️ Beleza e Estética</div>
+    <div class="cards-grid">
+      <div class="card" data-search="cabelereiro salão beleza corte coloração manicure pedicure">
+        <div class="card-accent" style="background:#8e44ad"></div>
+        <h3>Salões de Beleza e Barbearias</h3>
+        <div class="sub">Cabelo, Estética e Bem-estar</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> 1.110 empresas ativas de cabeleireiros, manicure e pedicure — 3ª maior categoria em Dourados</p>
+          <p><span class="ico">📍</span> Presentes em todos os bairros da cidade</p>
+          <p><span class="ico">📱</span> Agendamento online pelo WhatsApp ou aplicativos</p>
+        </div>
+        <span class="tag" style="background:#f3e5f5;color:#8e44ad">Beleza</span>
+      </div>
+
+      <div class="card" data-search="estetica corporal facial spa massagem laser depilação">
+        <div class="card-accent" style="background:#8e44ad"></div>
+        <h3>Centros de Estética</h3>
+        <div class="sub">Tratamentos Corporais e Faciais</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Centro e bairros nobres de Dourados</p>
+          <p><span class="ico">ℹ️</span> Depilação a laser, harmonização facial, massoterapia, drenagem linfática</p>
+        </div>
+        <span class="tag" style="background:#f3e5f5;color:#8e44ad">Estética</span>
+      </div>
+    </div>
+
+    <div class="cat-title">🚚 Transporte e Logística</div>
+    <div class="cards-grid">
+      <div class="card" data-search="transporte logística frete carga caminhão transportadora">
+        <div class="card-accent" style="background:#16a085"></div>
+        <h3>Transportadoras de Carga</h3>
+        <div class="sub">Frete Regional e Nacional</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> 752 empresas de transporte rodoviário de carga — 4ª maior categoria individual da cidade</p>
+          <p><span class="ico">📍</span> Concentradas na BR-163 e BR-376</p>
+          <p><span class="ico">ℹ️</span> Corredor estratégico: Dourados é hub logístico do sul do MS</p>
+        </div>
+        <span class="tag" style="background:#e0f7f4;color:#16a085">Logística</span>
+      </div>
+
+      <div class="card" data-search="mototaxi uber taxi corrida transporte passageiro">
+        <div class="card-accent" style="background:#16a085"></div>
+        <h3>Uber / 99 / Táxis</h3>
+        <div class="sub">Transporte de Passageiros</div>
+        <div class="card-info">
+          <p><span class="ico">📱</span> Uber e 99 disponíveis em Dourados</p>
+          <p><span class="ico">📞</span> Táxi convencional: centrais distribuídas pela cidade</p>
+          <p><span class="ico">ℹ️</span> Mototáxi regulamentado em operação</p>
+        </div>
+        <span class="tag" style="background:#e0f7f4;color:#16a085">Transporte</span>
+      </div>
+    </div>
+
+    <div class="cat-title">💻 Tecnologia e Informática</div>
+    <div class="cards-grid">
+      <div class="card" data-search="informatica computador assistencia técnica notebook celular">
+        <div class="card-accent" style="background:#2980b9"></div>
+        <h3>Assistência Técnica em Eletrônicos</h3>
+        <div class="sub">Computadores, Celulares e TVs</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> 288 empresas no setor de informação e comunicação em Dourados</p>
+          <p><span class="ico">📍</span> Concentradas no centro comercial</p>
+          <p><span class="ico">ℹ️</span> Reparo de celular, notebook, games, CFTV</p>
+        </div>
+        <span class="tag" style="background:#e3f2fd;color:#2980b9">TI</span>
+      </div>
+
+      <div class="card" data-search="desenvolvimento software sistemas web site tecnologia empresa TI">
+        <div class="card-accent" style="background:#2980b9"></div>
+        <h3>Empresas de Tecnologia</h3>
+        <div class="sub">Desenvolvimento e Consultoria TI</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> Ecossistema de startups e empresas de software crescendo em Dourados, impulsionado pela UFGD e Uems</p>
+          <p><span class="ico">📍</span> Incubadora na UFGD — Av. Douradina</p>
+        </div>
+        <span class="tag" style="background:#e3f2fd;color:#2980b9">Software</span>
+      </div>
+    </div>
+
+    <div class="cat-title">🏡 Serviços para o Lar</div>
+    <div class="cards-grid">
+      <div class="card" data-search="limpeza faxina diarista doméstica zeladoria serviço">
+        <div class="card-accent" style="background:#f39c12"></div>
+        <h3>Serviços Domésticos</h3>
+        <div class="sub">Limpeza, Faxina e Zeladoria</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> Plataformas: GetNinjas, Workana — cadastro de profissionais locais</p>
+          <p><span class="ico">📱</span> Grupos de WhatsApp de bairro são comuns para indicações</p>
+        </div>
+        <span class="tag" style="background:#fef9e7;color:#f39c12">Doméstico</span>
+      </div>
+
+      <div class="card" data-search="pedreiro eletricista encanador pintor reforma construção">
+        <div class="card-accent" style="background:#f39c12"></div>
+        <h3>Reformas e Manutenção Predial</h3>
+        <div class="sub">Pedreiros, Eletricistas, Encanadores</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> 959 empresas de atividades administrativas e serviços complementares</p>
+          <p><span class="ico">🔍</span> GetNinjas, Habitissimo, indicações locais</p>
+        </div>
+        <span class="tag" style="background:#fef9e7;color:#f39c12">Reforma</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFISSIONAIS -->
+  <div id="profissionais" class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#e8f5e9;">👔</div>
+      <div>
+        <h2 style="color:var(--verde)">Profissionais Liberais</h2>
+        <p>709 empresas de atividades profissionais, científicas e técnicas em Dourados</p>
+      </div>
+    </div>
+
+    <div class="cat-title">⚖️ Advocacia e Direito</div>
+    <div class="cards-grid">
+      <div class="card" data-search="advogado advocacia escritório jurídico direito OAB">
+        <div class="card-accent" style="background:#1a237e"></div>
+        <h3>Advogados e Escritórios Jurídicos</h3>
+        <div class="sub">Diversas áreas do Direito</div>
+        <div class="card-info">
+          <p><span class="ico">📞</span> OAB Subseção Dourados: (67) 3421-2553</p>
+          <p><span class="ico">📍</span> Av. Marcelino Pires e Centro</p>
+          <p><span class="ico">ℹ️</span> Civil, trabalhista, família, criminal, ambiental, agronegócio</p>
+          <p><span class="ico">🌐</span> oab-ms.org.br (busca de advogados)</p>
+        </div>
+        <span class="tag" style="background:#e8eaf6;color:#1a237e">Advocacia</span>
+      </div>
+    </div>
+
+    <div class="cat-title">📊 Contabilidade e Finanças</div>
+    <div class="cards-grid">
+      <div class="card" data-search="contador contabilidade escritório fiscal imposto nota fiscal">
+        <div class="card-accent" style="background:#004d40"></div>
+        <h3>Escritórios de Contabilidade</h3>
+        <div class="sub">Contabilidade, Fiscal e Trabalhista</div>
+        <div class="card-info">
+          <p><span class="ico">📞</span> SESCAP/CRC-MS Dourados — referência regional</p>
+          <p><span class="ico">📍</span> Diversas firmas no centro comercial</p>
+          <p><span class="ico">ℹ️</span> MEI, Simples Nacional, Lucro Presumido, Lucro Real, IRPF</p>
+        </div>
+        <span class="tag" style="background:#e0f2f1;color:#004d40">Contabilidade</span>
+      </div>
+
+      <div class="card" data-search="banco bradesco itau caixa sicredi crédito financiamento">
+        <div class="card-accent" style="background:#004d40"></div>
+        <h3>Bancos e Cooperativas de Crédito</h3>
+        <div class="sub">Serviços Financeiros</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Bradesco, Itaú, Caixa, BB, Santander, Sicredi CentroSul (destaque local)</p>
+          <p><span class="ico">ℹ️</span> Sicredi CentroSul MSBA — uma das maiores empresas de Dourados</p>
+        </div>
+        <span class="tag" style="background:#e0f2f1;color:#004d40">Financeiro</span>
+      </div>
+    </div>
+
+    <div class="cat-title">🏗️ Engenharia e Arquitetura</div>
+    <div class="cards-grid">
+      <div class="card" data-search="engenheiro arquiteto projeto construção crea cau">
+        <div class="card-accent" style="background:#bf360c"></div>
+        <h3>Engenheiros e Arquitetos</h3>
+        <div class="sub">Projetos, Laudos e Construção</div>
+        <div class="card-info">
+          <p><span class="ico">📞</span> CREA-MS Regional Dourados: (67) 3421-3400</p>
+          <p><span class="ico">ℹ️</span> Civil, elétrico, ambiental, agronômico, arquitetura de interiores</p>
+          <p><span class="ico">🌐</span> crea-ms.org.br (busca de profissionais)</p>
+        </div>
+        <span class="tag" style="background:#fbe9e7;color:#bf360c">Engenharia</span>
+      </div>
+    </div>
+
+    <div class="cat-title">📢 Marketing e Comunicação</div>
+    <div class="cards-grid">
+      <div class="card" data-search="marketing agencia publicidade propaganda design social media">
+        <div class="card-accent" style="background:#6a1b9a"></div>
+        <h3>Agências de Marketing e Publicidade</h3>
+        <div class="sub">Digital, Criação e Mídia</div>
+        <div class="card-info">
+          <p><span class="ico">ℹ️</span> 1.237 empresas ativas no CNAE de promoção de vendas — 2ª maior categoria individual da cidade</p>
+          <p><span class="ico">📍</span> Agências locais + profissionais freelancers</p>
+          <p><span class="ico">ℹ️</span> Gestão de redes sociais, SEO, criação de sites, gráficas</p>
+        </div>
+        <span class="tag" style="background:#f3e5f5;color:#6a1b9a">Marketing</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDUCAÇÃO -->
+  <div id="educacao" class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#e8f5e9;">🎓</div>
+      <div>
+        <h2 style="color:var(--verde)">Educação</h2>
+        <p>Universidades, escolas, cursos e idiomas em Dourados MS</p>
+      </div>
+    </div>
+
+    <div class="cat-title">🏛️ Ensino Superior</div>
+    <div class="cards-grid">
+      <div class="card" data-search="UFGD universidade federal Dourados ensino superior federal">
+        <div class="card-accent" style="background:var(--verde)"></div>
+        <h3>UFGD — Universidade Federal da Grande Dourados</h3>
+        <div class="sub">Federal — Gratuita</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Rodovia Dourados-Itahum, km 12</p>
+          <p><span class="ico">📞</span> (67) 3410-2065</p>
+          <p><span class="ico">🌐</span> ufgd.edu.br</p>
+          <p><span class="ico">ℹ️</span> 30+ cursos de graduação, pós-graduação, HU, incubadora de empresas</p>
+        </div>
+        <span class="tag" style="background:#e8f5e9;color:var(--verde)">Federal</span>
+      </div>
+
+      <div class="card" data-search="UEMS universidade estadual Mato Grosso do Sul estadual">
+        <div class="card-accent" style="background:var(--verde)"></div>
+        <h3>UEMS — Universidade Estadual de MS</h3>
+        <div class="sub">Estadual — Gratuita</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Dourados — Unidade principal</p>
+          <p><span class="ico">📞</span> (67) 3902-2700</p>
+          <p><span class="ico">🌐</span> uems.br</p>
+          <p><span class="ico">ℹ️</span> Direito, Letras, Ciência da Computação, Ciências Biológicas e mais</p>
+        </div>
+        <span class="tag" style="background:#e8f5e9;color:var(--verde)">Estadual</span>
+      </div>
+
+      <div class="card" data-search="Unigran faculdade privada dourados graduação presencial">
+        <div class="card-accent" style="background:var(--azul)"></div>
+        <h3>UNIGRAN — Centro Universitário</h3>
+        <div class="sub">Privado — Presencial e EAD</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Rua Balbina de Matos, 2121 — Jardim Universitário</p>
+          <p><span class="ico">📞</span> (67) 3411-4141</p>
+          <p><span class="ico">🌐</span> unigran.br</p>
+          <p><span class="ico">ℹ️</span> Medicina, Direito, Engenharia, Pedagogia, EAD</p>
+        </div>
+        <span class="tag" style="background:#e3f2fd;color:var(--azul)">Privada</span>
+      </div>
+
+      <div class="card" data-search="anhanguera faculdade privada EAD graduação">
+        <div class="card-accent" style="background:var(--azul)"></div>
+        <h3>Anhanguera / Kroton / Unopar</h3>
+        <div class="sub">Redes Privadas com EAD</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Diversas unidades em Dourados</p>
+          <p><span class="ico">ℹ️</span> Graduação presencial e polo EAD — cursos técnicos e de curta duração</p>
+        </div>
+        <span class="tag" style="background:#e3f2fd;color:var(--azul)">EAD</span>
+      </div>
+    </div>
+
+    <div class="cat-title">📚 Cursos Técnicos e Idiomas</div>
+    <div class="cards-grid">
+      <div class="card" data-search="SENAI SENAC curso técnico profissionalizante">
+        <div class="card-accent" style="background:#e67e22"></div>
+        <h3>SENAI e SENAC Dourados</h3>
+        <div class="sub">Educação Profissional</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> Av. Weimar Gonçalves Torres — Centro</p>
+          <p><span class="ico">📞</span> SENAI: (67) 3421-3700 | SENAC: (67) 3421-6000</p>
+          <p><span class="ico">ℹ️</span> Cursos técnicos, qualificação profissional, aprendizagem industrial</p>
+        </div>
+        <span class="tag" style="background:#fef0e6;color:#e67e22">Técnico</span>
+      </div>
+
+      <div class="card" data-search="inglês idiomas curso CNA CCAA Wizard Yázigi">
+        <div class="card-accent" style="background:#e67e22"></div>
+        <h3>Escolas de Idiomas</h3>
+        <div class="sub">Inglês, Espanhol, Francês e mais</div>
+        <div class="card-info">
+          <p><span class="ico">📍</span> CNA, Wizard, CCAA, Yázigi — unidades em Dourados</p>
+          <p><span class="ico">ℹ️</span> Inglês, Espanhol (muito demandado pela fronteira com Paraguai e Argentina)</p>
+        </div>
+        <span class="tag" style="background:#fef0e6;color:#e67e22">Idiomas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINKS ÚTEIS -->
+  <div id="links" class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#fff3e0;">🔗</div>
+      <div>
+        <h2 style="color:var(--laranja)">Fontes & Links Úteis</h2>
+        <p>Onde encontrar dados completos e atualizados sobre empresas em Dourados MS</p>
+      </div>
+    </div>
+
+    <div class="cat-title">🏛️ Oficiais e Governamentais</div>
+    <div class="links-grid">
+      <a class="link-card" href="https://www.dourados.ms.gov.br" target="_blank">
+        <div class="lico">🏛️</div>
+        <div class="ltitle">Prefeitura de Dourados</div>
+        <div class="ldesc">Portal oficial com serviços, alvarás, IPTU, concursos</div>
+        <div class="lurl">dourados.ms.gov.br</div>
+      </a>
+      <a class="link-card" href="https://www.jucems.ms.gov.br" target="_blank">
+        <div class="lico">📋</div>
+        <div class="ltitle">JUCEMS</div>
+        <div class="ldesc">Junta Comercial do MS — registro oficial de empresas</div>
+        <div class="lurl">jucems.ms.gov.br</div>
+      </a>
+      <a class="link-card" href="https://receita.economia.gov.br/orientacao/tributario/cadastros/cadastro-nacional-de-pessoas-juridicas-cnpj" target="_blank">
+        <div class="lico">🔍</div>
+        <div class="ltitle">Consulta CNPJ — Receita Federal</div>
+        <div class="ldesc">Situação cadastral de qualquer empresa</div>
+        <div class="lurl">receita.economia.gov.br</div>
+      </a>
+      <a class="link-card" href="https://www.dourados.ms.gov.br/index.php/secretaria-de-saude" target="_blank">
+        <div class="lico">🏥</div>
+        <div class="ltitle">Secretaria de Saúde de Dourados</div>
+        <div class="ldesc">UBS, programas e serviços de saúde do município</div>
+        <div class="lurl">dourados.ms.gov.br/saude</div>
+      </a>
+    </div>
+
+    <div class="cat-title">📊 Bases de Dados de Empresas</div>
+    <div class="links-grid">
+      <a class="link-card" href="https://oportunidados.com.br/empresas/mato-grosso-do-sul/dourados" target="_blank">
+        <div class="lico">📈</div>
+        <div class="ltitle">Oportunidados</div>
+        <div class="ldesc">15.922 MEIs + 32.735 empresas ativas em Dourados filtradas por CNAE</div>
+        <div class="lurl">oportunidados.com.br</div>
+      </a>
+      <a class="link-card" href="https://www.empresaqui.com.br/listas-de-empresas/MS/DOURADOS" target="_blank">
+        <div class="lico">🏢</div>
+        <div class="ltitle">EmpresAqui</div>
+        <div class="ldesc">CNPJ, endereço, sócios e dados de 36.000+ empresas de Dourados</div>
+        <div class="lurl">empresaqui.com.br</div>
+      </a>
+      <a class="link-card" href="https://www.econodata.com.br/maiores-empresas/ms-dourados" target="_blank">
+        <div class="lico">💹</div>
+        <div class="ltitle">Econodata</div>
+        <div class="ldesc">Maiores empresas, faturamento estimado, filtros por porte e setor</div>
+        <div class="lurl">econodata.com.br</div>
+      </a>
+      <a class="link-card" href="https://www.solutudo.com.br/empresas/ms/dourados" target="_blank">
+        <div class="lico">📖</div>
+        <div class="ltitle">Solutudo</div>
+        <div class="ldesc">Guia comercial categorizado — o maior do Brasil</div>
+        <div class="lurl">solutudo.com.br</div>
+      </a>
+    </div>
+
+    <div class="cat-title">🗺️ Mapas e Delivery</div>
+    <div class="links-grid">
+      <a class="link-card" href="https://www.google.com/maps/search/Dourados+MS" target="_blank">
+        <div class="lico">🗺️</div>
+        <div class="ltitle">Google Maps Dourados</div>
+        <div class="ldesc">Avaliações, fotos, horários e rotas para empresas</div>
+        <div class="lurl">maps.google.com</div>
+      </a>
+      <a class="link-card" href="https://www.ifood.com.br" target="_blank">
+        <div class="lico">🛵</div>
+        <div class="ltitle">iFood</div>
+        <div class="ldesc">Delivery de comida, mercado e farmácia em Dourados</div>
+        <div class="lurl">ifood.com.br</div>
+      </a>
+      <a class="link-card" href="https://www.aiqfome.com" target="_blank">
+        <div class="lico">🍔</div>
+        <div class="ltitle">Aiqfome</div>
+        <div class="ldesc">Delivery regional — forte no interior do MS</div>
+        <div class="lurl">aiqfome.com</div>
+      </a>
+    </div>
+
+    <div class="cat-title">🎓 Conselhos Profissionais</div>
+    <div class="links-grid">
+      <a class="link-card" href="https://oab-ms.org.br" target="_blank">
+        <div class="lico">⚖️</div>
+        <div class="ltitle">OAB Dourados</div>
+        <div class="ldesc">Busca de advogados registrados</div>
+        <div class="lurl">oab-ms.org.br</div>
+      </a>
+      <a class="link-card" href="https://crea-ms.org.br" target="_blank">
+        <div class="lico">🏗️</div>
+        <div class="ltitle">CREA-MS Dourados</div>
+        <div class="ldesc">Engenheiros, agrônomos e arquitetos</div>
+        <div class="lurl">crea-ms.org.br</div>
+      </a>
+      <a class="link-card" href="https://cfm.org.br" target="_blank">
+        <div class="lico">👨‍⚕️</div>
+        <div class="ltitle">CFM — Médicos</div>
+        <div class="ldesc">Busca de médicos registrados no CRM</div>
+        <div class="lurl">cfm.org.br</div>
+      </a>
+      <a class="link-card" href="https://cro-ms.org.br" target="_blank">
+        <div class="lico">🦷</div>
+        <div class="ltitle">CRO-MS — Dentistas</div>
+        <div class="ldesc">Busca de cirurgiões-dentistas registrados</div>
+        <div class="lurl">cro-ms.org.br</div>
+      </a>
+    </div>
+
+    <div class="info-box" style="border-color:var(--laranja); margin-top: 30px;">
+      <h4>💡 Dica: Como manter este guia sempre atualizado</h4>
+      <ul>
+        <li>Consulte o <strong>Google Maps</strong> para avaliações e horários em tempo real</li>
+        <li>Use <strong>EmpresAqui ou Oportunidados</strong> para dados cadastrais de CNPJ</li>
+        <li>O <strong>Solutudo</strong> é ótimo para navegação por categoria</li>
+        <li>Para novos negócios, acompanhe a <strong>JUCEMS</strong> e o portal da Prefeitura</li>
+        <li>Grupos de <strong>WhatsApp de bairros</strong> são excelentes para serviços locais</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Guia Dourados MS</strong> — Referência comercial da 2ª maior cidade do Mato Grosso do Sul<br>
+  <span>Dados baseados em fontes públicas: RAIS/CAGED, Receita Federal, Prefeitura de Dourados, Econodata, Oportunidados — 2024/2025</span><br>
+  <span style="margin-top:8px;display:block;font-size:0.75rem;">Para dados completos com contatos individuais, consulte as fontes listadas na aba 🔗 Fontes & Links</span>
+</footer>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    document.getElementById('searchInput').value = '';
+    document.getElementById('search-info').textContent = '';
+    document.querySelectorAll('.card').forEach(c => {
+      c.style.display = '';
+      c.innerHTML = c.innerHTML.replace(/<mark class="highlight">(.*?)<\/mark>/g, '$1');
+    });
+  }
+
+  function filtrarCards() {
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    const info = document.getElementById('search-info');
+
+    // Ativar todos os tabs se busca global
+    if (q.length < 2) {
+      document.querySelectorAll('.card').forEach(c => { c.style.display = ''; });
+      info.textContent = '';
+      return;
+    }
+
+    // Mostrar todos os tabs e filtrar
+    let total = 0;
+    document.querySelectorAll('.section').forEach(s => {
+      let haveis = false;
+      s.querySelectorAll('.card').forEach(c => {
+        const searchData = (c.getAttribute('data-search') || '') + ' ' + c.innerText.toLowerCase();
+        if (searchData.includes(q)) {
+          c.style.display = '';
+          haveis = true;
+          total++;
+        } else {
+          c.style.display = 'none';
+        }
+      });
+    });
+
+    // Mostrar a primeira aba que tiver resultado
+    const sections = document.querySelectorAll('.section');
+    const tabs = document.querySelectorAll('.tab-btn');
+    let found = false;
+    sections.forEach((s, i) => {
+      const visible = [...s.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+      if (visible && !found) {
+        document.querySelectorAll('.section').forEach(x => x.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+        s.classList.add('active');
+        if (tabs[i]) tabs[i].classList.add('active');
+        found = true;
+      }
+    });
+
+    info.textContent = total > 0 ? `${total} resultado(s) encontrado(s)` : '❌ Nenhum resultado encontrado';
+  }
+
+  document.getElementById('searchInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') filtrarCards();
+  });
+</script>
+</body>
+</html>
