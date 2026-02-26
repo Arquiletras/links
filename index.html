@@ -1,44 +1,33 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Índice Geral de Links</title>
+<title>Diretório de Links</title>
 
 <style>
 body{
-    font-family: Arial, sans-serif;
-    background:#f4f4f4;
-    margin:0;
-    padding:20px;
+  font-family: Arial, sans-serif;
+  background:#f4f4f4;
+  padding:20px;
 }
 h1{
-    text-align:center;
+  text-align:center;
 }
 ul{
-    list-style:none;
-    padding:0;
+  list-style:none;
+  padding:0;
 }
 li{
-    background:white;
-    margin:8px 0;
-    padding:10px;
-    border-radius:6px;
-    box-shadow:0 2px 4px rgba(0,0,0,0.1);
+  background:white;
+  margin:8px 0;
+  padding:12px;
+  border-radius:6px;
+  box-shadow:0 2px 4px rgba(0,0,0,0.1);
 }
 a{
-    text-decoration:none;
-    color:#1a73e8;
-    font-weight:bold;
-}
-a:hover{
-    text-decoration:underline;
-}
-.footer{
-    text-align:center;
-    margin-top:30px;
-    font-size:14px;
-    color:#777;
+  text-decoration:none;
+  font-weight:bold;
+  color:#1a73e8;
 }
 </style>
 </head>
@@ -47,46 +36,13 @@ a:hover{
 
 <h1>📂 Diretório Completo de Arquivos</h1>
 
-<ul id="listaArquivos"></ul>
+<ul>
 
-<div class="footer">
-Arquiletras • Índice automático
-</div>
+<li><a href="arquivo1.html">Arquivo 1</a></li>
+<li><a href="arquivo2.html">Arquivo 2</a></li>
+<li><a href="arquivo3.html">Arquivo 3</a></li>
 
-<script>
-fetch('./')
-.then(response => response.text())
-.then(text => {
-    const parser = new DOMParser();
-    const htmlDoc = parser.parseFromString(text, "text/html");
-    const links = htmlDoc.querySelectorAll("a");
-
-    let arquivos = [];
-
-    links.forEach(link => {
-        let href = link.getAttribute("href");
-
-        if(href.endsWith(".html") && href !== "index.html"){
-            arquivos.push(href);
-        }
-    });
-
-    arquivos.sort();
-
-    const lista = document.getElementById("listaArquivos");
-
-    arquivos.forEach(arquivo => {
-        let li = document.createElement("li");
-        let a = document.createElement("a");
-
-        a.href = arquivo;
-        a.textContent = arquivo.replace(".html","").replaceAll("_"," ");
-
-        li.appendChild(a);
-        lista.appendChild(li);
-    });
-});
-</script>
+</ul>
 
 </body>
 </html>
