@@ -1,56 +1,92 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Central de Arquivos</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Índice Geral de Links</title>
+
 <style>
-body { font-family: Arial; background:#f4f4f4; padding:20px; }
-h1 { text-align:center; }
-ul { list-style:none; padding:0; columns:2; }
-li { margin:6px 0; }
-a { text-decoration:none; font-weight:bold; color:#003366; }
-a:hover { color:#cc0000; }
-@media (max-width:768px){ ul{columns:1;} }
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
+}
+h1{
+    text-align:center;
+}
+ul{
+    list-style:none;
+    padding:0;
+}
+li{
+    background:white;
+    margin:8px 0;
+    padding:10px;
+    border-radius:6px;
+    box-shadow:0 2px 4px rgba(0,0,0,0.1);
+}
+a{
+    text-decoration:none;
+    color:#1a73e8;
+    font-weight:bold;
+}
+a:hover{
+    text-decoration:underline;
+}
+.footer{
+    text-align:center;
+    margin-top:30px;
+    font-size:14px;
+    color:#777;
+}
 </style>
 </head>
+
 <body>
 
-<h1>📂 Central de Arquivos</h1>
+<h1>📂 Diretório Completo de Arquivos</h1>
 
-<ul>
-<li><a href="revistas_guitarra.html">Revistas Guitarra</a></li>
-<li><a href="central_mundial_guitarra.html">Central Mundial Guitarra</a></li>
-<li><a href="musical_instrument_brands_directory.html">Marcas Instrumentos</a></li>
-<li><a href="montadoras_mundiais_nomes.html">Montadoras Mundiais</a></li>
-<li><a href="rock_bands_worldwide_official_links.html">Bandas de Rock</a></li>
-<li><a href="atlas-300-marcas.html">Atlas 300 Marcas</a></li>
-<li><a href="atlas-hoteis-luxo-europa-300.html">Hotéis Luxo Europa</a></li>
-<li><a href="restaurantes-brasileiros-steakhouses.html">Steakhouses Brasil</a></li>
-<li><a href="atlas-miami-orlando.html">Atlas Miami Orlando</a></li>
-<li><a href="atlas-franquias-setores.html">Franquias por Setor</a></li>
-<li><a href="atlas_buscadores_limpo.html">Atlas Buscadores</a></li>
-<li><a href="lojas_instrumentos_instagram_todas.html">Lojas Instrumentos Instagram</a></li>
-<li><a href="diretorio_lojas_musicais.html">Diretório Lojas Musicais</a></li>
-<li><a href="lojas_100_plus.html">Lojas 100+</a></li>
-<li><a href="brechos_100_plus.html">Brechós 100+</a></li>
-<li><a href="atlas_cartunistas_500_links.html">Cartunistas</a></li>
-<li><a href="cooperativas-sp.html">Cooperativas SP</a></li>
-<li><a href="jornais_por_estado.html">Jornais por Estado</a></li>
-<li><a href="corretoras_brasil_links.html">Corretoras Brasil</a></li>
-<li><a href="sindicatos.html">Sindicatos</a></li>
-<li><a href="100_Arquitetos_URLs.html">100 Arquitetos</a></li>
-<li><a href="top50_sites_fotos.html">Top Sites Fotos</a></li>
-<li><a href="Guia_Jardins_SP.html">Guia Jardins SP</a></li>
-<li><a href="lvmh-marcas.html">LVMH</a></li>
-<li><a href="kering-marcas.html">Kering</a></li>
-<li><a href="richemont-marcas.html">Richemont</a></li>
-<li><a href="swatch-group-marcas.html">Swatch</a></li>
-<li><a href="coty-marcas.html">Coty</a></li>
-<li><a href="todas-as-marcas.html">Todas as Marcas</a></li>
-<li><a href="kenjinkais_do_brasil-4.html">Kenjinkais Brasil</a></li>
-<li><a href="comunidades_japonesas_brasil.html">Comunidades Japonesas</a></li>
-</ul>
+<ul id="listaArquivos"></ul>
+
+<div class="footer">
+Arquiletras • Índice automático
+</div>
+
+<script>
+fetch('./')
+.then(response => response.text())
+.then(text => {
+    const parser = new DOMParser();
+    const htmlDoc = parser.parseFromString(text, "text/html");
+    const links = htmlDoc.querySelectorAll("a");
+
+    let arquivos = [];
+
+    links.forEach(link => {
+        let href = link.getAttribute("href");
+
+        if(href.endsWith(".html") && href !== "index.html"){
+            arquivos.push(href);
+        }
+    });
+
+    arquivos.sort();
+
+    const lista = document.getElementById("listaArquivos");
+
+    arquivos.forEach(arquivo => {
+        let li = document.createElement("li");
+        let a = document.createElement("a");
+
+        a.href = arquivo;
+        a.textContent = arquivo.replace(".html","").replaceAll("_"," ");
+
+        li.appendChild(a);
+        lista.appendChild(li);
+    });
+});
+</script>
 
 </body>
 </html>
