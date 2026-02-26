@@ -2,75 +2,151 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Diretório Arquiletras</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Arquiletras</title>
+
 <style>
-body{font-family:Arial;background:#f4f4f4;padding:20px}
-h1{text-align:center}
-ul{list-style:none;padding:0;columns:2}
-li{background:white;margin:6px;padding:10px;border-radius:6px;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
-a{text-decoration:none;font-weight:bold;color:#1a73e8}
-a:hover{text-decoration:underline}
-@media(max-width:700px){ul{columns:1}}
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f2f4f7;
+}
+header{
+    background:#111;
+    color:#fff;
+    text-align:center;
+    padding:30px 15px;
+}
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:14px;
+}
+.card{
+    background:#fff;
+    border-radius:10px;
+    padding:16px;
+    box-shadow:0 3px 8px rgba(0,0,0,0.08);
+    transition:.2s;
+}
+.card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 6px 14px rgba(0,0,0,0.15);
+}
+.card a{
+    text-decoration:none;
+    color:#1a73e8;
+    font-weight:bold;
+}
+#busca{
+    width:100%;
+    padding:12px;
+    margin-bottom:20px;
+    font-size:16px;
+}
+footer{
+    text-align:center;
+    padding:25px;
+    color:#777;
+}
 </style>
 </head>
 <body>
 
-<h1>📂 Diretório Arquiletras</h1>
+<header>
+<h1>Portal Arquiletras</h1>
+<p>Minha central de navegação</p>
+</header>
 
-<ul>
-<li><a href="100_Arquitetos_URLs.html">100 Arquitetos URLs</a></li>
-<li><a href="100_empresas_japao_completas.html">100 Empresas Japão</a></li>
-<li><a href="Guia_Jardins_SP.html">Guia Jardins SP</a></li>
-<li><a href="atlas-3-colunas.html">Atlas 3 Colunas</a></li>
-<li><a href="atlas-300-marcas.html">Atlas 300 Marcas</a></li>
-<li><a href="atlas-containers-europa.html">Atlas Containers Europa</a></li>
-<li><a href="atlas-franquias-setores.html">Atlas Franquias</a></li>
-<li><a href="atlas-hoteis-luxo-europa-300.html">Atlas Hotéis Europa</a></li>
-<li><a href="atlas-miami-orlando.html">Atlas Miami Orlando</a></li>
-<li><a href="atlas_buscadores_limpo.html">Atlas Buscadores</a></li>
-<li><a href="atlas_cartunistas_500_links.html">Atlas Cartunistas</a></li>
-<li><a href="beatles_musicas.html">Beatles Músicas</a></li>
-<li><a href="bolsas-de-valores-mundo-1.html">Bolsas de Valores</a></li>
-<li><a href="brechos_100_plus.html">Brechós 100+</a></li>
-<li><a href="central_mundial_guitarra.html">Central Mundial Guitarra</a></li>
-<li><a href="comunidades_japonesas_brasil.html">Comunidades Japonesas</a></li>
-<li><a href="cooperativas-sp.html">Cooperativas SP</a></li>
-<li><a href="corretoras_brasil_links.html">Corretoras Brasil</a></li>
-<li><a href="designers_famosos.html">Designers Famosos</a></li>
-<li><a href="dicionario_design.html">Dicionário Design</a></li>
-<li><a href="diretorios_industriais.html">Diretórios Industriais</a></li>
-<li><a href="empresas_porto_santos.html">Empresas Porto Santos</a></li>
-<li><a href="fabricantes_moveis_brasil.html">Fabricantes Móveis</a></li>
-<li><a href="festivais_mundo.html">Festivais do Mundo</a></li>
-<li><a href="fornecedores_mdf.html">Fornecedores MDF</a></li>
-<li><a href="franquias_alimentacao.html">Franquias Alimentação</a></li>
-<li><a href="franquias_brasil.html">Franquias Brasil</a></li>
-<li><a href="guias_bras_sp.html">Guias Brás SP</a></li>
-<li><a href="guias_bom_retiro.html">Guias Bom Retiro</a></li>
-<li><a href="guias_ruas_comerciais.html">Ruas Comerciais</a></li>
-<li><a href="hospitais_sp.html">Hospitais SP</a></li>
-<li><a href="importadores_brasil.html">Importadores Brasil</a></li>
-<li><a href="industrias_moveleiras.html">Indústrias Moveleiras</a></li>
-<li><a href="lojas_iluminacao.html">Lojas Iluminação</a></li>
-<li><a href="lojas_moveis_sp.html">Lojas Móveis SP</a></li>
-<li><a href="lojas_online_design.html">Lojas Online Design</a></li>
-<li><a href="marcas_luxo.html">Marcas de Luxo</a></li>
-<li><a href="materiais_construcao_sp.html">Materiais Construção</a></li>
-<li><a href="mercados_municipais_brasil.html">Mercados Municipais</a></li>
-<li><a href="moveis_planejados_brasil.html">Móveis Planejados</a></li>
-<li><a href="portais_noticias.html">Portais de Notícias</a></li>
-<li><a href="revistas_design.html">Revistas Design</a></li>
-<li><a href="shopping_centers_sp.html">Shopping Centers SP</a></li>
-<li><a href="shoppings_brasil.html">Shoppings Brasil</a></li>
-<li><a href="sites_freelancer.html">Sites Freelancer</a></li>
-<li><a href="startups_brasil.html">Startups Brasil</a></li>
-<li><a href="supermercados_sp.html">Supermercados SP</a></li>
-<li><a href="tecnologia_fabricacao.html">Tecnologia Fabricação</a></li>
-<li><a href="transportadoras_sp.html">Transportadoras SP</a></li>
-<li><a href="universidades_brasil.html">Universidades Brasil</a></li>
-<li><a href="varejo_mundo.html">Varejo Mundial</a></li>
-<li><a href="websites_design_inspiracao.html">Websites Design</a></li>
-</ul>
+<div class="container">
+
+<input type="text" id="busca" placeholder="🔎 Buscar...">
+
+<div class="grid">
+
+<!-- LISTA COMPLETA -->
+
+<div class="card"><a href="100_Arquitetos_URLs.html">100 Arquitetos</a></div>
+<div class="card"><a href="100_empresas_japao_completas.html">Empresas Japão</a></div>
+<div class="card"><a href="Guia_Jardins_SP.html">Guia Jardins SP</a></div>
+<div class="card"><a href="atlas-3-colunas.html">Atlas 3 Colunas</a></div>
+<div class="card"><a href="atlas-300-marcas.html">300 Marcas</a></div>
+<div class="card"><a href="atlas-containers-europa.html">Containers Europa</a></div>
+<div class="card"><a href="atlas-franquias-setores.html">Franquias</a></div>
+<div class="card"><a href="atlas-hoteis-luxo-europa-300.html">Hotéis Europa</a></div>
+<div class="card"><a href="atlas-miami-orlando.html">Miami & Orlando</a></div>
+<div class="card"><a href="atlas_buscadores_limpo.html">Buscadores</a></div>
+<div class="card"><a href="atlas_cartunistas_500_links.html">Cartunistas</a></div>
+<div class="card"><a href="beatles_musicas.html">Beatles</a></div>
+<div class="card"><a href="bolsas-de-valores-mundo-1.html">Bolsas de Valores</a></div>
+<div class="card"><a href="brechos_100_plus.html">Brechós</a></div>
+<div class="card"><a href="central_mundial_guitarra.html">Guitarra</a></div>
+<div class="card"><a href="comunidades_japonesas_brasil.html">Comunidades Japonesas</a></div>
+<div class="card"><a href="cooperativas-sp.html">Cooperativas</a></div>
+<div class="card"><a href="corretoras_brasil_links.html">Corretoras</a></div>
+<div class="card"><a href="coty-marcas.html">Coty Marcas</a></div>
+<div class="card"><a href="craques-europa.html">Craques Europa</a></div>
+<div class="card"><a href="diretorio_lojas_musicais.html">Lojas Musicais</a></div>
+<div class="card"><a href="empresas_porto_santos.html">Porto de Santos</a></div>
+<div class="card"><a href="forbes_bilionarios.html">Bilionários Forbes</a></div>
+<div class="card"><a href="fossil-group-marcas.html">Fossil Group</a></div>
+<div class="card"><a href="guia-compras-sp.html">Compras SP</a></div>
+<div class="card"><a href="guia-dourados-ms.html">Guia Dourados</a></div>
+<div class="card"><a href="guia-empresas-sp.html">Empresas SP</a></div>
+<div class="card"><a href="guitarristas-bandas-youtube-3.html">Guitarristas</a></div>
+<div class="card"><a href="importadoras_alimentos_sp.html">Importadoras</a></div>
+<div class="card"><a href="importadores_eua_links.html">Importadores EUA</a></div>
+<div class="card"><a href="jornais_por_estado.html">Jornais</a></div>
+<div class="card"><a href="jornalistas.html">Jornalistas</a></div>
+<div class="card"><a href="kenjinkais_do_brasil-4.html">Kenjinkais</a></div>
+<div class="card"><a href="kering-marcas.html">Kering Marcas</a></div>
+<div class="card"><a href="lojas_100_plus.html">Lojas 100+</a></div>
+<div class="card"><a href="lojas_instrumentos_instagram_todas.html">Lojas Instagram</a></div>
+<div class="card"><a href="lvmh-marcas.html">LVMH Marcas</a></div>
+<div class="card"><a href="mauricio-cailet.html">Mauricio Cailet</a></div>
+<div class="card"><a href="modelos_redes_sociais-1.html">Modelos Redes</a></div>
+<div class="card"><a href="montadoras_mundiais_nomes.html">Montadoras</a></div>
+<div class="card"><a href="musical_instrument_brands_directory.html">Marcas Instrumentos</a></div>
+<div class="card"><a href="restaurantes-brasileiros-steakhouses.html">Restaurantes</a></div>
+<div class="card"><a href="revistas_guitarra.html">Revistas Guitarra</a></div>
+<div class="card"><a href="richemont-marcas.html">Richemont</a></div>
+<div class="card"><a href="rock_bands_worldwide_official_links.html">Bandas Rock</a></div>
+<div class="card"><a href="rock_sp.html">Rock SP</a></div>
+<div class="card"><a href="shoppings_sp_links_diretos.html">Shoppings SP</a></div>
+<div class="card"><a href="sindicatos.html">Sindicatos</a></div>
+<div class="card"><a href="sistema_financeiro.html">Sistema Financeiro</a></div>
+<div class="card"><a href="steelydan_musicas.html">Steely Dan</a></div>
+<div class="card"><a href="swatch-group-marcas.html">Swatch Group</a></div>
+<div class="card"><a href="tapestry-marcas.html">Tapestry</a></div>
+<div class="card"><a href="todas-as-marcas.html">Todas as Marcas</a></div>
+<div class="card"><a href="top50_sites_fotos.html">Sites de Fotos</a></div>
+<div class="card"><a href="tv_europa_youtube_pesquisa.html">TV Europa</a></div>
+<div class="card"><a href="tvutina.html">TV Utina</a></div>
+<div class="card"><a href="vanhalen_musicas.html">Van Halen</a></div>
+<div class="card"><a href="vinhos-chile-argentina-1.html">Vinhos Chile & Argentina</a></div>
+
+</div>
+</div>
+
+<footer>
+Arquiletras • Portal pessoal
+</footer>
+
+<script>
+document.getElementById("busca").addEventListener("keyup", function() {
+  let filtro = this.value.toLowerCase();
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display =
+      card.textContent.toLowerCase().includes(filtro)
+      ? "block" : "none";
+  });
+});
+</script>
 
 </body>
 </html>
